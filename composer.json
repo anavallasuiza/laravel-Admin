@@ -1,5 +1,5 @@
 {
-    "name": "eusonlito/laravel-admin",
+    "name": "anavallasuiza/laravel-admin",
     "keywords": ["laravel", "admin"],
     "description": "Simple and extendible Laravel control panel",
     "license": "MIT",
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Admin\\": "src/eusonlito/laravel-Admin/"
+            "Admin\\": "src/anavallasuiza/laravel-Admin/"
         }
     },
     "scripts": {
