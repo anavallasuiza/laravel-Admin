@@ -28,7 +28,7 @@ class PublishAssets extends Command {
      */
     public function handle()
     {
-        $build = base_path('vendor/eusonlito/laravel-admin/assets/build');
+        $build = base_path('vendor/anavallasuiza/laravel-admin/assets/build');
         $public = public_path('assets/admin/build');
 
         if (!is_dir($build)) {

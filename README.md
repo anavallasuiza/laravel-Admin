@@ -1,4 +1,4 @@
-composer.json = "eusonlito/laravel-admin": "master-dev"
+composer.json = "anavallasuiza/laravel-admin": "master-dev"
 
 config/app.php
 
@@ -20,7 +20,7 @@ Add to app/Console/Kernel.php
         'Admin\Console\Commands\PublishAssets',
         'Admin\Console\Commands\UserNew'
 
-cd vendor/eusonlito/laravel-admin
+cd vendor/anavallasuiza/laravel-admin
 
 gulp build
 
