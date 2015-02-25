@@ -9,10 +9,10 @@ var gulp = require('gulp'),
 
 var paths = {
     'from': {
-        'css': './src/eusonlito/laravel-Admin/resources/assets/css/',
-        'js': './src/eusonlito/laravel-Admin/resources/assets/js/',
+        'css': './src/anavallasuiza/laravel-Admin/resources/assets/css/',
+        'js': './src/anavallasuiza/laravel-Admin/resources/assets/js/',
         'vendor': './assets/vendor/',
-	'adminlte': '../../almasaeed2010/adminlte/'
+    'adminlte': '../../almasaeed2010/adminlte/'
     },
     'to': {
         'build': './assets/build/',
