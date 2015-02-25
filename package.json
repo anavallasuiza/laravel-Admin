@@ -1,0 +1,21 @@
+{
+  "name": "Laravel-Admin",
+  "homepage": "https://github.com/eusonlito/laravel-Admin",
+  "version": "0.0.1",
+  "author": {
+    "name": "A Navalla Suiza",
+    "role": "Developer"
+  },
+  "devDependencies": {
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-cache": "latest",
+    "gulp-concat": "latest",
+    "gulp-filter": "latest",
+    "gulp-jshint": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-replace": "latest",
+    "gulp-rev": "latest",
+    "gulp-uglify": "latest"
+  }
+}
