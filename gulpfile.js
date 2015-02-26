@@ -12,7 +12,7 @@ var paths = {
         'css': './src/anavallasuiza/laravel-Admin/resources/assets/css/',
         'js': './src/anavallasuiza/laravel-Admin/resources/assets/js/',
         'vendor': './assets/vendor/',
-    'adminlte': '../../almasaeed2010/adminlte/'
+        'adminlte': '../../almasaeed2010/adminlte/'
     },
     'to': {
         'build': './assets/build/',
@@ -49,6 +49,7 @@ var css_files = [
     paths.from.vendor   + 'bootstrap-fileinput/css/fileinput.min.css',
     paths.from.adminlte + 'plugins/datatables/dataTables.bootstrap.css',
     paths.from.adminlte + 'dist/css/AdminLTE.min.css',
+    paths.from.adminlte + 'dist/css/skins/skin-blue.min.css',
     paths.from.css + '*'
 ];
 

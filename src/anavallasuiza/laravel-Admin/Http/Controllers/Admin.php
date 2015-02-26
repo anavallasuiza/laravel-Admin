@@ -36,6 +36,11 @@ class Admin extends Controller
         return Redirect::route('admin.login');
     }
 
+    public function index()
+    {
+        return self::view('index');
+    }
+
     public function gettextJs()
     {
         return Response::make(self::view('gettext-js'))->header('Content-Type', 'application/javascript');

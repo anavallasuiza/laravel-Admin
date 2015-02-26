@@ -22,7 +22,7 @@
         @show
     </head>
 
-    <body id="top">
+    <body id="top" class="skin-blue">
         @yield('body')
 
         <script src="{{ Html::elixir('js/app.min.js', 'admin') }}" type="text/javascript"></script>

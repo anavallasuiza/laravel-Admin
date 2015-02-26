@@ -9,9 +9,11 @@
 
         <div class="login-box-body">
             @include('admin::molecules.alert-flash')
+
             <form method="post" class="clearfix">
                 {!! Form::token() !!}
                 {!! Form::fake() !!}
+                {!! Form::referer() !!}
 
                 {!! $form->html() !!}
 

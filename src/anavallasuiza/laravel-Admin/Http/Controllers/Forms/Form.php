@@ -4,8 +4,9 @@ use FormManager\FormElementInterface;
 use FormManager\Inputs\Input;
 use FormManager\Fields\Field;
 
-use Config, View;
-use App\Libs;
+use Config, Input as LInput, View;
+
+use Admin\Library;
 
 class Form extends \FormManager\Form {
     public function __construct()
@@ -119,7 +120,7 @@ class Form extends \FormManager\Form {
         $class = $input->attr('class');
 
         if (strstr($class, 'wysiwyg') || strstr($class, 'wysihtml5')) {
-            return $input->val(Libs\Html::fix($value));
+            return $input->val(Library\Html::fix($value));
         }
 
         return $input;
@@ -231,5 +232,10 @@ class Form extends \FormManager\Form {
         $url = Field::text()->attr('name', 'fake_url')->addClass('required');
 
         return '<div class="hidden">'.$email.$url.'</div>';
+    }
+
+    public static function referer($url = '')
+    {
+        return Input::hidden()->name('referer')->value(LInput::get('referer') ?: ($url ?: getenv('REQUEST_URI')));
     }
 }

@@ -1,4 +1,5 @@
 <?php
+Config::set('auth', config('admin.auth'));
 
 Route::any('/admin/gettext.js', [
     'as' => 'admin.gettext.js',
@@ -13,7 +14,7 @@ Route::any('/admin/login', [
 Route::group(['prefix' => 'admin', 'before' => 'auth.admin'], function()
 {
     Route::get('/', [
-        'as' => 'admin',
+        'as' => 'admin.index',
         'uses' => 'Admin\Http\Controllers\Admin@index'
     ]);
 

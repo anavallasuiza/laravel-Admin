@@ -3,7 +3,7 @@
 use Illuminate\Routing\Controller as BaseController;
 
 use Exception;
-use App, Auth, Request, Session, View;
+use App, Auth, Config, Request, Session, View;
 use Gettext;
 
 abstract class Controller extends BaseController
