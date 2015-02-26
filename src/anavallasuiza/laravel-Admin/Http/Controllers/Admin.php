@@ -1,5 +1,6 @@
 <?php namespace Admin\Http\Controllers;
 
+use Redirect, Response;
 use Admin\Http\Controllers\Forms;
 use Meta;
 

@@ -1,7 +1,7 @@
 <?php
 Config::set('auth', config('admin.auth'));
 
-Route::any('/admin/gettext.js', [
+Route::get('/admin/gettext.js', [
     'as' => 'admin.gettext.js',
     'uses' => 'Admin\Http\Controllers\Admin@gettextJs'
 ]);

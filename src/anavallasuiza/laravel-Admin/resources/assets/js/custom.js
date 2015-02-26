@@ -134,15 +134,14 @@ $(function() {
 
     $('[data-toggle="offcanvas"]').on('click', function(e) {
         e.preventDefault();
+        $('body').toggleClass('sidebar-collapse').toggleClass('sidebar-open');
+    });
 
-        if ($(window).width() <= 992) {
-            $('.row-offcanvas').toggleClass('active');
-            $('.left-side').removeClass('collapse-left');
-            $('.right-side').removeClass('strech');
-            $('.row-offcanvas').toggleClass('relative');
-        } else {
-            $('.left-side').toggleClass('collapse-left');
-            $('.right-side').toggleClass('strech');
+    $('.content-wrapper').on('click', function() {
+        var $body = $('body');
+
+        if (($(window).width() <= 767) && $body.hasClass('sidebar-open')) {
+            $body.removeClass('sidebar-open');
         }
     });
 
