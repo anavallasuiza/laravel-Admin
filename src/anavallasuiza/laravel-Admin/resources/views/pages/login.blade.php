@@ -12,7 +12,6 @@
 
             <form method="post" class="clearfix">
                 {!! Form::token() !!}
-                {!! Form::fake() !!}
                 {!! Form::referer() !!}
 
                 {!! $form->html() !!}

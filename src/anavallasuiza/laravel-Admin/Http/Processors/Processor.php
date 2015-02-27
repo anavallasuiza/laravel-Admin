@@ -4,7 +4,7 @@ use ErrorException;
 use Input, Request;
 
 abstract class Processor {
-    protected function check($function, \FormManager\Form $form = null)
+    protected function check($function, $form = null)
     {
         if (($function !== 'login') && empty($this->user)) {
             throw new ErrorException(__('You havent\'t permissions to execute this action'));
@@ -16,17 +16,7 @@ abstract class Processor {
             return null;
         }
 
-        $method = strtolower(Request::method());
-
-        if (($form === null) && ($method === 'get')) {
-            $token = true;
-        } else {
-            $token = (isset($post['_token']) && (csrf_token() === $post['_token']));
-        }
-
-        $fake = ($method === 'post') ? ['fake_email', 'fake_url'] : [];
-
-        if (self::isBot($post, $fake) || ($token === false)) {
+        if (self::isFake($post, $form)) {
             throw new ErrorException(__('Not allowed'));
         }
 
@@ -57,7 +47,22 @@ abstract class Processor {
         return $data;
     }
 
-    public static function isBot(array $data = [], array $fake = [])
+    protected static function isFake($post, $form)
+    {
+        $method = strtolower(Request::method());
+
+        if (($form === null) && ($method === 'get')) {
+            $token = true;
+        } else {
+            $token = (isset($post['_token']) && (csrf_token() === $post['_token']));
+        }
+
+        $fake = ($method === 'post') ? ['fake_email', 'fake_url'] : [];
+
+        return (($token === false) || self::isBot($post, $fake));
+    }
+
+    protected static function isBot(array $data = [], array $fake = [])
     {
         $bots = [
             'ask jeeves','baiduspider','butterfly','fast','feedfetcher-google','firefly','gigabot',
@@ -85,7 +90,7 @@ abstract class Processor {
         return false;
     }
 
-    public static function checkTags(array $data)
+    protected static function checkTags(array $data)
     {
         $inputs = Input::all();
 

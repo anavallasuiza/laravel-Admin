@@ -3,7 +3,7 @@
 use Illuminate\Routing\Controller as BaseController;
 
 use Exception;
-use App, Auth, Config, Request, Session, View;
+use App, Auth, Input, Request, Response, Session, View;
 use Gettext;
 
 abstract class Controller extends BaseController
@@ -26,43 +26,60 @@ abstract class Controller extends BaseController
         ]);
     }
 
-    public static function view($template, $params = [])
+    protected static function view($template, $params = [])
     {
         return view('admin::pages.'.$template, $params);
     }
 
-    public function action($action, \FormManager\Form $form = null, $params = [])
+    protected function getActionClass()
     {
-        if (($action === 'AUTO') && empty($_action = Input::get('_action'))) {
+        return str_replace('\\Controllers', '\\Processors', get_class($this));
+    }
+
+    protected function action($action, $form = null, array $params = [])
+    {
+        if (!($action = $this->checkAction($action))) {
             return null;
         }
 
-        if (($form !== null) && !Request::isMethod('post')) {
+        return $this->makeAction($action, $form, $params);
+    }
+
+    protected function checkAction($action)
+    {
+        if (!Request::isMethod('post') || empty($_action = Input::get('_action'))) {
             return null;
         }
 
-        $action = ($action === 'AUTO') ? $_action : $action;
+        return (($action === 'AUTO') || ($action === $_action)) ? $_action : null;
+    }
 
+    protected function makeAction($action, $form = null, array $params = [])
+    {
         try {
-            $class = str_replace('\\Controllers', '\\Processors', get_class($this));
-            return App::make($class)->$action($form, $params);
+            return App::make($this->getActionClass())->$action($form, $params);
         } catch (Exception $e) {
-            $message = $e->getMessage();
-
-            if (config('debug')) {
-                $message = '['.$e->getFile().' - '.$e->getLine().'] '.$message;
-            }
-
-            if (Request::ajax()) {
-                return Response::make($message, (($e->getCode() === 404) ? 404 : 500));
-            }
-
-            Session::flash('flash-message', [
-                'message' => $message,
-                'status' => 'danger'
-            ]);
-
-            return false;
+            return $this->setActionMessage($e);
         }
+    }
+
+    protected function setActionMessage($e)
+    {
+        $message = $e->getMessage();
+
+        if (config('debug')) {
+            $message = '['.$e->getFile().' - '.$e->getLine().'] '.$message;
+        }
+
+        if (Request::ajax()) {
+            return Response::make($message, (($e->getCode() === 404) ? 404 : 500));
+        }
+
+        Session::flash('flash-message', [
+            'message' => $message,
+            'status' => 'danger'
+        ]);
+
+        return false;
     }
 }

@@ -1,14 +1,13 @@
 <?php namespace Admin\Http\Controllers\Forms;
 
-use FormManager\FormElementInterface;
-use FormManager\Inputs\Input;
-use FormManager\Fields\Field;
+use FormManager\Builder as F;
+use FormManager\Containers\Form as Base;
 
-use Config, Input as LInput, View;
-
+use Config, Input, View;
 use Admin\Library;
 
-class Form extends \FormManager\Form {
+class Form extends Base
+{
     public function __construct()
     {
         return $this->method('post');
@@ -20,17 +19,15 @@ class Form extends \FormManager\Form {
 
         parent::load($value, $file);
 
-        foreach ($this as $field) {
-            $this->setLoader($field);
+        foreach ($this as $input) {
+            $this->setLoader($input);
         }
     }
 
-    public function setLoader($field)
+    public function setLoader($input)
     {
-        $input = isset($field->input) ? $field->input : $field;
-
         $type = $input->getElementName();
-        $type = ($type === 'input') ? $field->attr('type') : $type;
+        $type = ($type === 'input') ? $input->attr('type') : $type;
 
         $method = 'load'.$type;
 
@@ -66,37 +63,29 @@ class Form extends \FormManager\Form {
         return $this;
     }
 
-    public function wrapperInput($field)
+    public function wrapperInput($input)
     {
-        if (empty($field->input)) {
-            return $field;
-        }
-
-        $type = $field->input->getElementName();
-        $type = ($type === 'input') ? $field->attr('type') : $type;
+        $type = $input->getElementName();
+        $type = ($type === 'input') ? $input->attr('type') : $type;
 
         $method = 'wrapper'.$type;
 
         if (method_exists($this, $method)) {
-            return $this->$method($field);
+            return $this->$method($input);
         }
 
-        return $this->wrapperDefault($field);
+        return $this->wrapperDefault($input);
     }
 
-    public function add($key, FormElementInterface $value = null)
+    public function add(array $children)
     {
         $languages = array_keys(Config::get('app.locales'));
 
-        if (is_string($key)) {
-            $key = [$key => $value];
-        }
-
-        foreach ($key as $name => $field) {
-            $language = $field->attr('language');
+        foreach ($children as $name => $input) {
+            $language = $input->attr('language');
 
             if (empty($language)) {
-                parent::add($name, $field);
+                parent::add([$name => $input]);
                 continue;
             }
 
@@ -104,7 +93,7 @@ class Form extends \FormManager\Form {
                 $language = $languages;
             }
 
-            $this->setLanguage($name, $field, $languages);
+            $this->setLanguage($name, $input, $languages);
         }
 
         return $this;
@@ -126,24 +115,24 @@ class Form extends \FormManager\Form {
         return $input;
     }
 
-    protected function setLanguage($name, $field, $language)
+    protected function setLanguage($name, $input, $language)
     {
         if (is_array($language)) {
             foreach ($language as $each) {
-                $this->setLanguage($name, $field, $each);
+                $this->setLanguage($name, $input, $each);
             }
 
             return $this;
         }
 
-        $placeholder = $field->attr('placeholder');
+        $placeholder = $input->attr('placeholder');
 
-        $new = clone $field;
+        $new = clone $input;
 
         $new->attr('placeholder', $placeholder.' '.__('language-'.$language));
         $new->removeAttr('language');
 
-        return parent::add($name.'-'.$language, $new);
+        return parent::add([$name.'-'.$language => $new]);
     }
 
     protected function wrapperDefault($input)
@@ -154,8 +143,8 @@ class Form extends \FormManager\Form {
 
         $input->addClass('form-control');
 
-        $input->render(function ($field) {
-            return '<div class="form-group">'.$field->label.$field->input.'</div>';
+        $input->render(function ($input) {
+            return '<div class="form-group">'.$input.'</div>';
         });
     }
 
@@ -172,14 +161,14 @@ class Form extends \FormManager\Form {
     {
         $input->label($input->attr('placeholder'));
 
-        $input->render(function ($field) {
-            $editor = View::make('admin.molecules.wysiwyg')->render();
+        $input->render(function ($input) {
+            $editor = View::make('admin::molecules.wysiwyg')->render();
 
             $editor = str_replace('%id', uniqid(), $editor);
-            $editor = str_replace('%name', $field->attr('name'), $editor);
-            $editor = str_replace('%value', $field->val(), $editor);
+            $editor = str_replace('%name', $input->attr('name'), $editor);
+            $editor = str_replace('%value', $input->val(), $editor);
 
-            return '<div class="form-group">'.$field->label.$editor.'</div>';
+            return '<div class="form-group">'.$input->label.$editor.'</div>';
         });
     }
 
@@ -188,14 +177,14 @@ class Form extends \FormManager\Form {
         $input->label($input->attr('placeholder'));
         $input->addClass('form-control');
 
-        $input->render(function ($field) {
-            if (!($value = $field->attr('data-value'))) {
-                return '<div class="form-group">'.$field->label.$field->input.'</div>';
+        $input->render(function ($input) {
+            if (!($value = $input->attr('data-value'))) {
+                return '<div class="form-group">'.$input.'</div>';
             }
 
-            $html = $field->label.'<div class="input-group form-group">'.$field->input;
+            $html = $input->label.'<div class="input-group form-group">'.$input;
 
-            if ($value = $field->attr('data-value')) {
+            if ($value = $input->attr('data-value')) {
                 if (!strstr($value, '?')) {
                     $value = url('storage/resources/'.$value);
                 }
@@ -213,29 +202,25 @@ class Form extends \FormManager\Form {
     {
         $input->label($input->attr('placeholder'));
 
-        $input->render(function ($field) {
+        $input->render(function ($input) {
             return '<div class="checkbox">'
                 .'<label>'
-                .$field->input.$field->input->attr('placeholder')
+                .$input.$input->attr('placeholder')
                 .'</label></div>';
         });
     }
 
     public static function token()
     {
-        return Input::hidden()->name('_token')->value(csrf_token());
-    }
+        $token = F::hidden()->name('_token')->value(csrf_token());
+        $email = F::email()->name('fake_email')->addClass('required')->style('display: none');
+        $url = F::text()->name('fake_url')->addClass('required')->style('display: none');
 
-    public static function fake()
-    {
-        $email = Field::email()->attr('name', 'fake_email')->addClass('required');
-        $url = Field::text()->attr('name', 'fake_url')->addClass('required');
-
-        return '<div class="hidden">'.$email.$url.'</div>';
+        return $token.$email.$url;
     }
 
     public static function referer($url = '')
     {
-        return Input::hidden()->name('referer')->value(LInput::get('referer') ?: ($url ?: getenv('REQUEST_URI')));
+        return F::hidden()->name('referer')->value(Input::get('referer') ?: ($url ?: getenv('REQUEST_URI')));
     }
 }
