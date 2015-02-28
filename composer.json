@@ -12,7 +12,7 @@
     "require": {
         "php": ">=5.4",
         "almasaeed2010/adminlte": "2.*",
-        "form-manager/form-manager": "4.0.*",
+        "form-manager/form-manager": "master-dev",
         "gettext/gettext": "3.*",
         "laravel/packer": "master-dev",
         "laravel/meta": "master-dev"
