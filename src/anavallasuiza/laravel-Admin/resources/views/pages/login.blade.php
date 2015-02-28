@@ -1,4 +1,4 @@
-<?php use Admin\Http\Controllers\Forms\Form ?>
+<?php use Admin\Http\Controllers\Forms\Form; ?>
 
 @extends('admin::layouts.master')
 
@@ -11,8 +11,7 @@
             @include('admin::molecules.alert-flash')
 
             <form method="post" class="clearfix">
-                {!! Form::token() !!}
-                {!! Form::referer() !!}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
                 {!! $form->html() !!}
 

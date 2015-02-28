@@ -17,7 +17,7 @@
 </div>
 
 <form method="post">
-    {{ Form::token() }}
+    {!! Form::token() !!}
 
     <input type="hidden" name="action" value="cacheMemcached" />
 

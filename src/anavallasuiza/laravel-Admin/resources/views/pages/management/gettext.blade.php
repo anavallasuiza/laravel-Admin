@@ -3,7 +3,7 @@
 @section('content')
 
 <form id="form-gettext" method="post">
-    {{ Form::token() }}
+    {!! Form::token() !!}
 
     <input type="hidden" name="locale" value="{{ $current }}" />
 

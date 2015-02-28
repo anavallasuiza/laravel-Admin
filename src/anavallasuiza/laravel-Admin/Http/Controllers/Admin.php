@@ -8,6 +8,8 @@ class Admin extends Controller
 {
     public function error($exception, $code)
     {
+        Meta::meta('title', __('Error %s', $code));
+
         $page = ($code === 500) ? 500 : 404;
 
         return Response::view('admin.pages.'.$page, [
@@ -24,7 +26,7 @@ class Admin extends Controller
             return $action;
         }
 
-        Meta::meta('title', __('Login in your user area'));
+        Meta::meta('title', __('Login into admin area'));
 
         return self::view('login', [
             'form' => $form
@@ -39,6 +41,7 @@ class Admin extends Controller
 
     public function index()
     {
+        Meta::meta('title', __('Index'));
         return self::view('index');
     }
 

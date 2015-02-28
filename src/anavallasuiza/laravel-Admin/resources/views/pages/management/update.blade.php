@@ -3,7 +3,7 @@
 @section('content')
 
 <form class="text-center well submit-wait" data-message="{{ __('Please wait...') }}" method="post">
-    {{ Form::token() }}
+    {!! Form::token() !!}
 
     <input type="hidden" name="_action" value="update" />
 

@@ -1,4 +1,4 @@
-<?php use Admin\Library\Html ?>
+<?php use Admin\Library\Html; ?>
 
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10 no-js" lang="{{App::getLocale()}}"> <![endif]-->

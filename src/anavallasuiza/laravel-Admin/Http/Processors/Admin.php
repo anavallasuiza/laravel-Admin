@@ -54,7 +54,7 @@ class Admin extends Processor {
         $referer = Input::get('referer');
 
         if (empty($referer) || ($referer === getenv('REQUEST_URI'))) {
-            return Redirect::route('admin');
+            return Redirect::route('admin.index');
         } else {
             return Redirect::away($referer);
         }

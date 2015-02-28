@@ -212,15 +212,16 @@ class Form extends Base
 
     public static function token()
     {
-        $token = F::hidden()->name('_token')->value(csrf_token());
-        $email = F::email()->name('fake_email')->addClass('required')->style('display: none');
-        $url = F::text()->name('fake_url')->addClass('required')->style('display: none');
-
-        return $token.$email.$url;
+        return F::group([
+            '_token' => F::hidden()->value(csrf_token()),
+            'fake_email' => F::email()->addClass('required')->style('display: none'),
+            'fake_url' => F::email()->addClass('required')->style('display: none')
+        ]);
     }
 
     public static function referer($url = '')
     {
-        return F::hidden()->name('referer')->value(Input::get('referer') ?: ($url ?: getenv('REQUEST_URI')));
+        $referer = Input::get('referer') ?: ($url ?: getenv('REQUEST_URI'));
+        return F::hidden()->name('referer')->value($referer);
     }
 }

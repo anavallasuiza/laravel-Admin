@@ -5,7 +5,7 @@
 <h4>{{ __('Used Files Cache') }}</h4>
 
 <form method="post">
-    {{ Form::token() }}
+    {!! Form::token() !!}
 
     <table class="table">
         @foreach ($folders as $folder)

@@ -1,8 +1,12 @@
 <?php namespace Admin\Console\Commands;
 
+use Exception;
+
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+
+use Hash;
 
 use Admin\Models;
 
@@ -52,11 +56,11 @@ class UserNew extends Command {
             Models\User::create([
                 'name' => $data['name'],
                 'user' => $data['user'],
-                'password' => \Hash::make($data['password']),
+                'password' => Hash::make($data['password']),
                 'admin' => 1,
                 'enabled' => 1
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage());
             return false;
         }

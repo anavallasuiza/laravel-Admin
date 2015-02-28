@@ -14,8 +14,8 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="tab-data">
-                {{ Form::token() }}
-                {{ $form->html() }}
+                {!! Form::token() !!}
+                {!! $form->html() !!}
             </div>
 
             @if ($row->id)

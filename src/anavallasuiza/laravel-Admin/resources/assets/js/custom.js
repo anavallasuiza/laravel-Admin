@@ -130,7 +130,7 @@ $(function() {
         });
     };
 
-    $('.right-side').css('min-height', $('.left-side > .sidebar').height());
+    $('.content-wrapper').css('min-height', $('.main-sidebar').height());
 
     $('[data-toggle="offcanvas"]').on('click', function(e) {
         e.preventDefault();
