@@ -12,7 +12,7 @@ var paths = {
         'css': './src/anavallasuiza/laravel-Admin/resources/assets/css/',
         'js': './src/anavallasuiza/laravel-Admin/resources/assets/js/',
         'vendor': './assets/vendor/',
-        'adminlte': '../../almasaeed2010/adminlte/'
+        'adminlte': 'vendor/almasaeed2010/adminlte/'
     },
     'to': {
         'build': './assets/build/',
@@ -113,4 +113,4 @@ gulp.task('version', ['directories', 'css', 'js'], function() {
 });
 
 // Launch
-gulp.task('build', ['directories', 'css', 'js', 'version']);
+gulp.task('default', ['directories', 'css', 'js', 'version']);

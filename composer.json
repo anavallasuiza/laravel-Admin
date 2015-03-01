@@ -9,6 +9,9 @@
             "email": "lito@eordes.com"
         }
     ],
+    "config": {
+        "vendor-dir": "vendor"
+    },
     "require": {
         "php": ">=5.4",
         "almasaeed2010/adminlte": "2.*",
@@ -21,11 +24,6 @@
         "psr-4": {
             "Admin\\": "src/anavallasuiza/laravel-Admin/"
         }
-    },
-    "scripts": {
-        "post-update-cmd": [
-            "php artisan admin:publish:assets"
-        ]
     },
     "minimum-stability": "dev"
 }
