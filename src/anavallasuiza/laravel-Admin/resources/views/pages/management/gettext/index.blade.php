@@ -10,7 +10,7 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             @foreach ($locales as $locale)
-            <li {{ ($locale === $current) ? 'class="active"' : '' }}><a href="{{ route('admin.management.gettext.index', $locale) }}">{{ $locale }}</a></li>
+            <li {!! ($locale === $current) ? 'class="active"' : '' !!}><a href="{{ route('admin.management.gettext.index', $locale) }}">{{ $locale }}</a></li>
             @endforeach
         </ul>
 
@@ -63,15 +63,15 @@
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} name="_action" value="gettext" class="btn btn-success">
+            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="save" class="btn btn-success">
                 {{ __('Save') }}
             </button>
 
-            <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} name="refresh" value="true" class="btn btn-primary">
+            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="refresh" value="true" class="btn btn-primary">
                 {{ __('Search for new translations') }}
             </button>
 
-            <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} name="_action" value="gettextDownload" class="btn btn-primary">
+            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="download" class="btn btn-primary">
                 {{ __('Download translations') }}
             </button>
         </div>

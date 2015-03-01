@@ -129,6 +129,10 @@ abstract class Controller extends BaseController
             return null;
         }
 
+        if (is_array($action)) {
+            return in_array($_action, $action, true) ? $_action : null;
+        }
+
         return (($action === 'AUTO') || ($action === $_action)) ? $_action : null;
     }
 

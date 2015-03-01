@@ -27,11 +27,11 @@ $(function() {
     };
 
     var gettextAdminShow = function ($group, text) {
-        return (!$gettextAdmin.is(':checked') || (text.indexOf('/admin/') !== -1) || text.match(common));
+        return (!$gettextAdmin.is(':checked') || (text.indexOf('/laravel-admin/') !== -1) || text.match(common));
     };
 
     var gettextWebShow = function ($group, text) {
-        return (!$gettextWeb.is(':checked') || (text.indexOf('/admin/') === -1));
+        return (!$gettextWeb.is(':checked') || (text.indexOf('/laravel-admin/') === -1));
     };
 
     var gettextEmptyShow = function ($group, text) {

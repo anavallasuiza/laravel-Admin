@@ -8,13 +8,7 @@ class Gettext extends Controller
 {
     public function index($locale)
     {
-        $action = Input::get('_action');
-
-        if (empty($action) || !in_array($action, [__FUNCTION__, 'gettextDownload'], true)) {
-            $action = null;
-        }
-
-        if ($action && is_object($action = $this->action($action))) {
+        if (is_object($action = $this->action(['save', 'download']))) {
             return $action;
         }
 
@@ -23,6 +17,8 @@ class Gettext extends Controller
         if (!in_array($locale, $locales, true)) {
             return Redirect::route('admin.management.gettext.index', $locales[0]);
         }
+
+        Library\Gettext::setDirs([app_path(), base_path('vendor/anavallasuiza/laravel-admin')]);
 
         $entries = Library\Gettext::get($locale, Input::get('refresh'));
         $base = base_path();

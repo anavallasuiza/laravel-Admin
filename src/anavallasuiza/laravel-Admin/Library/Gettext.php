@@ -5,6 +5,8 @@ use App, Config, Input, Redirect, Session;
 use Gettext\Extractors, Gettext\Generators, Gettext\Translations, Gettext\Translator;
 
 class Gettext {
+    private static $dirs = [];
+
     private static function base($locale)
     {
         return str_replace('%s', $locale, storage_path('locale/%s/LC_MESSAGES/messages.'));
@@ -40,8 +42,17 @@ class Gettext {
         return $entries;
     }
 
-    private static function scan(array $dirs)
+    public static function setDirs(array $dirs)
     {
+        self::$dirs = $dirs;
+    }
+
+    private static function scan()
+    {
+        if (empty(self::$dirs)) {
+            throw new Exception(__('You must define directories to scan.'));
+        }
+
         Extractors\PhpCode::$functions = [
             '__' => '__',
             '_' => '__'
@@ -49,7 +60,7 @@ class Gettext {
 
         $entries = new Translations;
 
-        foreach ($dirs as $dir) {
+        foreach (self::$dirs as $dir) {
             if (!is_dir($dir)) {
                 throw new Exception(__('Folder %s not exists. Gettext scan aborted.', $dir));
             }
