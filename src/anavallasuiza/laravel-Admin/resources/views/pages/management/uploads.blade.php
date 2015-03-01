@@ -33,7 +33,7 @@
 
 <ol class="breadcrumb">
     <li>
-        <a href="{{ route('admin::management.uploads') }}">
+        <a href="{{ route('admin.management.uploads') }}">
             <i class="fa fa-home"></i>
             {{ __('Home') }}
         </a>
@@ -41,7 +41,7 @@
 
     @foreach ($location as $path)
     <li>
-        <a href="{{ route('admin::management.uploads') }}?dir={{ $path['dir'] }}">
+        <a href="{{ route('admin.management.uploads') }}?dir={{ $path['dir'] }}">
             <i class="fa fa-page"></i>
             {{ $path['name'] }}
         </a>

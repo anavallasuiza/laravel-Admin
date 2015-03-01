@@ -21,42 +21,42 @@
             </a>
 
             <ul class="treeview-menu">
-                <li{{ ($ROUTE === 'users') ? ' class="active"' : '' }}>
+                <li{!! ($ROUTE === 'users') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.users.index') }}">
                         <i class="fa fa-users"></i>
                         {{ __('Users') }}
                     </a>
                 </li>
 
-                <li{{ ($ROUTE === 'gettext') ? ' class="active"' : '' }}>
-                    <a href="{{ route('admin.management.gettext', 'gl') }}">
+                <li{!! ($ROUTE === 'gettext') ? ' class="active"' : '' !!}>
+                    <a href="{{ route('admin.management.gettext.index', 'gl') }}">
                         <i class="fa fa-font"></i>
                         {{ __('Gettext') }}
                     </a>
                 </li>
 
-                <li{{ ($ROUTE === 'uploads') ? ' class="active"' : '' }}>
-                    <a href="{{ route('admin.management.uploads') }}">
+                <li{!! ($ROUTE === 'uploads') ? ' class="active"' : '' !!}>
+                    <a href="{{ route('admin.management.uploads.index') }}">
                         <i class="fa fa-upload"></i>
                         {{ __('Uploads') }}
                     </a>
                 </li>
 
-                <li{{ ($ROUTE === 'update') ? ' class="active"' : '' }}>
-                    <a href="{{ route('admin.management.update') }}">
+                <li{!! ($ROUTE === 'update') ? ' class="active"' : '' !!}>
+                    <a href="{{ route('admin.management.update.index') }}">
                         <i class="fa fa-refresh"></i>
                         {{ __('Update') }}
                     </a>
                 </li>
 
-                <li{{ ($ROUTE === 'logs') ? ' class="active"' : '' }}>
-                    <a href="{{ route('admin.management.logs') }}">
+                <li{!! ($ROUTE === 'logs') ? ' class="active"' : '' !!}>
+                    <a href="{{ route('admin.management.logs.index') }}">
                         <i class="fa fa-file-text"></i>
                         {{ __('Logs') }}
                     </a>
                 </li>
 
-                <li{{ ($ROUTE === 'cache') ? ' class="active"' : '' }}>
+                <li{!! ($ROUTE === 'cache') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.cache.views') }}">
                         <i class="fa fa-floppy-o"></i>
                         {{ __('Cache') }}

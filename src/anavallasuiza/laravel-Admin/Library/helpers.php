@@ -28,3 +28,8 @@ function slug($string)
 
     return strtolower($string);
 }
+
+function token()
+{
+    return (new Admin\Http\Controllers\Forms\Form)->token();
+}

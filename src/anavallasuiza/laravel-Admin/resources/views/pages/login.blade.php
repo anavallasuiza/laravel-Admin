@@ -11,12 +11,11 @@
             @include('admin::molecules.alert-flash')
 
             <form method="post" class="clearfix">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-
+                {!! $form->token() !!}
                 {!! $form->html() !!}
 
                 <div class="pull-right">
-                    <button type="submit" name="_action" value="login" class="btn btn-primary btn-block btn-flat">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">
                         {{ __('Sign me in') }}
                     </button>
                 </div>

@@ -3,8 +3,8 @@
 use Illuminate\Routing\Controller as BaseController;
 
 use Exception;
-use App, Auth, Input, Request, Response, Session, View;
-use Gettext, Meta;
+use App, Auth, Config, Input, Request, Response, Session, View;
+use Admin\Library, Meta;
 
 abstract class Controller extends BaseController
 {
@@ -13,9 +13,11 @@ abstract class Controller extends BaseController
 
     public function __construct()
     {
-        Gettext::load();
+        Library\Gettext::load();
 
         Meta::title(__('Admin Area'));
+
+        Config::set('auth', config('admin.auth'));
 
         View::share([
             'MODEL' => Request::segment(2),
@@ -31,44 +33,20 @@ abstract class Controller extends BaseController
         return view('admin::pages.'.$template, $params);
     }
 
-    public function indexBasic($list, $template)
+    protected function indexView($model, $fields, $template)
     {
-        if ($search = Input::get('search')) {
-            $list->search($search);
-        }
-
-        if (is_object($action = $this->action('downloadCSV', null, $list))) {
-            return $action;
-        }
-
-        $paginate = Libs\Utils::paginate('rows', [20, 50, 100, 200, -1]);
-
-        if (strstr($template, '\\')) {
-            $template = strtolower(substr(strrchr($template, '\\'), 1));
-        }
-
-        return self::view($template.'.index', [
-            'list' => ($paginate ? $list->paginate($paginate) : $list->get()),
-            'paginate' => $paginate,
-            'search' => $search
-        ]);
-    }
-
-    public function indexFilter($model, $fields, $template)
-    {
-        $filter = Libs\Utils::filter($fields);
-        $model = App::make('\\App\\Models\\'.$model);
-        $list = $model::filter($filter);
+        $filter = self::filter($fields);
+        $list = $model->filter($filter);
 
         if (is_object($action = $this->action('downloadCSV', null, $list))) {
             return $action;
         }
 
         $mode = ((explode(' ', $filter['sort'])[1] === 'DESC') ? 'ASC' : 'DESC');
-        $paginate = Libs\Utils::paginate('rows', [20, 50, 100, 200, -1]);
+        $paginate = self::paginate('rows', [20, 50, 100, 200, -1]);
 
         if (strstr($template, '\\')) {
-            $template = strtolower(substr(strrchr($template, '\\'), 1));
+            $template = strtolower(str_replace([__NAMESPACE__.'\\', '\\'], ['', '.'], $template));
         }
 
         return self::view($template.'.index', [
@@ -79,12 +57,64 @@ abstract class Controller extends BaseController
         ]);
     }
 
+    public static function filter(array $fields)
+    {
+        $all = Input::all();
+
+        foreach (['f-search-c', 'f-search-q', 'f-sort'] as $field) {
+            if (!isset($all[$field]) || (strlen($all[$field]) === 0)) {
+                $all[$field] = '';
+            }
+        }
+
+        $f = [];
+
+        if ((strlen($all['f-search-c']) === 0) || !in_array($all['f-search-c'], $fields, true)) {
+            $f['search-c'] = '';
+        } else {
+            $f['search-c'] = $all['f-search-c'];
+        }
+
+        if (strlen($all['f-search-q']) === 0) {
+            $f['search-q'] = '';
+        } else {
+            $f['search-q'] = $all['f-search-q'];
+        }
+
+        if (empty($all['f-sort'])) {
+            $f['sort'] = $fields[0].' DESC';
+        } else {
+            list($field, $mode) = explode(' ', $all['f-sort']);
+
+            if (in_array($field, $fields, true)) {
+                $f['sort'] = $field.' '.(($mode === 'DESC') ? 'DESC' : 'ASC');
+            } else {
+                $f['sort'] = $fields[0].' DESC';
+            }
+        }
+
+        return $f;
+    }
+
+    public static function paginate($name, array $valid = [], $default = 20)
+    {
+        $value = (int)Input::get($name);
+
+        if (empty($value) || !in_array($value, $valid, true)) {
+            return $default;
+        } elseif ($value === -1) {
+            return null;
+        } else {
+            return $value;
+        }
+    }
+
     protected function getActionClass()
     {
         return str_replace('\\Controllers', '\\Processors', get_class($this));
     }
 
-    protected function action($action, $form = null, array $params = [])
+    protected function action($action, $form = null, $params = null)
     {
         if (!($action = $this->checkAction($action))) {
             return null;
@@ -102,7 +132,7 @@ abstract class Controller extends BaseController
         return (($action === 'AUTO') || ($action === $_action)) ? $_action : null;
     }
 
-    protected function makeAction($action, $form = null, array $params = [])
+    protected function makeAction($action, $form = null, $params = null)
     {
         try {
             return App::make($this->getActionClass())->$action($form, $params);

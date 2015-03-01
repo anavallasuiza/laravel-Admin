@@ -15,8 +15,8 @@
             <td>{{ $row->created_at }}</td>
 
             @if ($row->related_table)
-            <td><a href="{{ route('admin::'.$row->related_table.'.index') }}">{{ $row->related_table }}</a></td>
-            <td><a href="{{ route('admin::'.$row->related_table.'.edit', $row->related_id) }}">{{ $row->related_id }}</td>
+            <td><a href="{{ route('admin.'.$row->related_table.'.index') }}">{{ $row->related_table }}</a></td>
+            <td><a href="{{ route('admin.'.$row->related_table.'.edit', $row->related_id) }}">{{ $row->related_id }}</td>
             @else
             <td>&nbsp;</td>
             <td>&nbsp;</td>

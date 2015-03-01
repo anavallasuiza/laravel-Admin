@@ -1,9 +1,18 @@
 <?php namespace Admin\Http\Processors;
 
 use ErrorException;
-use Input, Request;
+use Auth, Input, Request, Session;
 
 abstract class Processor {
+    protected $user;
+    protected $locale;
+
+    public function __construct()
+    {
+        $this->user = Auth::user();
+        $this->locale = Session::get('locale');
+    }
+
     protected function check($function, $form = null)
     {
         if (($function !== 'login') && empty($this->user)) {

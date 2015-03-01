@@ -4,7 +4,7 @@
 <div class="box">
     <div class="box-body">
         <form method="get" class="form-group">
-            <input type="search" name="search" value="{{ $search }}" class="form-control" placeholder="{{ __('Search') }}" />
+            <input type="search" name="search" value="{{ Input::get('search-q') }}" class="form-control" placeholder="{{ __('Search') }}" />
         </form>
 
         <table class="table table-hover">
@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ $row->id }}</td>
                     <td>
-                        <a href="{{ route('admin::management.users.edit', $row->id) }}">
+                        <a href="{{ route('admin.management.users.edit', $row->id) }}">
                             {{ $row->name }}
                         </a>
                     </td>
@@ -40,7 +40,7 @@
         </table>
 
         <div class="box-footer clearfix">
-            <a href="{{ route('admin::management.users.edit') }}" class="pull-right btn btn-success">
+            <a href="{{ route('admin.management.users.edit') }}" class="pull-right btn btn-success">
                 {{ __('New') }}
             </a>
         </div>

@@ -14,7 +14,7 @@
 
         <div class="tab-content">
             <div class="tab-pane active" id="tab-data">
-                {!! Form::token() !!}
+                {!! $form->token() !!}
                 {!! $form->html() !!}
             </div>
 

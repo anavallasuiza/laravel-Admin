@@ -148,6 +148,11 @@ class Form extends Base
         });
     }
 
+    protected function wrapperHidden($input)
+    {
+        return;
+    }
+
     protected function wrapperTextarea($input)
     {
         if ($input->attr('class') === 'wysiwyg') {
@@ -182,7 +187,7 @@ class Form extends Base
                 return '<div class="form-group">'.$input.'</div>';
             }
 
-            $html = $input->label.'<div class="input-group form-group">'.$input;
+            $html = $input->label.'<div class="input-group form-group">'.$input->input;
 
             if ($value = $input->attr('data-value')) {
                 if (!strstr($value, '?')) {
@@ -205,12 +210,12 @@ class Form extends Base
         $input->render(function ($input) {
             return '<div class="checkbox">'
                 .'<label>'
-                .$input.$input->attr('placeholder')
+                .$input->input.$input->attr('placeholder')
                 .'</label></div>';
         });
     }
 
-    public static function token()
+    public function token()
     {
         return F::group([
             '_token' => F::hidden()->value(csrf_token()),
@@ -219,7 +224,7 @@ class Form extends Base
         ]);
     }
 
-    public static function referer($url = '')
+    public function referer($url = '')
     {
         $referer = Input::get('referer') ?: ($url ?: getenv('REQUEST_URI'));
         return F::hidden()->name('referer')->value($referer);

@@ -7,7 +7,7 @@ class Admin extends Form
     public function login()
     {
         return $this->add([
-//            '_action' => F::hidden()->val('login'),
+            '_action' => F::hidden()->val('login'),
 
             'user' => F::text()->required()->attr([
                 'placeholder' => __('Your user'),
