@@ -1,6 +1,6 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Config, Input, Redirect;
+use Input, Redirect;
 use Admin\Http\Controllers\Controller;
 use Admin\Library, Meta;
 
@@ -12,7 +12,7 @@ class Gettext extends Controller
             return $action;
         }
 
-        $locales = array_keys(Config::get('app.locales'));
+        $locales = array_keys(config('app.locales'));
 
         if (!in_array($locale, $locales, true)) {
             return Redirect::route('admin.management.gettext.index', $locales[0]);
