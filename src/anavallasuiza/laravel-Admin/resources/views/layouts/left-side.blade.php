@@ -6,7 +6,9 @@
             <input type="search" placeholder="{{ __('Filter') }}" class="form-control" />
 
             <span class="input-group-btn">
-                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                <button type="submit" name="seach" id="search-btn" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                </button>
             </span>
         </div>
     </form>

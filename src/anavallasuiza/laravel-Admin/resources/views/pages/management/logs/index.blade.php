@@ -7,6 +7,7 @@
         <div class="col-sm-4 form-group">
             <select name="log" class="form-control" data-change-submit>
                 <option value="">{{ __('Choose a log') }}</option>
+
                 @foreach ($files as $row)
                 <option value="{{ $row }}" {{ ($row === $log) ? 'selected' : '' }}>{{ $row }}</option>
                 @endforeach
