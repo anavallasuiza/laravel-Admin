@@ -223,7 +223,7 @@ $(function() {
                     checkbox = $this.is(':checkbox') || $this.is(':radio');
 
                 if (!checkbox || (checkbox && $this.is(':checked'))) {
-                    inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.attr('value') + '" />';
+                    inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.val() + '" />';
                 }
             });
 
