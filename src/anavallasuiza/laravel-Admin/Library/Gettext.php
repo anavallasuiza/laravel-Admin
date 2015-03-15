@@ -1,10 +1,17 @@
 <?php namespace Admin\Library;
 
 use Exception;
-use App, Config, Input, Redirect, Session;
-use Gettext\Extractors, Gettext\Generators, Gettext\Translations, Gettext\Translator;
+use App;
+use Config;
+use Input;
+use Session;
+use Gettext\Extractors;
+use Gettext\Generators;
+use Gettext\Translations;
+use Gettext\Translator;
 
-class Gettext {
+class Gettext
+{
     private static $dirs = [];
 
     private static function base($locale)
@@ -55,10 +62,10 @@ class Gettext {
 
         Extractors\PhpCode::$functions = [
             '__' => '__',
-            '_' => '__'
+            '_' => '__',
         ];
 
-        $entries = new Translations;
+        $entries = new Translations();
 
         foreach (self::$dirs as $dir) {
             if (!is_dir($dir)) {
@@ -149,10 +156,10 @@ class Gettext {
         } elseif (is_file($file.'.po')) {
             $translations = Translations::fromPoFile($file.'.po');
         } else {
-            $translations = new Translations;
+            $translations = new Translations();
         }
 
-        Translator::initGettextFunctions((new Translator)->loadTranslations($translations));
+        Translator::initGettextFunctions((new Translator())->loadTranslations($translations));
     }
 
     public static function get($locale, $refresh = true)
@@ -178,7 +185,7 @@ class Gettext {
             return true;
         }
 
-        $entries = self::getCache($locale) ?: (new Translations);
+        $entries = self::getCache($locale) ?: (new Translations());
 
         foreach ($translations as $msgid => $msgstr) {
             $msgid = urldecode($msgid);

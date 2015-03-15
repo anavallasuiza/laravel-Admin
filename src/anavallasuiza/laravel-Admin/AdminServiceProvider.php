@@ -1,8 +1,6 @@
 <?php namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
-use Meta;
-use Packer;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -15,8 +13,6 @@ class AdminServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -36,8 +32,6 @@ class AdminServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {

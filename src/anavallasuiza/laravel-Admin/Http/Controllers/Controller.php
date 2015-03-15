@@ -1,10 +1,17 @@
 <?php namespace Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-
 use Exception;
-use App, Auth, Config, Input, Request, Response, Session, View;
-use Admin\Library, Meta;
+use App;
+use Auth;
+use Config;
+use Input;
+use Request;
+use Response;
+use Session;
+use View;
+use Admin\Library;
+use Meta;
 
 abstract class Controller extends BaseController
 {
@@ -24,7 +31,7 @@ abstract class Controller extends BaseController
             'ROUTE' => (Request::segment(3) ?: 'index'),
             'LOCALES' => array_keys(config('app.locales')),
             'LOCALE' => ($this->locale = Session::get('locale')),
-            'I' => ($this->user = Auth::user())
+            'I' => ($this->user = Auth::user()),
         ]);
     }
 
@@ -53,7 +60,7 @@ abstract class Controller extends BaseController
             'list' => ($paginate ? $list->paginate($paginate) : $list->get()),
             'paginate' => $paginate,
             'filter' => $filter,
-            'mode' => $mode
+            'mode' => $mode,
         ]);
     }
 
@@ -98,12 +105,12 @@ abstract class Controller extends BaseController
 
     public static function paginate($name, array $valid = [], $default = 20)
     {
-        $value = (int)Input::get($name);
+        $value = (int) Input::get($name);
 
         if (empty($value) || !in_array($value, $valid, true)) {
             return $default;
         } elseif ($value === -1) {
-            return null;
+            return;
         } else {
             return $value;
         }
@@ -117,7 +124,7 @@ abstract class Controller extends BaseController
     protected function action($action, $form = null, $params = null)
     {
         if (!($action = $this->checkAction($action))) {
-            return null;
+            return;
         }
 
         return $this->makeAction($action, $form, $params);
@@ -126,7 +133,7 @@ abstract class Controller extends BaseController
     protected function checkAction($action)
     {
         if (!Request::isMethod('post') || empty($_action = Input::get('_action'))) {
-            return null;
+            return;
         }
 
         if (is_array($action)) {
@@ -159,7 +166,7 @@ abstract class Controller extends BaseController
 
         Session::flash('flash-message', [
             'message' => $message,
-            'status' => 'danger'
+            'status' => 'danger',
         ]);
 
         return false;

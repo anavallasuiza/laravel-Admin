@@ -1,7 +1,6 @@
 <?php
 
-Route::filter('admin.logged', function()
-{
+Route::filter('admin.logged', function () {
     Config::set('auth', config('admin.auth'));
 
     if (!Auth::guest()) {
@@ -15,8 +14,7 @@ Route::filter('admin.logged', function()
     }
 });
 
-Route::filter('admin.admin', function()
-{
+Route::filter('admin.admin', function () {
     if (Auth::user()->admin) {
         return;
     }

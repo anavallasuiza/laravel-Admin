@@ -1,8 +1,8 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Input, Redirect;
+use Input;
 use Admin\Http\Controllers\Controller;
-use Admin\Library, Meta;
+use Meta;
 
 class Uploads extends Controller
 {
@@ -42,13 +42,13 @@ class Uploads extends Controller
                 $directories[] = [
                     'dir' => base64_encode($dir.$each),
                     'slug' => base64_encode($each),
-                    'name' => $each
+                    'name' => $each,
                 ];
             } else {
                 $files[] = [
                     'slug' => base64_encode($each),
                     'url' => asset($public.$each),
-                    'name' => $each
+                    'name' => $each,
                 ];
             }
         }
@@ -59,14 +59,14 @@ class Uploads extends Controller
         foreach (explode('/', $dir) as $path) {
             $location[] = [
                 'dir' => base64_encode($acum .= $path.'/'),
-                'name' => $path
+                'name' => $path,
             ];
         }
 
         return self::view('management.uploads.index', [
             'location' => $location,
             'directories' => $directories,
-            'files' => $files
+            'files' => $files,
         ]);
     }
 }

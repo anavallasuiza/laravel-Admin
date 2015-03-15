@@ -1,10 +1,14 @@
 <?php namespace Admin\Http\Processors\Management;
 
-use Auth, File, Input, Session;
+use Auth;
+use File;
+use Input;
+use Session;
 use Admin\Http\Processors\Processor;
-use Admin\Library, Admin\Models;
+use Admin\Models;
 
-class Uploads extends Processor {
+class Uploads extends Processor
+{
     public function fileNew($form, $uploads)
     {
         $files = array_filter(Input::file('files'));
@@ -23,14 +27,14 @@ class Uploads extends Processor {
                     'created_at' => date('Y-m-d H:i:s'),
                     'action' => __FUNCTION__,
                     'description' => (str_replace(public_path(), '', $uploads).$name),
-                    'users_id' => Auth::user()->id
+                    'users_id' => Auth::user()->id,
                 ]);
             }
         }
 
         Session::flash('flash-message', [
             'message' => __('Files uploaded successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return true;
@@ -49,13 +53,13 @@ class Uploads extends Processor {
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id
+                'users_id' => Auth::user()->id,
             ]);
         }
 
         Session::flash('flash-message', [
             'message' => __('File deleted successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return $success;
@@ -76,13 +80,13 @@ class Uploads extends Processor {
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id
+                'users_id' => Auth::user()->id,
             ]);
         }
 
         Session::flash('flash-message', [
             'message' => __('Directory created successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return $success;
@@ -101,13 +105,13 @@ class Uploads extends Processor {
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id
+                'users_id' => Auth::user()->id,
             ]);
         }
 
         Session::flash('flash-message', [
             'message' => __('Directory deleted successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return $success;

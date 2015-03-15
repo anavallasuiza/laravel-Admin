@@ -4,18 +4,19 @@ use Admin\Http\Processors\Processor;
 use Admin\Library;
 use Session;
 
-class Update extends Processor {
+class Update extends Processor
+{
     private function checkBin($bin)
     {
         set_time_limit(0);
 
-        if ((new Library\Shell)->exists($bin)) {
+        if ((new Library\Shell())->exists($bin)) {
             return true;
         }
 
         Session::flash('flash-message', [
             'message' => __('%s command not exists', $bin),
-            'status' => 'danger'
+            'status' => 'danger',
         ]);
 
         return false;
@@ -31,17 +32,17 @@ class Update extends Processor {
         $base .= 'export HOME="'.base_path().'"; ';
         $base .= 'export LC_ALL=en_US.UTF-8; ';
 
-        $log = end((new Library\Shell)->exec($base.$cmd)->getLog());
+        $log = end((new Library\Shell())->exec($base.$cmd)->getLog());
 
         if ($log['success']) {
             Session::flash('flash-message', [
                 'status' => 'success',
-                'message' => __('Environment updated successfully')
+                'message' => __('Environment updated successfully'),
             ]);
         } else {
             Session::flash('flash-message', [
                 'status' => 'danger',
-                'message' => __('Error updating environment')
+                'message' => __('Error updating environment'),
             ]);
         }
 

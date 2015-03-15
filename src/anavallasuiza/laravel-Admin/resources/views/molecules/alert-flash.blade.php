@@ -1,4 +1,6 @@
-<?php if (!($flash = Session::get('flash-message'))) return; ?>
+<?php if (!($flash = Session::get('flash-message'))) {
+    return;
+} ?>
 
 @include('admin::molecules.alert', [
     'status' => $flash['status'],

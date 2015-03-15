@@ -1,6 +1,7 @@
 <?php namespace Admin\Models;
 
-class Session extends Model {
+class Session extends Model
+{
     protected $table = 'admin_sessions';
     protected $guarded = ['id'];
 

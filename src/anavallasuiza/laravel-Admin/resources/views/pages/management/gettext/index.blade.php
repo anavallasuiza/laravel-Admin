@@ -46,13 +46,15 @@
                 <div class="form-group gettext-group">
                     <label for="entry-{{ ++$i }}">{{{ $entry->getOriginal() }}}</label>
 
-                    <?php if ($entry->lines) { ?>
+                    <?php if ($entry->lines) {
+    ?>
                     <a href="#" class="fa fa-info-circle show-references"></a>
 
                     <ul class="list-unstyled references text-muted">
                         <li>{{ implode('</li><li>', $entry->lines) }}</li>
                     </ul>
-                    <?php } ?>
+                    <?php 
+} ?>
 
                     <input id="entry-{{ $i }}" type="text" name="translations[{{{ $entry->getOriginal() }}}]" value="{{{ $entry->getTranslation() }}}" class="form-control" />
                 </div>

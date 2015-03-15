@@ -1,8 +1,9 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Input, Redirect;
+use Input;
 use Admin\Http\Controllers\Controller;
-use Admin\Library, Meta;
+use Admin\Library;
+use Meta;
 
 class Logs extends Controller
 {
@@ -17,7 +18,7 @@ class Logs extends Controller
             'contents' => $Logs->getContents(),
             'log' => (isset($data['log']) ? $data['log'] : ''),
             'raw' => (isset($data['raw']) ? $data['raw'] : ''),
-            'date' => (isset($data['date']) ? $data['date'] : 'day')
+            'date' => (isset($data['date']) ? $data['date'] : 'day'),
         ]);
     }
 }

@@ -1,9 +1,13 @@
 <?php namespace Admin\Http\Processors;
 
 use ErrorException;
-use Auth, Input, Request, Session;
+use Auth;
+use Input;
+use Request;
+use Session;
 
-abstract class Processor {
+abstract class Processor
+{
     protected $user;
     protected $locale;
 
@@ -22,7 +26,7 @@ abstract class Processor {
         $post = Input::all();
 
         if (empty($post['_action']) || ($post['_action'] !== $function)) {
-            return null;
+            return;
         }
 
         if (self::isFake($post, $form)) {
@@ -79,7 +83,7 @@ abstract class Processor {
             'scooter','slurp','sogou web spider','spade','tecnoseek','technoratisnoop','teoma',
             'tweetmemebot','twiceler','twitturls','url_spider_sql','webalta crawler','webbug',
             'webfindbot','zyborg','alexa','appie','crawler','froogle','girafabot','inktomi',
-            'looksmart','msnbot','rabaz','www.galaxy.com','rogerbot'
+            'looksmart','msnbot','rabaz','www.galaxy.com','rogerbot',
         ];
 
         $agent = strtolower($_SERVER['HTTP_USER_AGENT']);

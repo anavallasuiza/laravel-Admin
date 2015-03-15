@@ -2,8 +2,9 @@
 
 use FormManager\Builder as F;
 use FormManager\Containers\Form as Base;
-
-use Config, Input, View;
+use Config;
+use Input;
+use View;
 use Admin\Library;
 
 class Form extends Base
@@ -13,7 +14,7 @@ class Form extends Base
         return $this->method('post');
     }
 
-    public function load($value = NULL, $file = NULL)
+    public function load($value = null, $file = null)
     {
         $value = is_object($value) ? $value->toArray() : $value;
 
@@ -220,13 +221,14 @@ class Form extends Base
         return F::group([
             '_token' => F::hidden()->value(csrf_token()),
             'fake_email' => F::email()->addClass('required')->style('display: none'),
-            'fake_url' => F::email()->addClass('required')->style('display: none')
+            'fake_url' => F::email()->addClass('required')->style('display: none'),
         ]);
     }
 
     public function referer($url = '')
     {
         $referer = Input::get('referer') ?: ($url ?: getenv('REQUEST_URI'));
+
         return F::hidden()->name('referer')->value($referer);
     }
 }

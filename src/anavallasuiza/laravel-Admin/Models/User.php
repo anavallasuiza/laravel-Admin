@@ -3,7 +3,8 @@
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User extends Model implements AuthenticatableContract {
+class User extends Model implements AuthenticatableContract
+{
     use Authenticatable;
 
     /**
@@ -26,5 +27,4 @@ class User extends Model implements AuthenticatableContract {
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
 }

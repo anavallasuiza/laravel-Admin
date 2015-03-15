@@ -103,7 +103,7 @@ class Logs
                 'file' => '',
                 'line' => '',
                 'short' => '',
-                'details' => ''
+                'details' => '',
             ];
         }
 

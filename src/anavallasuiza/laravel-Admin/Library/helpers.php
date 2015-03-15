@@ -31,5 +31,5 @@ function slug($string)
 
 function token()
 {
-    return (new Admin\Http\Controllers\Forms\Form)->token();
+    return (new Admin\Http\Controllers\Forms\Form())->token();
 }

@@ -1,8 +1,8 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Input, Redirect;
+use Input;
 use Admin\Http\Controllers\Controller;
-use Admin\Library, Meta;
+use Meta;
 
 class Update extends Controller
 {
@@ -16,7 +16,7 @@ class Update extends Controller
 
         return self::view('management.update.index', [
             'action' => Input::get('_action'),
-            'response' => $action
+            'response' => $action,
         ]);
     }
 }

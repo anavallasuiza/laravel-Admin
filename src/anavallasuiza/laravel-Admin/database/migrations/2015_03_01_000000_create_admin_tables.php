@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateAdminTables extends Migration
@@ -14,8 +13,7 @@ class CreateAdminTables extends Migration
 
     public function up()
     {
-        Schema::create('admin_logs', function($table)
-        {
+        Schema::create('admin_logs', function ($table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -30,8 +28,7 @@ class CreateAdminTables extends Migration
             $table->integer('users_id')->unsigned();
         });
 
-        Schema::create('admin_sessions', function($table)
-        {
+        Schema::create('admin_sessions', function ($table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -45,8 +42,7 @@ class CreateAdminTables extends Migration
             $table->integer('users_id')->unsigned();
         });
 
-        Schema::create('admin_users', function($table)
-        {
+        Schema::create('admin_users', function ($table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -63,16 +59,14 @@ class CreateAdminTables extends Migration
             $table->timestamps();
         });
 
-        Schema::table('admin_logs', function($table)
-        {
+        Schema::table('admin_logs', function ($table) {
             $table->index('users_id')
                 ->foreign('users_id')
                 ->references('id')
                 ->on('admin_users');
         });
 
-        Schema::table('admin_sessions', function($table)
-        {
+        Schema::table('admin_sessions', function ($table) {
             $table->index('users_id');
         });
     }

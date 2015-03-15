@@ -2,11 +2,9 @@
 
 use File;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
-class PublishAssets extends Command {
-
+class PublishAssets extends Command
+{
     /**
      * The console command name.
      *
@@ -33,6 +31,7 @@ class PublishAssets extends Command {
 
         if (!is_dir($build)) {
             $this->error(__('%s path not exists. You must generate it with `gulp build`.'));
+
             return false;
         }
 
@@ -41,5 +40,4 @@ class PublishAssets extends Command {
 
         $this->info('Admin assets published successfully');
     }
-
 }

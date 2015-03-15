@@ -11,15 +11,15 @@ class Admin extends Form
 
             'user' => F::text()->required()->attr([
                 'placeholder' => __('Your user'),
-                'autofocus' => true
+                'autofocus' => true,
             ]),
             'password' => F::password()->required()->attr([
-                'placeholder' => __('Your password')
+                'placeholder' => __('Your password'),
             ]),
             'remember' => F::checkbox()->attr([
                 'placeholder' => __('Remember me'),
-                'value' => '1'
-            ])
+                'value' => '1',
+            ]),
         ])->wrapperInputs();
     }
 }

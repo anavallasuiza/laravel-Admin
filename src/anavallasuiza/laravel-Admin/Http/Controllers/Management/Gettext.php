@@ -1,8 +1,10 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Input, Redirect;
+use Input;
+use Redirect;
 use Admin\Http\Controllers\Controller;
-use Admin\Library, Meta;
+use Admin\Library;
+use Meta;
 
 class Gettext extends Controller
 {
@@ -40,7 +42,7 @@ class Gettext extends Controller
         return self::view('management.gettext.index', [
             'current' => $locale,
             'locales' => $locales,
-            'entries' => $entries
+            'entries' => $entries,
         ]);
     }
 }

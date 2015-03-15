@@ -35,7 +35,7 @@ class Shell
             'command' => $cmd,
             'success' => ($response ? true : false),
             'response' => $response,
-            'error' => file_get_contents($error)
+            'error' => file_get_contents($error),
         ];
 
         if (is_file($error)) {

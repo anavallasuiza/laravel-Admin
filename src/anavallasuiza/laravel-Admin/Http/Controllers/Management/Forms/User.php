@@ -12,25 +12,25 @@ class User extends Form
             '_action' => F::hidden()->value('edit'),
 
             'name' => F::text()->required()->attr([
-                'placeholder' => __('Name')
+                'placeholder' => __('Name'),
             ]),
             'user' => F::text()->required()->attr([
-                'placeholder' => __('User')
+                'placeholder' => __('User'),
             ]),
             'password' => F::password()->attr([
-                'placeholder' => __('Password')
+                'placeholder' => __('Password'),
             ]),
             'password_repeat' => F::password()->attr([
-                'placeholder' => __('Repeat Password')
+                'placeholder' => __('Repeat Password'),
             ]),
             'admin' => F::checkbox()->attr([
                 'placeholder' => __('Admin'),
-                'value' => '1'
+                'value' => '1',
             ]),
             'enabled' => F::checkbox()->attr([
                 'placeholder' => __('Enabled'),
-                'value' => '1'
-            ])
+                'value' => '1',
+            ]),
         ])->wrapperInputs();
     }
 }

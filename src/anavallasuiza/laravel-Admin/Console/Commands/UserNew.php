@@ -1,17 +1,13 @@
 <?php namespace Admin\Console\Commands;
 
 use Exception;
-
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Hash;
-
 use Admin\Models;
 
-class UserNew extends Command {
-
+class UserNew extends Command
+{
     /**
      * The console command name.
      *
@@ -28,8 +24,6 @@ class UserNew extends Command {
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -49,6 +43,7 @@ class UserNew extends Command {
 
         if ($exists) {
             $this->error(__('User %s alread exists', $data['user']));
+
             return false;
         }
 
@@ -58,10 +53,11 @@ class UserNew extends Command {
                 'user' => $data['user'],
                 'password' => Hash::make($data['password']),
                 'admin' => 1,
-                'enabled' => 1
+                'enabled' => 1,
             ]);
         } catch (Exception $e) {
             $this->error($e->getMessage());
+
             return false;
         }
 
@@ -78,7 +74,7 @@ class UserNew extends Command {
         return array(
             array('name', InputArgument::REQUIRED, 'User name.'),
             array('user', InputArgument::REQUIRED, 'Login user.'),
-            array('password', InputArgument::REQUIRED, 'Login password.')
+            array('password', InputArgument::REQUIRED, 'Login password.'),
         );
     }
 

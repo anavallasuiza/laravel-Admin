@@ -1,7 +1,8 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use Redirect, Response, View;
-use Admin\Http\Controllers\Controller, Admin\Models;
+use View;
+use Admin\Http\Controllers\Controller;
+use Admin\Models;
 use Meta;
 
 class Users extends Controller
@@ -17,7 +18,7 @@ class Users extends Controller
 
     public function edit($id = '')
     {
-        $form = (new Forms\User)->edit();
+        $form = (new Forms\User())->edit();
 
         if (is_object($action = $this->action(__FUNCTION__, $form))) {
             return $action;
@@ -35,8 +36,7 @@ class Users extends Controller
                 $form->load($row);
             }
 
-            View::composer('admin::pages.management.users.logs', function($view) use ($row)
-            {
+            View::composer('admin::pages.management.users.logs', function ($view) use ($row) {
                 $rows = Models\Log::where('users_id', '=', $row->id)
                     ->orderBy('id', 'DESC')
                     ->get()->each(function ($row) {
@@ -46,8 +46,7 @@ class Users extends Controller
                 $view->with('rows', $rows);
             });
 
-            View::composer('admin::pages.management.users.sessions', function($view) use ($row)
-            {
+            View::composer('admin::pages.management.users.sessions', function ($view) use ($row) {
                 $view->with('rows', Models\Session::where('users_id', '=', $row->id)
                     ->orderBy('id', 'DESC')
                     ->get());
@@ -58,7 +57,7 @@ class Users extends Controller
 
         return self::view('management.users.edit', [
             'form' => $form,
-            'row' => $row
+            'row' => $row,
         ]);
     }
 }

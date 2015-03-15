@@ -3,7 +3,8 @@
 use Illuminate\Database\Eloquent\Model as LModel;
 use Auth;
 
-class Model extends LModel {
+class Model extends LModel
+{
     protected $guarded = ['id'];
 
     public function scopeFilter($query, $filter)
@@ -31,7 +32,7 @@ class Model extends LModel {
 
         $q = '%'.str_replace(' ', '%', trim($q)).'%';
 
-        return $query->where(function($query) use ($columns, $q) {
+        return $query->where(function ($query) use ($columns, $q) {
             foreach ($columns as $column) {
                 $query->orWhere($column, 'LIKE', $q);
             }
@@ -80,7 +81,7 @@ class Model extends LModel {
             'related_table' => str_replace('admin_', 'management.', $this->getTable()),
             'related_id' => $row->id,
             'action' => (empty($data['id']) ? 'insert' : 'update'),
-            'users_id' => ($user ? $user->id : 0)
+            'users_id' => ($user ? $user->id : 0),
         ]);
 
         return $row;

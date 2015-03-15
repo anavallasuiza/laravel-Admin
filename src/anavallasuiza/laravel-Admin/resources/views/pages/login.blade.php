@@ -1,4 +1,6 @@
-<?php use Admin\Http\Controllers\Forms\Form; ?>
+<?php use Admin\Http\Controllers\Forms\Form;
+
+?>
 
 @extends('admin::layouts.master')
 

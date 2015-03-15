@@ -1,10 +1,14 @@
 <?php namespace Admin\Http\Processors\Management;
 
 use Exception;
-use Admin\Http\Processors\Processor, Admin\Models;
-use Hash, Session, Redirect;
+use Admin\Http\Processors\Processor;
+use Admin\Models;
+use Hash;
+use Session;
+use Redirect;
 
-class Users extends Processor {
+class Users extends Processor
+{
     public function edit($form)
     {
         if (!($data = $this->check(__FUNCTION__, $form))) {
@@ -41,7 +45,7 @@ class Users extends Processor {
 
         Session::flash('flash-message', [
             'message' => __('Data was saved successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return Redirect::route('admin.management.users.edit', $row->id);

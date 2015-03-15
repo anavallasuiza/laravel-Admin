@@ -1,11 +1,16 @@
 <?php namespace Admin\Http\Processors\Management;
 
-use Exception, ZipArchive;
+use Exception;
+use ZipArchive;
 use Admin\Http\Processors\Processor;
 use Admin\Library;
-use Input, Session, Redirect, Response;
+use Input;
+use Session;
+use Redirect;
+use Response;
 
-class Gettext extends Processor {
+class Gettext extends Processor
+{
     public function save()
     {
         if (!($data = $this->check(__FUNCTION__))) {
@@ -16,12 +21,11 @@ class Gettext extends Processor {
 
         Session::flash('flash-message', [
             'message' => __('Gettext was saved successfully'),
-            'status' => 'success'
+            'status' => 'success',
         ]);
 
         return Redirect::back();
     }
-
 
     public function download()
     {
@@ -38,12 +42,12 @@ class Gettext extends Processor {
 
         $file = tempnam(sys_get_temp_dir(), $locale.'-zip-');
 
-        $zip = new ZipArchive;
+        $zip = new ZipArchive();
         $zip->open($file, ZipArchive::CREATE);
 
         $zip->addGlob(storage_path('locale/'.$locale.'/LC_MESSAGES/messages.*'), null, [
             'add_path' => '/',
-            'remove_all_path' => true
+            'remove_all_path' => true,
         ]);
 
         $zip->close();
