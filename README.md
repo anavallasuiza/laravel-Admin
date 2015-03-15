@@ -63,13 +63,13 @@ protected $commands = [
 
 Publish admin assets with:
 
-```php
+```bash
 php artisan admin:publish:assets
 ```
 
 And finally, create your first admin user:
 
-```php
+```bash
 # php artisan admin:user:new Name user password
 php artisan admin:user:new Admin admin admin
 ```
