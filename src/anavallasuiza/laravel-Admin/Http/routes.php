@@ -29,6 +29,11 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
     });
 
     Route::group(['before' => 'admin.admin'], function () {
+        Route::get('/management/database', [
+            'as' => 'admin.management.database.index',
+            'uses' => 'Admin\Http\Controllers\Management\Database@index',
+        ]);
+
         Route::get('/management/users', [
             'as' => 'admin.management.users.index',
             'uses' => 'Admin\Http\Controllers\Management\Users@index',

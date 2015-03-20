@@ -30,6 +30,13 @@
                     </a>
                 </li>
 
+                <li{!! ($ROUTE === 'database') ? ' class="active"' : '' !!}>
+                    <a href="{{ route('admin.management.database.index') }}">
+                        <i class="fa fa-database"></i>
+                        {{ __('Database') }}
+                    </a>
+                </li>
+
                 <li{!! ($ROUTE === 'gettext') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.gettext.index', 'gl') }}">
                         <i class="fa fa-font"></i>
