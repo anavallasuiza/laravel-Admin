@@ -1,52 +1,25 @@
 <?php namespace Admin\Library\Database;
 
-use Closure;
-use Schema;
-use Admin\Library\Database\Formats\Format;
-use Admin\Library\Database\Grammars\Grammar;
+use Schema as LSchema;
+use Illuminate\Database\Migrations\Migration as LMigration;
 
-class Migration
+class Migration extends LMigration
 {
-    private static $connection;
     private static $tables = [];
-
-    public function table($table, Closure $callback)
-    {
-        return self::$tables[$table] = self::getFormat($table, $callback);
-    }
 
     public function toSql()
     {
-        $connection = self::getConnection();
+        $connection = LSchema::getConnection();
         $grammar = $connection->getSchemaGrammar();
 
-        $sql = [];
+        $sql = '';
 
-        foreach (self::$tables as $format) {
-            $sql = array_merge($sql, $format->toSql($connection, $grammar));
+        foreach (Schema::getTables() as $table) {
+            $sql .= "\n".implode("\n", array_map(function($row) {
+                return $row.';';
+            }, $table->toSql($connection, $grammar)));
         }
 
-        return array_map(function($row) {
-            return $row.';';
-        }, $sql);
-    }
-
-    private static function getConnection()
-    {
-        if (self::$connection) {
-            return self::$connection;
-        }
-
-        return self::$connection = Grammar::getConnection();
-    }
-
-    private static function getFormat($table, Closure $callback)
-    {
-        $format = new Format($table);
-        $format->create();
-
-        $callback($format);
-
-        return $format;
+        return trim($sql);
     }
 }
