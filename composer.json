@@ -17,8 +17,8 @@
         "almasaeed2010/adminlte": "2.*",
         "form-manager/form-manager": "4.2.*",
         "gettext/gettext": "3.*",
-        "laravel/packer": "master-dev",
-        "laravel/meta": "master-dev"
+        "laravel/packer": "1.*",
+        "laravel/meta": "1.*"
     },
     "autoload": {
         "psr-4": {

@@ -1,6 +1,8 @@
 <?php namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
+use Admin\Console\Commands;
+use Admin\Library;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Library\Gettext::load();
+
         include __DIR__.'/Library/helpers.php';
         include __DIR__.'/Http/routes.php';
 
@@ -35,6 +39,21 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerCommands();
+    }
+
+    protected function registerCommands()
+    {
+        $this->app->singleton('command.admin.publish.assets', function($app) {
+            return new Commands\PublishAssets();
+        });
+
+        $this->app->singleton('command.admin.user.new', function($app) {
+            return new Commands\UserNew();
+        });
+
+        $this->commands('command.admin.publish.assets');
+        $this->commands('command.admin.user.new');
     }
 
     /**
@@ -44,5 +63,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function provides()
     {
+        return [
+            'command.admin.publish.assets',
+            'command.admin.user.new'
+        ];
     }
 }

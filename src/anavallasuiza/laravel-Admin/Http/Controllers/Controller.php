@@ -20,8 +20,6 @@ abstract class Controller extends BaseController
 
     public function __construct()
     {
-        Library\Gettext::load();
-
         Meta::title(__('Admin Area'));
 
         Config::set('auth', config('admin.auth'));

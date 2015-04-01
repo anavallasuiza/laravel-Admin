@@ -24,10 +24,6 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
         'uses' => 'Admin\Http\Controllers\Admin@logout',
     ]);
 
-    Route::group(['prefix' => 'database'], function () {
-
-    });
-
     Route::group(['before' => 'admin.admin'], function () {
         Route::get('/management/database', [
             'as' => 'admin.management.database.index',

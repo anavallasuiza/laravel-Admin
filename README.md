@@ -67,11 +67,13 @@ Publish admin assets with:
 php artisan admin:publish:assets
 ```
 
-And finally, create your first admin user:
+And finally, launch new migration and create your first admin user:
 
 ```bash
-# php artisan admin:user:new Name user password
-php artisan admin:user:new Admin admin admin
+php artisan migrate
+
+# php artisan admin:user:new Name user password admin
+php artisan admin:user:new Admin admin admin true
 ```
 
 Check now to login into http://mydomain.com/admin

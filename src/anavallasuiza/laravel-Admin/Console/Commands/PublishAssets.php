@@ -30,7 +30,7 @@ class PublishAssets extends Command
         $public = public_path('assets/admin/build');
 
         if (!is_dir($build)) {
-            $this->error(__('%s path not exists. You must generate it with `gulp build`.'));
+            $this->error(__('%s path not exists. You must generate it with `gulp build` in %s.', $build, basename(basename($build))));
 
             return false;
         }
