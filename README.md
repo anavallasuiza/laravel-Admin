@@ -48,17 +48,6 @@ Publish the base admin configuration:
 php artisan vendor:publish
 ```
 
-Update `app/Console/Kernel.php` with this new commands:
-
-```php
-protected $commands = [
-    ...
-
-    'Admin\Console\Commands\PublishAssets',
-    'Admin\Console\Commands\UserNew',
-
-    ...
-];
 ```
 
 Publish admin assets with:
@@ -67,13 +56,18 @@ Publish admin assets with:
 php artisan admin:publish:assets
 ```
 
-And finally, launch new migration and create your first admin user:
+Mirate admin tables
+
+```bash
+php artisan migrate
+```
+
+And finally, create your first admin user:
 
 ```bash
 php artisan migrate
 
-# php artisan admin:user:new Name user password admin
-php artisan admin:user:new Admin admin admin true
+php artisan admin:user:new --name Admin --user admin --password admin --admin true
 ```
 
 Check now to login into http://mydomain.com/admin
