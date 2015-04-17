@@ -53,7 +53,8 @@
                     <ul class="list-unstyled references text-muted">
                         <li>{{ implode('</li><li>', $entry->lines) }}</li>
                     </ul>
-                    <?php 
+                    <?php
+
 } ?>
 
                     <input id="entry-{{ $i }}" type="text" name="translations[{{{ $entry->getOriginal() }}}]" value="{{{ $entry->getTranslation() }}}" class="form-control" />

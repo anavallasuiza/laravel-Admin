@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.4",
         "almasaeed2010/adminlte": "2.*",
-        "form-manager/form-manager": "4.2.*",
+        "form-manager/form-manager": "4.3.*",
         "gettext/gettext": "3.*",
         "laravel/packer": "1.*",
         "laravel/meta": "1.*"

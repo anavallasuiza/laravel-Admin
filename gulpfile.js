@@ -32,7 +32,7 @@ directories[paths.from.adminlte + 'plugins/datatables/images/*'] = paths.to.buil
 var js_files = [
     paths.from.vendor   + 'jquery/dist/jquery.min.js',
     paths.from.vendor   + 'bootstrap/dist/js/bootstrap.min.js',
-    paths.from.vendor   + 'bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js',
+    paths.from.vendor   + 'summernote/dist/summernote.min.js',
     paths.from.vendor   + 'select2/select2.min.js',
     paths.from.vendor   + 'bootstrap-fileinput/js/fileinput.min.js',
     paths.from.vendor   + 'DataTables/media/js/jquery.dataTables.min.js',
@@ -43,7 +43,7 @@ var js_files = [
 var css_files = [
     paths.from.vendor   + 'bootstrap/dist/css/bootstrap.min.css',
     paths.from.vendor   + 'font-awesome/css/font-awesome.min.css',
-    paths.from.vendor   + 'bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css',
+    paths.from.vendor   + 'summernote/dist/summernote.css',
     paths.from.vendor   + 'select2/select2.css',
     paths.from.vendor   + 'select2-bootstrap-css/select2-bootstrap.min.css',
     paths.from.vendor   + 'bootstrap-fileinput/css/fileinput.min.css',

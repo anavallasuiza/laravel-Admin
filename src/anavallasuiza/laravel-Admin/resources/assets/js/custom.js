@@ -163,15 +163,13 @@ $(function() {
 
     $('.sidebar .treeview').tree();
 
-    $('.wysihtml5').wysihtml5({
-        'toolbar': {
-            'link': false,
-            'blockquote': false,
-            'color': false
-        },
-        'style': {
-            'remove': 1
-        }
+    $('.wysihtml5').summernote({
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture']],
+            ['misc', ['undo', 'redo', 'codeview']],
+        ]
     });
 
     $('.select2').select2();

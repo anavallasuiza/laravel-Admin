@@ -13,6 +13,6 @@
     "select2": "latest",
     "select2-bootstrap-css": "latest",
     "bootstrap-fileinput": "latest",
-    "bootstrap3-wysihtml5-bower": "latest"
+    "summernote": "latest"
   }
 }

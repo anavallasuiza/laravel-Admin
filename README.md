@@ -12,7 +12,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "anavallasuiza/laravel-admin": "master-dev"
+        "anavallasuiza/laravel-admin": "dev-master"
     }
 }
 ```
