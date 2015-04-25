@@ -21,7 +21,7 @@
         "laravel/meta": "1.*",
         "laravel/simple-route": "0.*",
         "laravel/processor": "0.*",
-        "laravel/gettext": "dev-master"
+        "laravel/gettext": "0.*"
     },
     "autoload": {
         "psr-4": {
