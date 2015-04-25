@@ -18,8 +18,6 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Library\Gettext::load();
-
         include __DIR__.'/Http/routes.php';
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
