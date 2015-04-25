@@ -92,4 +92,25 @@ class Html
 
         return asset($base.'/'.$manifest[$file]);
     }
+
+    public static function query($key, $value = null)
+    {
+        parse_str(parse_url(getenv('REQUEST_URI'), PHP_URL_QUERY), $query);
+
+        if (is_array($key)) {
+            $query = array_merge($query, $key);
+        } else {
+            $query[$key] = $value;
+        }
+
+        foreach ($query as $key => $value) {
+            if (is_string($value) && (strlen($value) === 0)) {
+                unset($query[$key]);
+            } elseif (is_array($value) && !($value = array_filter($value))) {
+                unset($query[$key]);
+            }
+        }
+
+        return '?'.http_build_query($query);
+    }
 }

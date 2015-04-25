@@ -1,6 +1,4 @@
 <?php
-require __DIR__.'/filters.php';
-
 $prefix = config('admin.admin.prefix');
 
 Route::get('/'.$prefix.'/gettext.js', [

@@ -20,7 +20,6 @@ class AdminServiceProvider extends ServiceProvider
     {
         Library\Gettext::load();
 
-        include __DIR__.'/Library/helpers.php';
         include __DIR__.'/Http/routes.php';
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
