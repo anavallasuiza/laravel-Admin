@@ -52,7 +52,7 @@ class UserNew extends Command
                 'name' => $data['name'],
                 'user' => $data['user'],
                 'password' => Hash::make($data['password']),
-                'admin' => $data['admin'],
+                'admin' => ($data['admin'] && ($data['admin'] !== 'false')),
                 'enabled' => 1
             ]);
         } catch (Exception $e) {

@@ -14,8 +14,7 @@
     </form>
 
     <ul class="sidebar-menu">
-        @if ($I->admin)
-        <li class="treeview{{ ($MODEL === 'management') ? ' active' : '' }}">
+        <li class="treeview{{ strstr($ROUTE, 'management') ? ' active' : '' }}">
             <a href="#">
                 <i class="fa fa-lock"></i>
                 <span>{{ __('Management') }}</span>
@@ -23,49 +22,59 @@
             </a>
 
             <ul class="treeview-menu">
-                <li{!! ($ROUTE === 'users') ? ' class="active"' : '' !!}>
+                <li{!! strstr($ROUTE, 'management.users') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.users.index') }}">
                         <i class="fa fa-users"></i>
                         {{ __('Users') }}
                     </a>
                 </li>
 
-                <li{!! ($ROUTE === 'database') ? ' class="active"' : '' !!}>
-                    <a href="{{ route('admin.management.database.index') }}">
-                        <i class="fa fa-database"></i>
-                        {{ __('Database') }}
-                    </a>
-                </li>
-
-                <li{!! ($ROUTE === 'gettext') ? ' class="active"' : '' !!}>
-                    <a href="{{ route('admin.management.gettext.index', 'gl') }}">
+                <li class="treeview{{ strstr($ROUTE, 'management.gettext') ? ' active' : '' }}">
+                    <a href="#">
                         <i class="fa fa-font"></i>
-                        {{ __('Gettext') }}
+                        <span>{{ __('Gettext') }}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+
+                    <ul class="treeview-menu">
+                        <li{!! strstr($ROUTE, 'management.gettext.app') ? ' class="active"' : '' !!}>
+                            <a href="{{ route('admin.management.gettext.app') }}">
+                                <i class="fa fa-font"></i>
+                                {{ __('App Gettext') }}
+                            </a>
+                        </li>
+
+                        <li{!! strstr($ROUTE, 'management.gettext.admin') ? ' class="active"' : '' !!}>
+                            <a href="{{ route('admin.management.gettext.admin') }}">
+                                <i class="fa fa-font"></i>
+                                {{ __('Admin Gettext') }}
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li{!! ($ROUTE === 'uploads') ? ' class="active"' : '' !!}>
+                <li{!! strstr($ROUTE, 'management.uploads') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.uploads.index') }}">
                         <i class="fa fa-upload"></i>
                         {{ __('Uploads') }}
                     </a>
                 </li>
 
-                <li{!! ($ROUTE === 'update') ? ' class="active"' : '' !!}>
+                <li{!! strstr($ROUTE, 'management.update') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.update.index') }}">
                         <i class="fa fa-refresh"></i>
                         {{ __('Update') }}
                     </a>
                 </li>
 
-                <li{!! ($ROUTE === 'logs') ? ' class="active"' : '' !!}>
+                <li{!! strstr($ROUTE, 'management.logs') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.logs.index') }}">
                         <i class="fa fa-file-text"></i>
                         {{ __('Logs') }}
                     </a>
                 </li>
 
-                <li{!! ($ROUTE === 'cache') ? ' class="active"' : '' !!}>
+                <li{!! strstr($ROUTE, 'management.cache') ? ' class="active"' : '' !!}>
                     <a href="{{ route('admin.management.cache.views') }}">
                         <i class="fa fa-floppy-o"></i>
                         {{ __('Cache') }}
@@ -73,7 +82,6 @@
                 </li>
             </ul>
         </li>
-        @endif
     </ul>
 </section>
 

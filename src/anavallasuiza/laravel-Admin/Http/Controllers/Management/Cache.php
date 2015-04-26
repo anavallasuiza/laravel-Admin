@@ -46,8 +46,8 @@ class Cache extends Controller
             ]);
         }
 
-        if (is_object($action = $this->action(__FUNCTION__))) {
-            return $action;
+        if (is_object($processor = $this->processor(__FUNCTION__))) {
+            return $processor;
         }
 
         $stats = apc_sma_info();
@@ -97,8 +97,8 @@ class Cache extends Controller
             return $Memcache;
         }
 
-        if (is_object($action = $this->action(__FUNCTION__, null, $Memcache))) {
-            return $action;
+        if (is_object($processor = $this->processor(__FUNCTION__, null, $Memcache))) {
+            return $processor;
         }
 
         $stats = $Memcache->getStats();
@@ -123,8 +123,8 @@ class Cache extends Controller
             return $Memcache;
         }
 
-        if (is_object($action = $this->action(__FUNCTION__, null, $Memcache))) {
-            return $action;
+        if (is_object($processor = $this->processor(__FUNCTION__, null, $Memcache))) {
+            return $processor;
         }
 
         $stats = array_values($Memcache->getStats())[0];
@@ -141,8 +141,8 @@ class Cache extends Controller
 
     public function files()
     {
-        if (is_object($action = $this->action(__FUNCTION__))) {
-            return $action;
+        if (is_object($processor = $this->processor(__FUNCTION__))) {
+            return $processor;
         }
 
         $total = 0;

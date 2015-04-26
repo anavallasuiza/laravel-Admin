@@ -10,7 +10,7 @@
             {{ __('Save changes') }}
         </button>
 
-        <button type="submit" name="_action" value="duplicate" class="btn btn-primary">
+        <button type="submit" name="_processor" value="duplicate" class="btn btn-primary">
             {{ __('Duplicate') }}
         </button>
     </div>
@@ -43,7 +43,7 @@
                             {{ __('No, cancel') }}
                         </button>
 
-                        <button type="submit" name="_action" value="delete" class="btn btn-danger">
+                        <button type="submit" name="_processor" value="delete" class="btn btn-danger">
                             {{ __('Yes, delete') }}
                         </button>
                     </div>

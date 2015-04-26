@@ -1,4 +1,6 @@
 <?php
+require __DIR__.'/filters.php';
+
 $prefix = config('admin.admin.prefix');
 
 Route::get('/'.$prefix.'/gettext.js', [
@@ -38,9 +40,14 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
             'uses' => 'Admin\Http\Controllers\Management\Users@edit',
         ]);
 
-        Route::any('/management/gettext/{locale}', [
-            'as' => 'admin.management.gettext.index',
-            'uses' => 'Admin\Http\Controllers\Management\Gettext@index',
+        Route::any('/management/gettext/app/{locale?}', [
+            'as' => 'admin.management.gettext.app',
+            'uses' => 'Admin\Http\Controllers\Management\Gettext@app',
+        ]);
+
+        Route::any('/management/gettext/admin/{locale?}', [
+            'as' => 'admin.management.gettext.admin',
+            'uses' => 'Admin\Http\Controllers\Management\Gettext@admin',
         ]);
 
         Route::any('/management/uploads', [

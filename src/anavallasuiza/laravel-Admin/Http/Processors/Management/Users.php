@@ -9,7 +9,7 @@ use Redirect;
 
 class Users extends Processor
 {
-    public function edit($form)
+    public function edit($form, $row)
     {
         if (!($data = $this->check(__FUNCTION__, $form))) {
             return $data;
@@ -38,7 +38,7 @@ class Users extends Processor
         unset($data['password_repeat']);
 
         try {
-            $row = Models\User::replace($data);
+            $row = Models\User::replace($data, $row);
         } catch (Exception $e) {
             throw new Exception(__('Error storing data: %s', $e->getMessage()));
         }

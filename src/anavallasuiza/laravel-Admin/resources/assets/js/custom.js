@@ -121,12 +121,6 @@ $(function() {
                     btn.parent('li').addClass('active');
                 }
             });
-
-            menu.find('li > a').each(function() {
-                $(this).css({
-                    'margin-left': (parseInt($(this).css('margin-left')) + 10) + 'px'
-                });
-            });
         });
     };
 

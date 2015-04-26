@@ -5,7 +5,8 @@
 <h4>{{ __('Used Files Cache') }}</h4>
 
 <form method="post">
-    {!! Form::token() !!}
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="_processor" value="files" />
 
     <table class="table">
         @foreach ($folders as $folder)
@@ -31,7 +32,7 @@
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} name="_action" value="cacheFiles" class="btn btn-success">
+            <button type="submit" class="btn btn-success">
                 {{ __('Delete Selected Cache Folders') }}
             </button>
         </div>

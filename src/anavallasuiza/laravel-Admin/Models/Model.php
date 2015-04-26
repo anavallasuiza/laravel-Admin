@@ -1,7 +1,6 @@
 <?php namespace Admin\Models;
 
 use Illuminate\Database\Eloquent\Model as LModel;
-use Auth;
 
 class Model extends LModel
 {
@@ -58,31 +57,17 @@ class Model extends LModel
 
     public function scopeReplace($query, array $data, $row = null)
     {
-        if (empty($data['id'])) {
-            $row = $this->create(array_filter($data, function ($value) {
-                return !is_null($value);
-            }));
-        } else {
-            if (empty($row)) {
-                $row = $query->where('id', '=', $data['id'])->firstOrFail();
-            }
+        $action = empty($row->id) ? 'insert' : 'update';
 
-            foreach ($data as $key => $value) {
+        foreach ($data as $key => $value) {
+            if (!is_array($value)) {
                 $row->$key = $value;
             }
-
-            $row->save();
         }
 
-        $user = Auth::user();
+        $row->save();
 
-        Log::insert([
-            'created_at' => date('Y-m-d H:i:s'),
-            'related_table' => str_replace('admin_', 'management.', $this->getTable()),
-            'related_id' => $row->id,
-            'action' => (empty($data['id']) ? 'insert' : 'update'),
-            'users_id' => ($user ? $user->id : 0),
-        ]);
+        Log::register($action, $this->getTable(), $row);
 
         return $row;
     }

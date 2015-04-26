@@ -19,7 +19,6 @@
         "gettext/gettext": "3.*",
         "laravel/packer": "1.*",
         "laravel/meta": "1.*",
-        "laravel/simple-route": "0.*",
         "laravel/processor": "0.*",
         "laravel/gettext": "0.*"
     },

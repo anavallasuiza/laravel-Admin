@@ -11,22 +11,23 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tab-upload-file">
             <form method="post" enctype="multipart/form-data">
-                {!! token() !!}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="_processor" value="fileNew" />
 
-                <input type="hidden" name="_action" value="fileNew" />
                 <input type="file" name="files[]" multiple="true" class="file file-uploader" data-preview-file-type="any" />
             </form>
         </div>
 
         <div class="tab-pane" id="tab-upload-directory">
             <form method="post">
-                {!! token() !!}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <input type="hidden"  name="_processor" value="directoryNew" />
 
                 <div class="input-group">
                     <input type="text" name="name" class="form-control" placeholder="{{ __('New directory') }}" required />
 
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" name="_action" value="directoryNew">
+                        <button class="btn btn-primary">
                             {{ __('Create')}}
                         </button>
                     </span>
@@ -69,7 +70,7 @@
         <tr>
             <td><a href="?dir={{ $row['dir'] }}"><strong>{{ $row['name'] }}</strong></a></td>
             <td class="text-center">
-                <button type="button" name="uploads-delete" data-name="{{ $row['slug'] }}" data-_action="directoryDelete" class="btn btn-sm btn-danger">
+                <button type="button" name="uploads-delete" data-name="{{ $row['slug'] }}" data-_processor="directoryDelete" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i>
                     <span class="sr-only sr-only-focusable">{{ __('Delete') }}</span>
                 </button>
@@ -81,7 +82,7 @@
         <tr>
             <td><a href="{{ $row['url'] }}" target="_blank">{{ $row['name'] }}</a></td>
             <td class="text-center">
-                <button type="button" name="uploads-delete" data-name="{{ $row['slug'] }}" data-_action="fileDelete" class="btn btn-sm btn-danger">
+                <button type="button" name="uploads-delete" data-name="{{ $row['slug'] }}" data-_processor="fileDelete" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i>
                     <span class="sr-only sr-only-focusable">{{ __('Delete') }}</span>
                 </button>
@@ -113,9 +114,9 @@
 
             <div class="modal-footer">
                 <form method="post">
-                    {!! token() !!}
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
-                    <input type="hidden" name="_action" value="" />
+                    <input type="hidden" name="_processor" value="" />
                     <input type="hidden" name="name" value="" />
 
                     <button type="button" class="btn btn-default" data-dismiss="modal">

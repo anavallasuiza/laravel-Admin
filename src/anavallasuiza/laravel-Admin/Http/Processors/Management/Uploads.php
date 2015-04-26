@@ -1,6 +1,5 @@
 <?php namespace Admin\Http\Processors\Management;
 
-use Auth;
 use File;
 use Input;
 use Session;
@@ -27,7 +26,7 @@ class Uploads extends Processor
                     'created_at' => date('Y-m-d H:i:s'),
                     'action' => __FUNCTION__,
                     'description' => (str_replace(public_path(), '', $uploads).$name),
-                    'users_id' => Auth::user()->id,
+                    'admin_users_id' => $this->user->id,
                 ]);
             }
         }
@@ -53,7 +52,7 @@ class Uploads extends Processor
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id,
+                'admin_users_id' => $this->user->id,
             ]);
         }
 
@@ -80,7 +79,7 @@ class Uploads extends Processor
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id,
+                'admin_users_id' => $this->user->id,
             ]);
         }
 
@@ -105,7 +104,7 @@ class Uploads extends Processor
                 'created_at' => date('Y-m-d H:i:s'),
                 'action' => __FUNCTION__,
                 'description' => (str_replace(public_path(), '', $uploads).$name),
-                'users_id' => Auth::user()->id,
+                'admin_users_id' => $this->user->id,
             ]);
         }
 

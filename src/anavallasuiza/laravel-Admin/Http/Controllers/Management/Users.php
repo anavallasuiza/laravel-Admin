@@ -1,9 +1,9 @@
 <?php namespace Admin\Http\Controllers\Management;
 
-use View;
 use Admin\Http\Controllers\Controller;
 use Admin\Models;
 use Meta;
+use View;
 
 class Users extends Controller
 {
@@ -16,48 +16,63 @@ class Users extends Controller
         return $this->indexView(Models\User::orderBy('id', 'DESC'), $fields, __CLASS__);
     }
 
-    public function edit($id = '')
+    private function getRow($id)
     {
-        $form = (new Forms\User())->edit();
-
-        if (is_object($action = $this->action(__FUNCTION__, $form))) {
-            return $action;
+        if (empty($id)) {
+            return new Models\User();
         }
 
-        $row = new \stdClass();
-        $row->id = 0;
+        return Models\User::where('id', $id)->firstOrFail();
+    }
 
-        if ($id) {
-            $row = Models\User::where('id', '=', $id)->firstOrFail();
+    public function edit($id = '')
+    {
+        $row = $this->getRow($id);
 
+        $form = new Forms\Users\Edit();
+
+        if (is_object($processor = $this->processor(__FUNCTION__, $form, $row))) {
+            return $processor;
+        }
+
+        if (empty($row->id)) {
+            Meta::meta('title', __('New'));
+        } else {
             Meta::meta('title', __('Edit "%s"', $row->name));
 
-            if ($action === null) {
-                $form->load($row);
+            if ($processor === null) {
+                $form->preload($row);
             }
 
-            View::composer('admin::pages.management.users.logs', function ($view) use ($row) {
-                $rows = Models\Log::where('users_id', '=', $row->id)
-                    ->orderBy('id', 'DESC')
-                    ->get()->each(function ($row) {
-                        $row->related_table = str_replace('_', '-', $row->related_table);
-                    });
-
-                $view->with('rows', $rows);
-            });
-
-            View::composer('admin::pages.management.users.sessions', function ($view) use ($row) {
-                $view->with('rows', Models\Session::where('users_id', '=', $row->id)
-                    ->orderBy('id', 'DESC')
-                    ->get());
-            });
-        } else {
-            Meta::meta('title', __('New'));
+            self::ViewComposerLogs($row);
+            self::ViewComposerSessions($row);
         }
 
         return self::view('management.users.edit', [
             'form' => $form,
             'row' => $row,
         ]);
+    }
+
+    private static function ViewComposerLogs($row)
+    {
+        View::composer('admin::pages.management.users.logs', function ($view) use ($row) {
+            $rows = Models\Log::where('admin_users_id', $row->id)
+                ->orderBy('id', 'DESC')
+                ->get()->each(function ($row) {
+                    $row->related_table = str_replace('_', '-', $row->related_table);
+                });
+
+            $view->with('rows', $rows);
+        });
+    }
+
+    private static function ViewComposerSessions($row)
+    {
+        View::composer('admin::pages.management.users.sessions', function ($view) use ($row) {
+            $view->with('rows', Models\Session::where('admin_users_id', $row->id)
+                ->orderBy('id', 'DESC')
+                ->get());
+        });
     }
 }

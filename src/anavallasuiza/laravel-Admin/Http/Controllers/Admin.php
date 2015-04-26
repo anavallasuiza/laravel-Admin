@@ -21,10 +21,10 @@ class Admin extends Controller
 
     public function login()
     {
-        $form = (new Forms\Admin())->login();
+        $form = new Forms\Users\Login();
 
-        if (is_object($action = $this->action(__FUNCTION__, $form))) {
-            return $action;
+        if (is_object($processor = $this->processor(__FUNCTION__, $form))) {
+            return $processor;
         }
 
         Meta::meta('title', __('Login into admin area'));
@@ -36,9 +36,7 @@ class Admin extends Controller
 
     public function logout()
     {
-        Auth::logout();
-
-        return Redirect::route('admin.login');
+        return $this->makeProcessor(__FUNCTION__);
     }
 
     public function index()

@@ -3,14 +3,14 @@
 @section('content')
 
 <form id="form-gettext" method="post">
-    {!! token() !!}
+    {!! $form->token() !!}
 
     <input type="hidden" name="locale" value="{{ $current }}" />
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             @foreach ($locales as $locale)
-            <li {!! ($locale === $current) ? 'class="active"' : '' !!}><a href="{{ route('admin.management.gettext.index', $locale) }}">{{ $locale }}</a></li>
+            <li {!! ($locale === $current) ? 'class="active"' : '' !!}><a href="{{ route(Route::currentRouteName(), $locale) }}">{{ $locale }}</a></li>
             @endforeach
         </ul>
 
@@ -26,14 +26,6 @@
                             <div class="btn-group pull-right" data-toggle="buttons">
                                 <label class="btn">
                                     <input type="checkbox" data-gettext="empty" autocomplete="off" /> {{ __('Only empty') }}
-                                </label>
-
-                                <label class="btn">
-                                    <input type="checkbox" data-gettext="admin" autocomplete="off" /> {{ __('Only admin') }}
-                                </label>
-
-                                <label class="btn">
-                                    <input type="checkbox" data-gettext="web" autocomplete="off" /> {{ __('Only web') }}
                                 </label>
                             </div>
                         </div>
@@ -66,15 +58,11 @@
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="save" class="btn btn-success">
+            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_processor" value="save" class="btn btn-success">
                 {{ __('Save') }}
             </button>
 
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="refresh" value="true" class="btn btn-primary">
-                {{ __('Search for new translations') }}
-            </button>
-
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="download" class="btn btn-primary">
+            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_processor" value="download" class="btn btn-primary">
                 {{ __('Download translations') }}
             </button>
         </div>
