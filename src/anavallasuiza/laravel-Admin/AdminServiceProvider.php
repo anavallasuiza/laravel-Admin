@@ -4,6 +4,7 @@ namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Admin\Console\Commands;
+
 class AdminServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +22,7 @@ class AdminServiceProvider extends ServiceProvider
         include __DIR__.'/Http/routes.php';
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
+        $this->loadViewsFrom(base_path('admin/resources/views'), 'admin-app');
 
         $this->publishes([
             __DIR__.'/config' => config_path('admin'),

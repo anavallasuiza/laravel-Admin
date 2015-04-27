@@ -2,8 +2,7 @@
 
 namespace Admin\Library;
 
-class Helpers
-{
+class Helpers {
     public static function slug($string)
     {
         $string = preg_replace('/[^\p{L}0-9]/u', '-', trim(strip_tags($string)));
