@@ -7,6 +7,7 @@ use Laravel\Processor\Controllers\ProcessorTrait;
 use Auth;
 use Config;
 use Input;
+use Request;
 use Route;
 use Session;
 use View;
@@ -23,10 +24,12 @@ abstract class Controller extends BaseController
     {
         Meta::title(__('Admin Area'));
 
-        Config::set('auth', config('admin.auth'));
+        $route = Route::currentRouteName();
+        $database = ($route === 'admin.database');
 
         View::share([
-            'ROUTE' => Route::currentRouteName(),
+            'ROUTE' => $route,
+            'TABLE' => ($database ? Request::segment(3) : null),
             'LOCALES' => config('gettext.locales'),
             'LOCALE' => ($this->locale = Session::get('locale')),
             'I' => ($this->user = Auth::user()),
@@ -50,11 +53,7 @@ abstract class Controller extends BaseController
         $mode = ((explode(' ', $filter['sort'])[1] === 'DESC') ? 'ASC' : 'DESC');
         $paginate = self::paginate('rows', [20, 50, 100, 200, -1]);
 
-        if (strstr($template, '\\')) {
-            $template = strtolower(str_replace([__NAMESPACE__.'\\', '\\'], ['', '.'], $template));
-        }
-
-        return self::view($template.'.index', [
+        return view($template, [
             'list' => ($paginate ? $list->paginate($paginate) : $list->get()),
             'paginate' => $paginate,
             'filter' => $filter,

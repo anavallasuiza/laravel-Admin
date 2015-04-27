@@ -15,7 +15,7 @@ class Users extends Controller
 
         $fields = ['user', 'name', 'admin', 'enabled'];
 
-        return $this->indexView(Models\User::orderBy('id', 'DESC'), $fields, __CLASS__);
+        return $this->indexView(Models\User::orderBy('id', 'DESC'), $fields, 'admin::pages.management.users.index');
     }
 
     private function getRow($id)

@@ -22,10 +22,10 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
         'uses' => 'Admin\Http\Controllers\Admin@index',
     ]);
 
-    Route::get('/database/{table}/{action}', ['as' => 'admin.database', function ($table, $action) {
+    Route::any('/database/{table}/{action}/{id?}', ['as' => 'admin.database', function ($table, $action, $id = null) {
         $class = 'Admin\\Http\\Controllers\\Database\\'.Helpers::camelcase($table);
 
-        return App::make($class)->$action();
+        return App::make($class)->$action($id);
     }]);
 
     Route::get('/logout', [

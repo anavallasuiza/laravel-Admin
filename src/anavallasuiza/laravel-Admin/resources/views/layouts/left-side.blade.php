@@ -14,6 +14,10 @@
     </form>
 
     <ul class="sidebar-menu">
+        @if (view()->exists('admin-app::layout.left-side'))
+            @include ('admin-app::layout.left-side')
+        @endif
+
         <li class="treeview{{ strstr($ROUTE, 'management') ? ' active' : '' }}">
             <a href="#">
                 <i class="fa fa-lock"></i>
