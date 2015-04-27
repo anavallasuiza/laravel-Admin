@@ -25,7 +25,7 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
     Route::get('/database/{table}/{action}', ['as' => 'admin.database', function ($table, $action) {
         $class = 'Admin\\Http\\Controllers\\Database\\'.Helpers::camelcase($table);
 
-        App::make($class)->$action();
+        return App::make($class)->$action();
     }]);
 
     Route::get('/logout', [
