@@ -13,7 +13,7 @@ class CreateAdminTables extends Migration
 
     protected function upTables()
     {
-        Schema::create('admin_logs', function(Blueprint $table) {
+        Schema::create('admin_logs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -28,7 +28,7 @@ class CreateAdminTables extends Migration
             $table->integer('admin_users_id')->unsigned();
         });
 
-        Schema::create('admin_menus', function(Blueprint $table) {
+        Schema::create('admin_menus', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -39,7 +39,7 @@ class CreateAdminTables extends Migration
             $table->boolean('enabled');
         });
 
-        Schema::create('admin_menus_users', function(Blueprint $table) {
+        Schema::create('admin_menus_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->boolean('list')->nullable();
@@ -51,7 +51,7 @@ class CreateAdminTables extends Migration
             $table->integer('admin_users_id')->unsigned();
         });
 
-        Schema::create('admin_sessions', function(Blueprint $table) {
+        Schema::create('admin_sessions', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -65,7 +65,7 @@ class CreateAdminTables extends Migration
             $table->unsignedInteger('admin_users_id')->nullable();
         });
 
-        Schema::create('admin_users', function(Blueprint $table) {
+        Schema::create('admin_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -85,13 +85,13 @@ class CreateAdminTables extends Migration
 
     protected function upIndex()
     {
-        Schema::table('admin_logs', function(Blueprint $table) {
+        Schema::table('admin_logs', function (Blueprint $table) {
             $table->foreign('admin_users_id')
                 ->references('id')
                 ->on('admin_users');
         });
 
-        Schema::table('admin_menus_users', function(Blueprint $table) {
+        Schema::table('admin_menus_users', function (Blueprint $table) {
             $table->foreign('admin_menus_id')
                 ->references('id')
                 ->on('admin_menus');
@@ -101,7 +101,7 @@ class CreateAdminTables extends Migration
                 ->on('admin_users');
         });
 
-        Schema::table('admin_sessions', function(Blueprint $table) {
+        Schema::table('admin_sessions', function (Blueprint $table) {
             $table->foreign('admin_users_id')
                 ->references('id')
                 ->on('admin_users');

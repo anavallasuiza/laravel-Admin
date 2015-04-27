@@ -1,4 +1,6 @@
-<?php namespace Admin\Library\Database\Formats;
+<?php
+
+namespace Admin\Library\Database\Formats;
 
 use Illuminate\Database\Schema\Blueprint;
 

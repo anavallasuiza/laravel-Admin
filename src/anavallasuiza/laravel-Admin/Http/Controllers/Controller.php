@@ -1,17 +1,15 @@
-<?php namespace Admin\Http\Controllers;
+<?php
+
+namespace Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Laravel\Processor\Controllers\ProcessorTrait;
-
-use Exception;
-use App;
 use Auth;
 use Config;
 use Input;
 use Route;
 use Session;
 use View;
-use Admin\Library;
 use Meta;
 
 abstract class Controller extends BaseController

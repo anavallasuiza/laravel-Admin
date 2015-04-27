@@ -1,7 +1,7 @@
-<?php namespace Admin\Http\Controllers;
+<?php
 
-use Auth;
-use Redirect;
+namespace Admin\Http\Controllers;
+
 use Response;
 use Meta;
 

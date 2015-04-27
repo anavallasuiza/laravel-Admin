@@ -2,12 +2,10 @@
 
 namespace Admin\Http\Controllers\Management;
 
-use Input;
 use Redirect;
 use Laravel\Gettext\Gettext as LGettext;
 use Laravel\FormManager\Form;
 use Meta;
-
 use Admin\Http\Controllers\Controller;
 
 class Gettext extends Controller
@@ -45,7 +43,7 @@ class Gettext extends Controller
             'form' => $form,
             'current' => $locale,
             'locales' => $config['locales'],
-            'entries' => $entries
+            'entries' => $entries,
         ]);
     }
 

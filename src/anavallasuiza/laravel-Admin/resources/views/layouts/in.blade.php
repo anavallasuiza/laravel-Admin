@@ -1,4 +1,6 @@
-<?php use Admin\Library\Html; ?>
+<?php use Admin\Library\Html;
+
+?>
 
 @extends('admin::layouts.master')
 

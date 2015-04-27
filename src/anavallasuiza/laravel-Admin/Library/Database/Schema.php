@@ -1,4 +1,6 @@
-<?php namespace Admin\Library\Database;
+<?php
+
+namespace Admin\Library\Database;
 
 use Closure;
 use App;

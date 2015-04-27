@@ -1,4 +1,6 @@
-<?php namespace Admin\Library\Database;
+<?php
+
+namespace Admin\Library\Database;
 
 use Schema as LSchema;
 use Illuminate\Database\Migrations\Migration as LMigration;
@@ -15,7 +17,7 @@ class Migration extends LMigration
         $sql = '';
 
         foreach (Schema::getTables() as $table) {
-            $sql .= "\n".implode("\n", array_map(function($row) {
+            $sql .= "\n".implode("\n", array_map(function ($row) {
                 return $row.';';
             }, $table->toSql($connection, $grammar)));
         }

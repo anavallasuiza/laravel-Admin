@@ -1,11 +1,12 @@
-<?php namespace Admin\Http\Processors;
+<?php
+
+namespace Admin\Http\Processors;
 
 use ErrorException;
 use Auth;
 use Input;
 use Redirect;
 use Request;
-use Session;
 use Admin\Models;
 
 class Admin extends Processor

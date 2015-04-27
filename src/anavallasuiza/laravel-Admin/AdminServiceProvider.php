@@ -1,9 +1,9 @@
-<?php namespace Admin;
+<?php
+
+namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Admin\Console\Commands;
-use Admin\Library;
-
 class AdminServiceProvider extends ServiceProvider
 {
     /**
@@ -41,11 +41,11 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerCommands()
     {
-        $this->app->singleton('command.admin.publish.assets', function($app) {
+        $this->app->singleton('command.admin.publish.assets', function ($app) {
             return new Commands\PublishAssets();
         });
 
-        $this->app->singleton('command.admin.user.new', function($app) {
+        $this->app->singleton('command.admin.user.new', function ($app) {
             return new Commands\UserNew();
         });
 
@@ -62,7 +62,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         return [
             'command.admin.publish.assets',
-            'command.admin.user.new'
+            'command.admin.user.new',
         ];
     }
 }

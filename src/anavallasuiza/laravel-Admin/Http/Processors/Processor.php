@@ -1,11 +1,9 @@
-<?php namespace Admin\Http\Processors;
+<?php
+
+namespace Admin\Http\Processors;
 
 use Laravel\Processor\Processors\ProcessorTrait;
-
-use ErrorException;
 use Auth;
-use Input;
-use Request;
 use Session;
 
 abstract class Processor

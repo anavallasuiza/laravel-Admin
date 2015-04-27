@@ -1,4 +1,6 @@
-<?php namespace Admin\Http\Controllers\Management;
+<?php
+
+namespace Admin\Http\Controllers\Management;
 
 use Input;
 use Admin\Http\Controllers\Controller;

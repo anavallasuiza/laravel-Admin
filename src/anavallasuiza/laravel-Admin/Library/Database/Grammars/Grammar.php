@@ -1,4 +1,6 @@
-<?php namespace Admin\Library\Database\Grammars;
+<?php
+
+namespace Admin\Library\Database\Grammars;
 
 use ReflectionClass;
 use Schema;
@@ -19,7 +21,7 @@ class Grammar
         $grammar = (new ReflectionClass($grammar))->getShortName();
         $grammar = __NAMESPACE__.'\\'.$grammar;
 
-        $grammar = $connection->withTablePrefix(new $grammar);
+        $grammar = $connection->withTablePrefix(new $grammar());
 
         $connection->setSchemaGrammar($grammar);
 

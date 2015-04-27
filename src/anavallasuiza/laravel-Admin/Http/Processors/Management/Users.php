@@ -1,4 +1,6 @@
-<?php namespace Admin\Http\Processors\Management;
+<?php
+
+namespace Admin\Http\Processors\Management;
 
 use Exception;
 use Admin\Http\Processors\Processor;

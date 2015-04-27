@@ -1,4 +1,6 @@
-<?php namespace Admin\Library;
+<?php
+
+namespace Admin\Library;
 
 class Logs
 {

@@ -1,6 +1,9 @@
-<?php namespace Admin\Library;
+<?php
 
-class Helpers {
+namespace Admin\Library;
+
+class Helpers
+{
     public static function slug($string)
     {
         $string = preg_replace('/[^\p{L}0-9]/u', '-', trim(strip_tags($string)));
@@ -10,5 +13,12 @@ class Helpers {
         $string = preg_replace('/^\-|\-$/', '', $string);
 
         return strtolower($string);
+    }
+
+    public static function camelcase($string)
+    {
+        return ucfirst(preg_replace_callback('/\-([a-z])/', function ($matches) {
+            return ucfirst($matches[1]);
+        }, $string));
     }
 }

@@ -1,4 +1,7 @@
 <?php
+
+use Admin\Library\Helpers;
+
 require __DIR__.'/filters.php';
 
 $prefix = config('admin.admin.prefix');
@@ -19,17 +22,18 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
         'uses' => 'Admin\Http\Controllers\Admin@index',
     ]);
 
+    Route::get('/database/{table}/{action}', ['as' => 'admin.database', function ($table, $action) {
+        $class = 'Admin\\Http\\Controllers\\Database\\'.Helpers::camelcase($table);
+
+        App::make($class)->$action();
+    }]);
+
     Route::get('/logout', [
         'as' => 'admin.logout',
         'uses' => 'Admin\Http\Controllers\Admin@logout',
     ]);
 
     Route::group(['before' => 'admin.admin'], function () {
-        Route::get('/management/database', [
-            'as' => 'admin.management.database.index',
-            'uses' => 'Admin\Http\Controllers\Management\Database@index',
-        ]);
-
         Route::get('/management/users', [
             'as' => 'admin.management.users.index',
             'uses' => 'Admin\Http\Controllers\Management\Users@index',

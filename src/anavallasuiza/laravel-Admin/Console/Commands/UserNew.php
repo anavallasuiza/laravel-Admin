@@ -1,4 +1,6 @@
-<?php namespace Admin\Console\Commands;
+<?php
+
+namespace Admin\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -53,7 +55,7 @@ class UserNew extends Command
                 'user' => $data['user'],
                 'password' => Hash::make($data['password']),
                 'admin' => ($data['admin'] && ($data['admin'] !== 'false')),
-                'enabled' => 1
+                'enabled' => 1,
             ]);
         } catch (Exception $e) {
             $this->error($e->getMessage());
@@ -85,7 +87,7 @@ class UserNew extends Command
             ['name', '', InputOption::VALUE_REQUIRED, 'User name.'],
             ['user', '', InputOption::VALUE_REQUIRED, 'Login user.'],
             ['password', '', InputOption::VALUE_REQUIRED, 'Login password.'],
-            ['admin', '', InputOption::VALUE_OPTIONAL, 'Set User as Admin.']
+            ['admin', '', InputOption::VALUE_OPTIONAL, 'Set User as Admin.'],
         ];
     }
 }

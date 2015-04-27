@@ -1,4 +1,6 @@
-<?php use Admin\Library\Html; ?>
+<?php use Admin\Library\Html;
+
+?>
 
 <div class="box-footer clearfix">
     <a href="{{ Html::query('_processor', 'downloadCSV') }}" class="pull-left btn btn-info">

@@ -1,4 +1,6 @@
-<?php namespace Admin\Http\Controllers\Management;
+<?php
+
+namespace Admin\Http\Controllers\Management;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

@@ -1,4 +1,6 @@
-<?php namespace Admin\Console\Commands;
+<?php
+
+namespace Admin\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
