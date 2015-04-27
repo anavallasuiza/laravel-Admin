@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Admin\\": ["src/anavallasuiza/laravel-Admin/", "/admin/"]
+            "Admin\\": ["src/anavallasuiza/laravel-Admin/", "../../../admin/"]
         }
     },
     "minimum-stability": "dev"
