@@ -12,7 +12,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "anavallasuiza/laravel-admin": "dev-master"
+        "anavallasuiza/laravel-admin": "dev-develop"
     }
 }
 ```
@@ -48,8 +48,6 @@ Publish the base admin configuration:
 php artisan vendor:publish
 ```
 
-```
-
 Publish admin assets with:
 
 ```bash
@@ -65,8 +63,6 @@ php artisan migrate
 And finally, create your first admin user:
 
 ```bash
-php artisan migrate
-
 php artisan admin:user:new --name Admin --user admin --password admin --admin true
 ```
 
