@@ -4,6 +4,7 @@ namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Admin\Console\Commands;
+use Config;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,7 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands();
+        $this->registerAuth();
     }
 
     protected function registerCommands()
@@ -53,6 +55,12 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->commands('command.admin.publish.assets');
         $this->commands('command.admin.user.new');
+    }
+
+    protected function registerAuth()
+    {
+        Config::set('session.cookie', config('session.cookie').'_admin');
+        Config::set('auth', config('admin.auth'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Admin\Http\Controllers;
 
+use Redirect;
 use Response;
 use Meta;
 
@@ -21,6 +22,10 @@ class Admin extends Controller
 
     public function login()
     {
+        if ($this->user) {
+            return Redirect::back();
+        }
+
         $form = new Forms\Users\Login();
 
         if (is_object($processor = $this->processor(__FUNCTION__, $form))) {
