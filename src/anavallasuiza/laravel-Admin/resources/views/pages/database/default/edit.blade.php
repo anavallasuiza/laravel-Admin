@@ -16,11 +16,7 @@
         </div>
     </div>
 
-    <div class="box-footer clearfix">
-        <button type="submit" class="btn btn-success pull-right">
-            {{ $row->id ? __('Update') : __('Create') }}
-        </button>
-    </div>
+    @include ('admin::molecules.edit-footer')
 </form>
 
 @stop
