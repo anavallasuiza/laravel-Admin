@@ -52,4 +52,29 @@ class Users extends Processor
 
         return Redirect::route('admin.management.users.edit', $row->id);
     }
+
+    public function delete($form, $row)
+    {
+        if (!($data = $this->check(__FUNCTION__))) {
+            return $data;
+        }
+
+        if ($row->id === $this->user->id) {
+            Session::flash('flash-message', [
+                'message' => __('You can not delete your own user'),
+                'status' => 'danger',
+            ]);
+
+            return false;
+        }
+
+        $row->delete();
+
+        Session::flash('flash-message', [
+            'message' => __('Data was saved successfully'),
+            'status' => 'success',
+        ]);
+
+        return Redirect::route('admin.management.users.index');
+    }
 }

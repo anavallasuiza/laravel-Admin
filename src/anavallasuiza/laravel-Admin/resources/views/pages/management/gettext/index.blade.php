@@ -38,16 +38,13 @@
                 <div class="form-group gettext-group">
                     <label for="entry-{{ ++$i }}">{{{ $entry->getOriginal() }}}</label>
 
-                    <?php if ($entry->lines) {
-    ?>
+                    <?php if ($entry->lines) { ?>
                     <a href="#" class="fa fa-info-circle show-references"></a>
 
                     <ul class="list-unstyled references text-muted">
                         <li>{{ implode('</li><li>', $entry->lines) }}</li>
                     </ul>
-                    <?php
-
-} ?>
+                    <?php } ?>
 
                     <input id="entry-{{ $i }}" type="text" name="translations[{{{ $entry->getOriginal() }}}]" value="{{{ $entry->getTranslation() }}}" class="form-control" />
                 </div>
@@ -58,11 +55,11 @@
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_processor" value="save" class="btn btn-success">
+            <button type="submit" name="_processor" value="save" class="btn btn-success">
                 {{ __('Save') }}
             </button>
 
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_processor" value="download" class="btn btn-primary">
+            <button type="submit" name="_processor" value="download" class="btn btn-primary">
                 {{ __('Download translations') }}
             </button>
         </div>

@@ -1,7 +1,3 @@
-<?php if (empty($I->admin)) {
-    return;
-} ?>
-
 <div class="box-footer clearfix">
     @if ($row->id)
 

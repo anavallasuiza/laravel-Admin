@@ -7,9 +7,7 @@
         {{ __('Download CSV') }}
     </a>
 
-    @if ($I->admin)
     <a href="{{ route('admin.'.$MODEL.'.edit') }}" class="pull-right btn btn-success">
         {{ __('New') }}
     </a>
-    @endif
 </div>

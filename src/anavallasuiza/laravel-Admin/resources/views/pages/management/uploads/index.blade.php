@@ -123,7 +123,7 @@
                         {{ __('No, cancel') }}
                     </button>
 
-                    <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger">
                         <i class="fa fa-trash"></i>
                         {{ __('Yes, Delete') }}
                     </button>

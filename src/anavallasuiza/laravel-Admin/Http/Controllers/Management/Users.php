@@ -31,6 +31,10 @@ class Users extends Controller
     {
         $row = $this->getRow($id);
 
+        if ($id && is_object($processor = $this->processor('delete', null, $row))) {
+            return $processor;
+        }
+
         $form = new Forms\Users\Edit();
 
         if (is_object($processor = $this->processor(__FUNCTION__, $form, $row))) {

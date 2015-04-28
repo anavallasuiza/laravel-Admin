@@ -17,7 +17,7 @@
     </div>
 
     <div class="box-footer clearfix">
-        <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} class="btn btn-success pull-right">
+        <button type="submit" class="btn btn-success pull-right">
             {{ $row->id ? __('Update') : __('Create') }}
         </button>
     </div>
