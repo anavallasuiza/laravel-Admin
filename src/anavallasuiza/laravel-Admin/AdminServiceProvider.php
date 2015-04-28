@@ -5,6 +5,7 @@ namespace Admin;
 use Illuminate\Support\ServiceProvider;
 use Admin\Console\Commands;
 use Config;
+use Request;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -14,13 +15,29 @@ class AdminServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+    protected static $admin;
+
+    private function isAdmin()
+    {
+        if (self::$admin !== null) {
+            return self::$admin;
+        }
+
+        return self::$admin = (config('admin.admin.prefix') === Request::segment(1));
+    }
 
     /**
      * Bootstrap the application events.
      */
     public function boot()
     {
+        if (!self::isAdmin()) {
+            return null;
+        }
+
         include __DIR__.'/Http/routes.php';
+
+        $this->registerAuth();
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
         $this->loadViewsFrom(base_path('admin/resources/views'), 'admin-app');
@@ -40,7 +57,6 @@ class AdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands();
-        $this->registerAuth();
     }
 
     protected function registerCommands()
