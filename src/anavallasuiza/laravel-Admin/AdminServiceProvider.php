@@ -37,7 +37,7 @@ class AdminServiceProvider extends ServiceProvider
 
         include __DIR__.'/Http/routes.php';
 
-        $this->registerAuth();
+        $this->bootAuth();
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
         $this->loadViewsFrom(base_path('admin/resources/views'), 'admin-app');
@@ -49,6 +49,12 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/database/migrations' => base_path('database/migrations'),
         ]);
+    }
+
+    protected function bootAuth()
+    {
+        Config::set('session.cookie', config('session.cookie').'_admin');
+        Config::set('auth', config('admin.auth'));
     }
 
     /**
@@ -71,12 +77,6 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->commands('command.admin.publish.assets');
         $this->commands('command.admin.user.new');
-    }
-
-    protected function registerAuth()
-    {
-        Config::set('session.cookie', config('session.cookie').'_admin');
-        Config::set('auth', config('admin.auth'));
     }
 
     /**

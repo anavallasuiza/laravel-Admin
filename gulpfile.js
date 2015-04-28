@@ -23,6 +23,7 @@ var paths = {
 
 var directories = {};
 
+directories[paths.from.vendor   + 'select2/*'] = paths.to.build + 'select2';
 directories[paths.from.vendor   + 'bootstrap-fileinput/img/*'] = paths.to.build + 'bootstrap-fileinput/img',
 directories[paths.from.vendor   + 'bootstrap/dist/fonts/*'] = paths.to.build + 'fonts';
 directories[paths.from.vendor   + 'font-awesome/fonts/*'] = paths.to.build + 'fonts';
@@ -32,7 +33,7 @@ var js_files = [
     paths.from.vendor   + 'jquery/dist/jquery.min.js',
     paths.from.vendor   + 'bootstrap/dist/js/bootstrap.min.js',
     paths.from.vendor   + 'summernote/dist/summernote.min.js',
-    paths.from.vendor   + 'select2/dist/js/select2.min.js',
+    paths.from.vendor   + 'select2/select2.min.js',
     paths.from.vendor   + 'bootstrap-fileinput/js/fileinput.min.js',
     paths.from.vendor   + 'DataTables/media/js/jquery.dataTables.min.js',
     paths.from.adminlte + 'plugins/datatables/dataTables.bootstrap.js',
@@ -43,7 +44,8 @@ var css_files = [
     paths.from.vendor   + 'bootstrap/dist/css/bootstrap.min.css',
     paths.from.vendor   + 'font-awesome/css/font-awesome.min.css',
     paths.from.vendor   + 'summernote/dist/summernote.css',
-    paths.from.vendor   + 'select2/dist/css/select2.min.css',
+    paths.from.vendor   + 'select2/select2.css',
+    paths.from.vendor   + 'select2-bootstrap-css/select2-bootstrap.min.css',
     paths.from.vendor   + 'bootstrap-fileinput/css/fileinput.min.css',
     paths.from.adminlte + 'plugins/datatables/dataTables.bootstrap.css',
     paths.from.adminlte + 'dist/css/AdminLTE.min.css',
@@ -74,6 +76,7 @@ gulp.task('css', ['css:clean'], function() {
         .pipe(concat('app.min.css'))
         .pipe(minifycss({keepSpecialComments: 0, processImport: false}))
         .pipe(replace(/url\(images/g, "url(../datatables/images"))
+        .pipe(replace(/url\(select2/g, "url(../select2/select2"))
         .pipe(replace(/url\(..\/img/g, "url(../bootstrap-fileinput/img"))
         .pipe(replace(/@import[^;]+;/g, ''))
         .pipe(gulp.dest(paths.to.css));

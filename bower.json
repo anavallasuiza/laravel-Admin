@@ -9,9 +9,9 @@
     "jquery": "2.*",
     "font-awesome": "4.3.*",
     "bootstrap": "3.3.*",
-    "DataTables": "latest",
-    "select2": "latest",
-    "bootstrap-fileinput": "latest",
-    "summernote": "latest"
+    "DataTables": "1.10.*",
+    "select2": "3.*",
+    "bootstrap-fileinput": "4.1.*",
+    "summernote": "0.6.*"
   }
 }
