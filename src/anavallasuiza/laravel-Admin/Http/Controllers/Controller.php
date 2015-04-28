@@ -41,9 +41,9 @@ abstract class Controller extends BaseController
         return view('admin::pages.'.$template, $params);
     }
 
-    protected function indexView($model, $fields, $template)
+    protected function indexView($model, $template)
     {
-        $filter = self::filter($fields);
+        $filter = $this->filter();
         $list = $model->filter($filter);
 
         if (is_object($processor = $this->processor('downloadCSV', null, $list))) {
@@ -61,7 +61,7 @@ abstract class Controller extends BaseController
         ]);
     }
 
-    public static function filter(array $fields)
+    public function filter()
     {
         $all = Input::all();
 
@@ -73,27 +73,27 @@ abstract class Controller extends BaseController
 
         $f = [];
 
-        if ((strlen($all['f-search-c']) === 0) || !in_array($all['f-search-c'], $fields, true)) {
-            $f['search-c'] = '';
-        } else {
-            $f['search-c'] = $all['f-search-c'];
-        }
-
         if (strlen($all['f-search-q']) === 0) {
             $f['search-q'] = '';
         } else {
             $f['search-q'] = $all['f-search-q'];
         }
 
+        if ((strlen($all['f-search-c']) === 0) || !in_array($all['f-search-c'], $this->fields, true)) {
+            $f['search-c'] = $f['search-q'] ? $this->fields : '';
+        } else {
+            $f['search-c'] = $all['f-search-c'];
+        }
+
         if (empty($all['f-sort'])) {
-            $f['sort'] = $fields[0].' DESC';
+            $f['sort'] = $this->fields[0].' DESC';
         } else {
             list($field, $mode) = explode(' ', $all['f-sort']);
 
-            if (in_array($field, $fields, true)) {
+            if (in_array($field, $this->fields, true)) {
                 $f['sort'] = $field.' '.(($mode === 'DESC') ? 'DESC' : 'ASC');
             } else {
-                $f['sort'] = $fields[0].' DESC';
+                $f['sort'] = $this->fields[0].' DESC';
             }
         }
 

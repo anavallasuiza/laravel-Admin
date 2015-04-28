@@ -12,7 +12,7 @@ class Update extends Controller
 
     public function index()
     {
-        if (is_object($processor = $this->processor('AUTO'))) {
+        if (is_object($processor = $this->processor(self::$processors))) {
             return $processor;
         }
 

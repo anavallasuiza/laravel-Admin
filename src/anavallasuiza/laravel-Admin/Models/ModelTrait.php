@@ -2,6 +2,8 @@
 
 namespace Admin\Models;
 
+use Schema;
+
 trait ModelTrait
 {
     public function scopeFilter($query, $filter)

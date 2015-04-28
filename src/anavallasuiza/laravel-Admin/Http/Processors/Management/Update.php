@@ -53,17 +53,17 @@ class Update extends Processor
 
     public function git()
     {
-        return $this->exec(__FUNCTION__, 'git pull -u origin master');
+        return $this->exec(__FUNCTION__, 'git pull -u origin '.env('GIT_BRANCH'));
     }
 
     public function composer()
     {
-        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer update');
+        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer install');
     }
 
     public function npm()
     {
-        return $this->exec(__FUNCTION__, 'npm install; npm update');
+        return $this->exec(__FUNCTION__, 'npm install');
     }
 
     public function bower()
