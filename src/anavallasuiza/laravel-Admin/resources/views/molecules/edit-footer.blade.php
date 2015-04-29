@@ -56,7 +56,7 @@
 
     <div class="pull-right">
         <button type="submit" class="btn btn-success">
-            {{ __('Create new') }}
+            {{ __('Save') }}
         </button>
     </div>
 

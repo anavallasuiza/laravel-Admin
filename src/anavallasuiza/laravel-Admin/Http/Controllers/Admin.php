@@ -23,7 +23,7 @@ class Admin extends Controller
     public function login()
     {
         if ($this->user) {
-            return Redirect::back();
+            return Redirect::route('admin.index');
         }
 
         $form = new Forms\Users\Login();

@@ -60,9 +60,15 @@ trait ModelTrait
         $action = empty($row->id) ? 'insert' : 'update';
 
         foreach ($data as $key => $value) {
-            if (!is_array($value)) {
-                $row->$key = $value;
+            if (is_array($value)) {
+                continue;
             }
+
+            if (empty($value)) {
+                $value = strstr('_id', $key) ? null : $value;
+            }
+
+            $row->$key = $value;
         }
 
         $row->save();
