@@ -10,7 +10,7 @@ class Html
             return $html;
         }
 
-        $html = self::xss($html);
+        $html = '<p>'.self::xss($html).'</p>';
 
         $valid = 'class|src|target|alt|title|href|rel';
 
