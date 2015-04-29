@@ -14,6 +14,9 @@ class Html
 
         $valid = 'class|src|target|alt|title|href|rel';
 
+        $html = preg_replace('#<(font|span) style="font-weight[^"]+">([^<]+)</(font|span)>#i', '<strong>$2</strong>', $html);
+        $html = preg_replace('#<(font|span) style="font-style:\s*italic[^"]+">([^<]+)</(font|span)>#i', '<i>$2</i>', $html);
+
         $html = preg_replace('# ('.$valid.')=#i', ' |$1|', $html);
         $html = preg_replace('# [a-z]+=["\'][^"\']*["\']#i', '', $html);
         $html = preg_replace('#\|('.$valid.')\|#i', ' $1=', $html);

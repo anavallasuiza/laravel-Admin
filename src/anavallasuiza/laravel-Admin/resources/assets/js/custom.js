@@ -158,6 +158,7 @@ $(function() {
     $('.sidebar .treeview').tree();
 
     $('.htmleditor').summernote({
+        styleWithSpan: false,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['para', ['ul', 'ol', 'paragraph']],
