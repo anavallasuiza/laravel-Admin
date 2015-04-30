@@ -21,4 +21,11 @@ class Helpers
             return ucfirst($matches[1]);
         }, $string));
     }
+
+    public static function locale()
+    {
+        $cookie = config('gettext.cookie');
+
+        return isset($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : config('gettext.locales')[0];
+    }
 }

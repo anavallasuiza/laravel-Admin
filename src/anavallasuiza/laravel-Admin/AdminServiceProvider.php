@@ -37,8 +37,6 @@ class AdminServiceProvider extends ServiceProvider
 
         include __DIR__.'/Http/routes.php';
 
-        $this->bootAuth();
-
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
         $this->loadViewsFrom(base_path('admin/resources/views'), 'admin-app');
 
@@ -51,18 +49,23 @@ class AdminServiceProvider extends ServiceProvider
         ]);
     }
 
-    protected function bootAuth()
-    {
-        Config::set('session.cookie', config('session.cookie').'_admin');
-        Config::set('auth', config('admin.auth'));
-    }
-
     /**
      * Register the service provider.
      */
     public function register()
     {
+        if (self::isAdmin()) {
+            $this->registerConfig();
+        }
+
         $this->registerCommands();
+    }
+
+    protected function registerConfig()
+    {
+        Config::set('session.cookie', config('session.cookie').'_admin');
+        Config::set('gettext.cookie', config('gettext.cookie').'_admin');
+        Config::set('auth', config('admin.auth'));
     }
 
     protected function registerCommands()

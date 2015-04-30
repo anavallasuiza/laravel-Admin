@@ -4,6 +4,7 @@ namespace Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Laravel\Processor\Controllers\ProcessorTrait;
+use Admin\Library;
 use Auth;
 use Config;
 use Input;
@@ -31,7 +32,7 @@ abstract class Controller extends BaseController
             'ROUTE' => $route,
             'TABLE' => ($database ? Request::segment(3) : null),
             'LOCALES' => config('gettext.locales'),
-            'LOCALE' => ($this->locale = Session::get('locale')),
+            'LOCALE' => ($this->locale = Library\Helpers::locale()),
             'I' => ($this->user = Auth::user()),
         ]);
     }

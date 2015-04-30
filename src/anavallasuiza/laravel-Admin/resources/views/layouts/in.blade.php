@@ -29,7 +29,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                             @foreach ($LOCALES as $locale)
-                            <li role="presentation"><a role="menuitem" href="{{ Html::query('locale', $locale) }}" tabindex="-1">{{ __('language-'.$locale) }}</a></li>
+                            <li role="presentation"><a role="menuitem" href="{{ Html::query('locale_admin', $locale) }}" tabindex="-1">{{ __('language-'.$locale) }}</a></li>
                             @endforeach
                         </ul>
                     </li>

@@ -3,6 +3,7 @@
 namespace Admin\Http\Processors;
 
 use Laravel\Processor\Processors\ProcessorTrait;
+use Admin\Library;
 use Auth;
 use Session;
 
@@ -16,6 +17,6 @@ abstract class Processor
     public function __construct()
     {
         $this->user = Auth::user();
-        $this->locale = Session::get('locale');
+        $this->locale = Library\Helpers::locale();
     }
 }
