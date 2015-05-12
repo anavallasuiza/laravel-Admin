@@ -79,10 +79,12 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerAliases()
     {
-        $this->app->alias('Collection', 'Illuminate\Database\Eloquent\Collection');
-        $this->app->alias('Meta', 'Laravel\Meta\Facade');
-        $this->app->alias('Packer', 'Laravel\Packer\Facade');
-        $this->app->alias('Gettext', 'Laravel\Gettext\Facade');
+        $loader = AliasLoader::getInstance();
+
+        $loader->alias('Collection', 'Illuminate\Database\Eloquent\Collection');
+        $loader->alias('Meta', 'Laravel\Meta\Facade');
+        $loader->alias('Packer', 'Laravel\Packer\Facade');
+        $loader->alias('Gettext', 'Laravel\Gettext\Facade');
     }
 
     protected function registerCommands()
