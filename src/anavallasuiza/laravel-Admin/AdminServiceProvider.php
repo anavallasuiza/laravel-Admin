@@ -56,6 +56,8 @@ class AdminServiceProvider extends ServiceProvider
     {
         if (self::isAdmin()) {
             $this->registerConfig();
+            $this->registerProviders();
+            $this->registerAliases();
         }
 
         $this->registerCommands();
@@ -66,6 +68,21 @@ class AdminServiceProvider extends ServiceProvider
         Config::set('session.cookie', config('session.cookie').'_admin');
         Config::set('gettext.cookie', config('gettext.cookie').'_admin');
         Config::set('auth', config('admin.auth'));
+    }
+
+    protected function registerProviders()
+    {
+        $this->app->register('Laravel\Meta\MetaServiceProvider');
+        $this->app->register('Laravel\Packer\PackerServiceProvider');
+        $this->app->register('Laravel\Gettext\GettextServiceProvider');
+    }
+
+    protected function registerAliases()
+    {
+        $this->app->alias('Collection', 'Illuminate\Database\Eloquent\Collection');
+        $this->app->alias('Meta', 'Laravel\Meta\Facade');
+        $this->app->alias('Packer', 'Laravel\Packer\Facade');
+        $this->app->alias('Gettext', 'Laravel\Gettext\Facade');
     }
 
     protected function registerCommands()

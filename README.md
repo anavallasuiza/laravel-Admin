@@ -17,26 +17,13 @@ Begin by installing this package through Composer.
 }
 ```
 
-Configure Laravel Service Providers and Aliases in `config/app.php`:
+Configure Laravel Service Providers in `config/app.php`:
 
 ```php
 'providers' => [
     ...
 
-    'App\Providers\GettextServiceProvider',
-    'Laravel\Meta\MetaServiceProvider',
-    'Laravel\Packer\PackerServiceProvider'
     'Admin\AdminServiceProvider',
-
-    ...
-]
-
-'aliases' => [
-    ...
-
-    'Gettext'   => 'App\Facades\Gettext',
-    'Meta'     => 'Laravel\Meta\Facade',
-    'Packer'   => 'Laravel\Packer\Facade',
 
     ...
 ]
