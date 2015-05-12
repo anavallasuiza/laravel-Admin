@@ -30,7 +30,7 @@
     "scripts": {
         "post-update-cmd": [
             "php artisan admin:publish:assets"
-        ],
+        ]
     },
     "minimum-stability": "dev"
 }
