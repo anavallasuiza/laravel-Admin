@@ -3,6 +3,7 @@
 namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 use Admin\Console\Commands;
 use Config;
 use Request;
