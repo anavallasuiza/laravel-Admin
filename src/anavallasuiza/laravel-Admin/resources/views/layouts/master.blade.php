@@ -27,7 +27,7 @@
     <body id="top" class="skin-blue">
         @yield('body')
 
-        <script src="{{ url('admin/gettext.js') }}" type="text/javascript"></script>
+        <script src="{{ route('admin.gettext.js') }}" type="text/javascript"></script>
         <script src="{{ Html::elixir('js/app.min.js', 'admin') }}" type="text/javascript"></script>
     </body>
 </html>

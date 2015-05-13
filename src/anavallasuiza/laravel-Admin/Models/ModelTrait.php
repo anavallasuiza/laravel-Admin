@@ -6,18 +6,27 @@ use Schema;
 
 trait ModelTrait
 {
-    public function scopeFilter($query, $filter)
+    public function scopeFilter($query, $filters)
     {
-        if (isset($filter['search-q']) && isset($filter['search-q']) && strlen($filter['search-q'])) {
-            $query->search($filter['search-q'], $filter['search-c']);
-        }
-
-        if (isset($filter['sort']) && $filter['sort']) {
-            list($field, $mode) = explode(' ', $filter['sort']);
-            $query->orderBy($field, $mode);
-        }
+        self::filterSearch($query, $filters);
+        self::filterSort($query, $filters);
 
         return $query;
+    }
+
+    public static function filterSearch($query, $filters)
+    {
+        if (isset($filters['search-q']) && isset($filters['search-q']) && strlen($filters['search-q'])) {
+            $query->search($filters['search-q'], $filters['search-c']);
+        }
+    }
+
+    public static function filterSort($query, $filters)
+    {
+        if (isset($filters['sort']) && $filters['sort']) {
+            list($field, $mode) = explode(' ', $filters['sort']);
+            $query->orderBy($field, $mode);
+        }
     }
 
     public function scopeSearch($query, $q, $columns = [])

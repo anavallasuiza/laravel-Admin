@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Library;
 
 use Laravel\FormManager\Form as BaseForm;
