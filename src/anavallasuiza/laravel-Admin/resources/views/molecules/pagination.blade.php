@@ -1,7 +1,7 @@
 <div class="box-footer clearfix">
     <div class="row">
         <div class="col-sm-8 text-center">
-            {!! method_exists($list, 'render') ? $list->appends(Input::except('page'))->render() : '' !!}
+            {!! method_exists($list, 'render') ? str_replace('/?', '?', $list->appends(Input::except('page'))->render()) : '' !!}
         </div>
 
         <div class="col-sm-2">
