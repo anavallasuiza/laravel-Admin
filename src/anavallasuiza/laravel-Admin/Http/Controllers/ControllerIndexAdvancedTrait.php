@@ -14,7 +14,7 @@ trait ControllerIndexAdvancedTrait
         }
 
         $mode = ($filters['sort'][1] === 'DESC') ? 'ASC' : 'DESC';
-        $paginate = self::paginate($form['f-rows']->val(), [20, 50, 100, 200, -1]);
+        $paginate = self::paginate($filters['paginate'], [20, 50, 100, 200, -1]);
 
         return view($params['template'], [
             'list' => ($paginate ? $model->paginate($paginate) : $model->get()),
@@ -33,7 +33,7 @@ trait ControllerIndexAdvancedTrait
     private static function initFilters($form)
     {
         $v = $form->val();
-        $f = ['search' => [], 'sort' => []];
+        $f = ['search' => [], 'sort' => [], 'paginate' => ''];
 
         foreach ($v['filters'] as $index => $filter) {
             if (strlen($filter['f-search-q'])) {
@@ -47,11 +47,13 @@ trait ControllerIndexAdvancedTrait
             $form['filters']->pushVal();
         }
 
-        if ($v['f-sort-f'] && $v['f-sort-m']) {
-            $f['sort'] = [$v['f-sort-f'], $v['f-sort-m']];
+        if ($v['f-sort']) {
+            $f['sort'] = explode(' ', $v['f-sort']);
         } else {
             $f['sort'] = ['id', 'DESC'];
         }
+
+        $f['paginate'] = (int)$form['f-rows']->val();
 
         return $f;
     }
@@ -91,7 +93,7 @@ trait ControllerIndexAdvancedTrait
         });
     }
 
-    private static function paginate($value, array $valid = [])
+    private static function paginate($value, array $valid)
     {
         if (empty($value) || !in_array($value, $valid, true)) {
             return $valid[0];

@@ -24,8 +24,7 @@ trait ModelTrait
     public static function filterSort($query, $filters)
     {
         if (isset($filters['sort']) && $filters['sort']) {
-            list($field, $mode) = explode(' ', $filters['sort']);
-            $query->orderBy($field, $mode);
+            $query->orderBy($filters['sort'][0], $filters['sort'][1]);
         }
     }
 

@@ -7,29 +7,29 @@ trait ControllerIndexSimpleTrait
 {
     protected function indexView($params)
     {
-        $filter = $this->filter($params['fields']);
-        $list = $params['model']->filter($filter);
+        $filters = self::initFilters($params['fields']);
+        $list = $params['model']->filter($filters);
 
         if (is_object($processor = $this->processor('downloadCSV', null, $list))) {
             return $processor;
         }
 
-        $mode = ((explode(' ', $filter['sort'])[1] === 'DESC') ? 'ASC' : 'DESC');
-        $paginate = self::paginate('rows', [20, 50, 100, 200, -1]);
+        $mode = ($filters['sort'][1] === 'DESC') ? 'ASC' : 'DESC';
+        $paginate = self::paginate($filters['paginate'], [20, 50, 100, 200, -1]);
 
         return view($params['template'], [
             'list' => ($paginate ? $list->paginate($paginate) : $list->get()),
             'paginate' => $paginate,
-            'filter' => $filter,
-            'mode' => $mode,
+            'filter' => $filters,
+            'mode' => $mode
         ]);
     }
 
-    public function filter($fields)
+    private static function initFilters($fields)
     {
         $all = Input::all();
 
-        foreach (['f-search-c', 'f-search-q', 'f-sort'] as $field) {
+        foreach (['f-search-c', 'f-search-q', 'f-sort', 'f-rows'] as $field) {
             if (!isset($all[$field]) || (strlen($all[$field]) === 0)) {
                 $all[$field] = '';
             }
@@ -50,26 +50,26 @@ trait ControllerIndexSimpleTrait
         }
 
         if (empty($all['f-sort'])) {
-            $f['sort'] = $fields[0].' DESC';
+            $f['sort'] = [$fields[0], 'DESC'];
         } else {
             list($field, $mode) = explode(' ', $all['f-sort']);
 
             if (in_array($field, $fields, true)) {
-                $f['sort'] = $field.' '.(($mode === 'DESC') ? 'DESC' : 'ASC');
+                $f['sort'] = [$field, (($mode === 'DESC') ? 'DESC' : 'ASC')];
             } else {
-                $f['sort'] = $fields[0].' DESC';
+                $f['sort'] = [$fields[0], 'DESC'];
             }
         }
+
+        $f['paginate'] = (int)$all['f-rows'];
 
         return $f;
     }
 
-    public static function paginate($name, array $valid = [], $default = 20)
+    private static function paginate($value, array $valid)
     {
-        $value = (int) Input::get($name);
-
         if (empty($value) || !in_array($value, $valid, true)) {
-            return $default;
+            return $valid[0];
         } elseif ($value === -1) {
             return;
         } else {

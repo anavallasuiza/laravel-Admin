@@ -3,19 +3,25 @@
 namespace Admin\Http\Controllers\Management;
 
 use Admin\Http\Controllers\Controller;
+use Admin\Http\Controllers\ControllerIndexSimpleTrait;
 use Admin\Models;
 use Meta;
 use View;
+use App;
 
 class Users extends Controller
 {
-    protected $fields = ['user', 'name', 'admin', 'enabled'];
+    use ControllerIndexSimpleTrait;
 
     public function index()
     {
         Meta::meta('title', __('List Admin Users'));
 
-        return $this->indexView(Models\User::orderBy('id', 'DESC'), 'admin::pages.management.users.index');
+        return $this->indexView([
+            'model' => App::make('Admin\\Models\\User'),
+            'template' => 'admin::pages.management.users.index',
+            'fields' => ['user', 'name', 'admin', 'enabled']
+        ]);
     }
 
     private function getRow($id)

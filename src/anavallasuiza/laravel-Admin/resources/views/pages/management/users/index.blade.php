@@ -4,7 +4,7 @@
 <div class="box">
     <div class="box-body">
         <form method="get" class="form-group">
-            <input type="search" name="search" value="{{ Input::get('search-q') }}" class="form-control" placeholder="{{ __('Search') }}" />
+            <input type="search" name="f-search-q" value="{{ Input::get('f-search-q') }}" class="form-control" placeholder="{{ __('Search') }}" />
         </form>
 
         <table class="table table-hover">
