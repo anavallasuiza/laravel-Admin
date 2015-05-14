@@ -16,8 +16,8 @@ trait FormsIndexAdvancedTrait
 
         return $this->method('get')->add([
             'filters' => $filters,
-            'f-rows' => B::number(),
-            'f-sort' => B::text()
+            'f-rows' => B::hidden(),
+            'f-sort' => B::hidden()
         ])->setRender('Bootstrap');
     }
 }

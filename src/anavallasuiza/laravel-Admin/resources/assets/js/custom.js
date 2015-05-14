@@ -1,3 +1,26 @@
+function updateQuery (key, value) {
+    var queryString = location.search.slice(1),
+        params = {};
+
+    queryString.replace(/([^=]*)=([^&]*)&*/g, function (_, key, value) {
+        params[key] = value;
+    });
+
+    params[key] = value;
+
+    var query = [];
+
+    for (current in params) {
+        if (!params.hasOwnProperty(current)) {
+            continue;
+        }
+
+        query.push(current + '=' + params[current]);
+    }
+
+    location.search = query.join('&');
+}
+
 $(function() {
     'use strict';
 
@@ -278,10 +301,10 @@ $(function() {
             $form = $this.closest('form');
 
         if ($form.length) {
-            $form.submit();
-        } else {
-            window.location = '?' + $this.attr('name') + '=' + encodeURIComponent($this.val());
+            return $form.submit();
         }
+
+        updateQuery($this.attr('name'), $this.val());
     });
 
     $('[data-print]').on('click', function (e) {

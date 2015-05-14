@@ -1,4 +1,6 @@
-<form method="get">
+<form action="?" method="get">
+    {!! $form['f-rows'].$form['f-sort'] !!}
+
     @foreach ($form['filters'] as $filter)
     <div class="row advanced-search">
         <div class="col-xs-12 col-sm-4 col-lg-2">
