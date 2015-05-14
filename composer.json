@@ -26,10 +26,5 @@
             "Admin\\": ["src/anavallasuiza/laravel-Admin/", "../../../admin/"]
         }
     },
-    "scripts": {
-        "post-update-cmd": [
-            "php artisan admin:publish:assets"
-        ]
-    },
     "minimum-stability": "dev"
 }
