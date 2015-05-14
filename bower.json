@@ -11,6 +11,7 @@
     "bootstrap": "3.3.*",
     "DataTables": "1.10.*",
     "select2": "3.*",
+    "select2-bootstrap-css": "1.4.*",
     "bootstrap-fileinput": "4.1.*",
     "summernote": "0.6.*"
   }
