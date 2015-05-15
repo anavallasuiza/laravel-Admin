@@ -16,13 +16,13 @@ trait ControllerIndexAdvancedTrait
         $mode = ($filters['sort'][1] === 'DESC') ? 'ASC' : 'DESC';
         $paginate = self::paginate($filters['paginate'], [20, 50, 100, 200, -1]);
 
-        return view($params['template'], [
+        return view($params['template'], array_merge([
             'list' => ($paginate ? $model->paginate($paginate) : $model->get()),
             'paginate' => $paginate,
             'filters' => $filters,
             'mode' => $mode,
             'form' => $form
-        ]);
+        ], array_key_exists('share', $params) ? $params['share'] : []));
     }
 
     private static function loadForm($form)

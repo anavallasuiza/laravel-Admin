@@ -17,12 +17,12 @@ trait ControllerIndexSimpleTrait
         $mode = ($filters['sort'][1] === 'DESC') ? 'ASC' : 'DESC';
         $paginate = self::paginate($filters['paginate'], [20, 50, 100, 200, -1]);
 
-        return view($params['template'], [
+        return view($params['template'], array_merge([
             'list' => ($paginate ? $list->paginate($paginate) : $list->get()),
             'paginate' => $paginate,
             'filter' => $filters,
             'mode' => $mode
-        ]);
+        ], array_key_exists('share', $params) ? $params['share'] : []));
     }
 
     private static function initFilters($fields)
