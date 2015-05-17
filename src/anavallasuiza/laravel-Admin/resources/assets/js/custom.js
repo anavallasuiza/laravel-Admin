@@ -227,21 +227,24 @@ $(function() {
         return false;
     });
 
-    var $datatable = $('.datatable').dataTable({
-        'bPaginate': true,
-        'bSort': true,
-        'bInfo': true,
-        'bAutoWidth': false,
-        'bProcessing': true,
-        'aaSorting': [],
-        'oLanguage': gettext['datatables'],
-        'aLengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
-        'fnInitComplete': function () {
-            this.fnAdjustColumnSizing();
-        }
-    });
+    var $datatable = $('.datatable');
 
     if ($datatable.length) {
+        $datatable.dataTable({
+            'bDestroy': true,
+            'bPaginate': true,
+            'bSort': true,
+            'bInfo': true,
+            'bAutoWidth': false,
+            'bProcessing': true,
+            'aaSorting': [],
+            'oLanguage': gettext['datatables'],
+            'aLengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
+            'fnInitComplete': function () {
+                this.fnAdjustColumnSizing();
+            }
+        });
+
         $('form button[type=submit]').on('click', function () {
             var $form = $(this).closest('form'),
                 $checks = $form.find('input[type="checkbox"], input[type="radio"]');
@@ -252,13 +255,15 @@ $(function() {
 
             var inputs = '';
 
-            $('input, select', $datatable.fnGetNodes()).each(function () {
-                var $this = $(this),
-                    checkbox = $this.is(':checkbox') || $this.is(':radio');
+            $datatable.each(function () {
+                $('input, select', $(this).dataTable().fnGetNodes()).each(function () {
+                    var $this = $(this),
+                        checkbox = $this.is(':checkbox') || $this.is(':radio');
 
-                if (!checkbox || (checkbox && $this.is(':checked'))) {
-                    inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.val() + '" />';
-                }
+                    if (!checkbox || (checkbox && $this.is(':checked'))) {
+                        inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.val() + '" />';
+                    }
+                });
             });
 
             if (($('input:checked', $form).length === 0) && (inputs === '')) {

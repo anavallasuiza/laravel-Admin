@@ -2,6 +2,7 @@
 
 namespace Admin\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Schema;
 
 trait ModelTrait
@@ -54,7 +55,11 @@ trait ModelTrait
 
         foreach ($rows as $row) {
             if (count($row->$table)) {
-                $row->related = $row->$table->first();
+                if ($row->$table instanceof Collection) {
+                    $row->related = $row->$table->first();
+                } else {
+                    $row->related = $row->$table;
+                }
             } else {
                 $row->related = false;
             }
