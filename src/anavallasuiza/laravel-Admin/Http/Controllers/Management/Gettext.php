@@ -2,8 +2,8 @@
 namespace Admin\Http\Controllers\Management;
 
 use Redirect;
-use Laravel\Gettext\Gettext as LGettext;
-use Laravel\FormManager\Form;
+use Eusonlito\LaravelGettext\Gettext as LGettext;
+use Eusonlito\LaravelFormManager\Form;
 use Meta;
 use Admin\Http\Controllers\Controller;
 

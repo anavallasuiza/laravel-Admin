@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Library;
 
-use Laravel\FormManager\Form as BaseForm;
+use Eusonlito\LaravelFormManager\Form as BaseForm;
 
 class Forms extends BaseForm
 {

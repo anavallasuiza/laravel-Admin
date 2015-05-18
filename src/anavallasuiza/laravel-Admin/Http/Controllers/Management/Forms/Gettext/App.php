@@ -2,7 +2,7 @@
 namespace Admin\Http\Controllers\Management\Forms\Gettext;
 
 use FormManager\Builder as B;
-use Laravel\FormManager\Form as F;
+use Eusonlito\LaravelFormManager\Form as F;
 
 class App extends F
 {

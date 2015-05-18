@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Http\Processors;
 
-use Laravel\Processor\Processors\ProcessorTrait;
+use Eusonlito\LaravelProcessor\Processors\ProcessorTrait;
 use Admin\Library;
 use Auth;
 use Session;

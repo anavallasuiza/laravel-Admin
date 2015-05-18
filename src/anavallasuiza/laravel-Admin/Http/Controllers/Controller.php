@@ -2,7 +2,7 @@
 namespace Admin\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Laravel\Processor\Controllers\ProcessorTrait;
+use Eusonlito\LaravelProcessor\Controllers\ProcessorTrait;
 use Admin\Library;
 use Auth;
 use Request;

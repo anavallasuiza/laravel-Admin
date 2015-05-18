@@ -2,7 +2,7 @@
 namespace Admin\Http\Controllers\Forms\Users;
 
 use FormManager\Builder as B;
-use Laravel\FormManager\Form as F;
+use Eusonlito\LaravelFormManager\Form as F;
 
 class Login extends F
 {
