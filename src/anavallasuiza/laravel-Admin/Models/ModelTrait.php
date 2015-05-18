@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Models;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -68,7 +67,7 @@ trait ModelTrait
         return $rows->sortByDesc('related');
     }
 
-    public function scopeReplace($query, array $data, $row = null)
+    public function scopeReplace($query, array $data, $row = null, $log = false)
     {
         $action = empty($row->id) ? 'insert' : 'update';
 
@@ -77,8 +76,8 @@ trait ModelTrait
                 continue;
             }
 
-            if (empty($value)) {
-                $value = strstr('_id', $key) ? null : $value;
+            if (empty($value) && strstr('_id', $key)) {
+                $value = null;
             }
 
             $row->$key = $value;
@@ -86,7 +85,9 @@ trait ModelTrait
 
         $row->save();
 
-        Log::register($action, $this->getTable(), $row);
+        if ($log) {
+            Log::register($action, $this->getTable(), $row);
+        }
 
         return $row;
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Models;
 
 use Illuminate\Auth\Authenticatable;

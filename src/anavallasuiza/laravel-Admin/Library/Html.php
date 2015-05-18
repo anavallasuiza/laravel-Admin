@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Library;
 
 class Html

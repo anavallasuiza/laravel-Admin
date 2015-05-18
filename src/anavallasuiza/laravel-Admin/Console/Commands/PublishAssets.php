@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Console\Commands;
 
 use File;

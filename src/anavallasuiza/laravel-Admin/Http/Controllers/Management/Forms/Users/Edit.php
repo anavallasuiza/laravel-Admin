@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Http\Controllers\Management\Forms\Users;
 
 use FormManager\Builder as B;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Http\Processors;
 
 use ErrorException;

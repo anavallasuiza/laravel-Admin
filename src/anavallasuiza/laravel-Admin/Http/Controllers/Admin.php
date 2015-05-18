@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Http\Controllers;
 
 use Redirect;
