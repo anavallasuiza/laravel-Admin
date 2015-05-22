@@ -117,4 +117,15 @@ class Html
 
         return '?'.http_build_query($query);
     }
+
+    public static function DT($string)
+    {
+        if (strpos($string, 'datatables.s') !== 0) {
+            return $string;
+        } elseif (strstr($string, 'sLengthMenu')) {
+            return '_MENU_';
+        } else  {
+            return str_replace('datatables.s', '', $string);
+        }
+    }
 }
