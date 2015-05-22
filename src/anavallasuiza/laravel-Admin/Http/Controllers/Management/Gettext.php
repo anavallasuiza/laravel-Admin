@@ -53,6 +53,7 @@ class Gettext extends Controller
         $config = config('gettext');
 
         $config['storage'] = base_path($config['storage']);
+        $config['domain'] = preg_replace('/\-admin$/', '', $config['domain']);
 
         foreach ($config['directories'] as $key => $directory) {
             $config['directories'][$key] = base_path($directory);
@@ -73,7 +74,6 @@ class Gettext extends Controller
 
         $config['storage'] = base_path($config['storage']);
         $config['directories'] = [$directory];
-        $config['domain'] = $config['domain'].'-admin';
 
         Meta::meta('title', __('Admin Gettext translations'));
 

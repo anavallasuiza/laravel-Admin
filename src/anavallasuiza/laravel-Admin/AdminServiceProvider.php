@@ -67,6 +67,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         Config::set('session.cookie', config('session.cookie').'_admin');
         Config::set('gettext.cookie', config('gettext.cookie').'_admin');
+        Config::set('gettext.domain', config('gettext.domain').'-admin');
         Config::set('auth', config('admin.auth'));
     }
 
