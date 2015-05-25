@@ -8,7 +8,7 @@ class Forms extends BaseForm
     public function setSanitize()
     {
         foreach ($this as $input) {
-            if ($input->getElementName() === 'textarea') {
+            if (strstr($input->attr('class'), 'htmleditor')) {
                 $input->sanitize(__NAMESPACE__.'\\Html::fix');
             } elseif ($input->attr('type') === 'text') {
                 $input->sanitize('strip_tags');

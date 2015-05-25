@@ -1,5 +1,4 @@
 <?php
-
 use Admin\Library\Helpers;
 
 require __DIR__.'/filters.php';
@@ -27,6 +26,10 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
 
         return App::make($class)->$action($id);
     }]);
+
+    if (is_file($custom = base_path('admin/Http/routes.php'))) {
+        require $custom;
+    }
 
     Route::get('/logout', [
         'as' => 'admin.logout',
