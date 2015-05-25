@@ -3,14 +3,14 @@ namespace Admin\Http\Controllers;
 
 use Input;
 
-trait ControllerIndexSimpleTrait
+trait IndexSimpleTrait
 {
     protected function indexView($params)
     {
         $filters = self::initFilters($params['fields']);
         $list = $params['model']->filter($filters);
 
-        if (is_object($processor = $this->processor('downloadCSV', null, $list))) {
+        if (is_object($processor = $this->processor('exportCsv', null, $list))) {
             return $processor;
         }
 

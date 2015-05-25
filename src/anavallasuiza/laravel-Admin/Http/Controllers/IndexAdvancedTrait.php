@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Http\Controllers;
 
-trait ControllerIndexAdvancedTrait
+trait IndexAdvancedTrait
 {
     protected function indexView($params)
     {
@@ -9,7 +9,7 @@ trait ControllerIndexAdvancedTrait
         $filters = self::initFilters($form);
         $model = self::applyFilters($params['model'], $filters);
 
-        if (is_object($processor = $this->processor('downloadCSV', null, $model))) {
+        if (is_object($processor = $this->processor('exportCsv', null, $model))) {
             return $processor;
         }
 
