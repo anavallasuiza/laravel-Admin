@@ -2,7 +2,7 @@
 namespace Admin\Http\Controllers\Management;
 
 use Admin\Http\Controllers\Controller;
-use Admin\Http\Controllers\ControllerIndexSimpleTrait;
+use Admin\Http\Controllers\IndexSimpleTrait;
 use Admin\Models;
 use Meta;
 use View;
@@ -10,7 +10,7 @@ use App;
 
 class Users extends Controller
 {
-    use ControllerIndexSimpleTrait;
+    use IndexSimpleTrait;
 
     public function index()
     {
