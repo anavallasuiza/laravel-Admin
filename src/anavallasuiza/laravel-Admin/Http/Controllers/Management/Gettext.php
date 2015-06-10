@@ -29,7 +29,7 @@ class Gettext extends Controller
         foreach ($entries as $entry) {
             $entry->lines = [];
 
-            if (empty($references = $entry->getReferences())) {
+            if (!($references = $entry->getReferences())) {
                 continue;
             }
 
