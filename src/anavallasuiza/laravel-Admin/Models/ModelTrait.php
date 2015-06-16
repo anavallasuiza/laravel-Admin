@@ -76,7 +76,7 @@ trait ModelTrait
                 continue;
             }
 
-            if (empty($value) && strstr('_id', $key)) {
+            if (empty($value) && strstr($key, '_id')) {
                 $value = null;
             }
 
