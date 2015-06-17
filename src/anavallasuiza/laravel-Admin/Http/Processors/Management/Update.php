@@ -57,7 +57,7 @@ class Update extends Processor
 
     public function composer()
     {
-        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer install');
+        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer install '.env('COMPOSER_OPTIONS'));
     }
 
     public function npm()
