@@ -27,7 +27,7 @@ trait EditTrait
         self::startFiles($form, $data);
 
         try {
-            $row = self::getModel()->replace($data, $row, true);
+            $row = self::getModel()->replace(self::filter($data), $row, true);
         } catch (Exception $e) {
             throw new Exception(__('Error storing data: %s', $e->getMessage()));
         }
@@ -40,6 +40,17 @@ trait EditTrait
         ]);
 
         return $row;
+    }
+
+    protected static function filter(array $data)
+    {
+        foreach ($data as $field => $value) {
+            if (empty($value)) {
+                $data[$field] = preg_match('/_id$/', $field) ? null : '';
+            }
+        }
+
+        return $data;
     }
 
     public function deleteCommon($form, $row)
