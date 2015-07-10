@@ -42,17 +42,6 @@ trait EditTrait
         return $row;
     }
 
-    protected static function filter(array $data)
-    {
-        foreach ($data as $field => $value) {
-            if (empty($value)) {
-                $data[$field] = preg_match('/_id$/', $field) ? null : '';
-            }
-        }
-
-        return $data;
-    }
-
     public function deleteCommon($form, $row)
     {
         if (!($data = $this->check('delete'))) {
@@ -69,6 +58,17 @@ trait EditTrait
         ]);
 
         return $row;
+    }
+
+    protected static function filter(array $data)
+    {
+        foreach ($data as $field => $value) {
+            if (empty($value)) {
+                $data[$field] = preg_match('/_id$/', $field) ? null : '';
+            }
+        }
+
+        return $data;
     }
 
     private static function checkDuplicates(array $data)
