@@ -77,11 +77,11 @@ trait EditTrait
             return null;
         }
 
-        $exists = self::getModel();
-
-        foreach (self::$duplicates as $column) {
-            $exists = $exists->orWhere($column, $data[$column]);
-        }
+        $exists = self::getModel()->where(function($q) use ($data) {
+            foreach (self::$duplicates as $column) {
+                $q->orWhere($column, $data[$column]);
+            }
+        });
 
         if ($data['id']) {
             $exists = $exists->where('id', '!=', $data['id']);
