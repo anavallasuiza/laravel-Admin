@@ -2,6 +2,8 @@
 namespace Admin\Http\Processors\Database;
 
 use Exception;
+use Hash;
+use Imagecow\Image;
 
 trait EditTrait
 {
@@ -20,19 +22,19 @@ trait EditTrait
             return $data;
         }
 
-        self::checkDuplicates($data);
+        $this->checkDuplicates($data);
 
         $previous = clone $row;
 
-        self::startFiles($form, $data);
+        $this->startFiles($form, $data);
 
         try {
-            $row = self::getModel()->replace(self::filter($data), $row, true);
+            $row = self::getModel()->replace($this->filter($data), $row, true);
         } catch (Exception $e) {
             throw new Exception(__('Error storing data: %s', $e->getMessage()));
         }
 
-        self::endFiles($form, $data, $previous);
+        $this->endFiles($form, $data, $previous);
 
         session()->flash('flash-message', [
             'message' => __('Data was saved successfully'),
@@ -48,7 +50,7 @@ trait EditTrait
             return $data;
         }
 
-        self::deleteFiles($row);
+        $this->deleteFiles($row);
 
         $row->delete();
 
@@ -60,25 +62,14 @@ trait EditTrait
         return $row;
     }
 
-    protected static function filter(array $data)
+    private function checkDuplicates(array $data)
     {
-        foreach ($data as $field => $value) {
-            if (empty($value)) {
-                $data[$field] = preg_match('/_id$/', $field) ? null : '';
-            }
-        }
-
-        return $data;
-    }
-
-    private static function checkDuplicates(array $data)
-    {
-        if (empty(self::$duplicates)) {
+        if (empty($this->duplicates)) {
             return null;
         }
 
         $exists = self::getModel()->where(function($q) use ($data) {
-            foreach (self::$duplicates as $column) {
+            foreach ($this->duplicates as $column) {
                 $q->orWhere($column, $data[$column]);
             }
         });
@@ -88,35 +79,128 @@ trait EditTrait
         }
 
         if ($exists->first()) {
-            throw new Exception(__('Already exists another content with same %s', implode(__(' or '), self::$duplicates)));
+            throw new Exception(__('Already exists another content with same %s', implode(__(' or '), $this->duplicates)));
         }
     }
 
-    private static function startFiles($form, array &$data)
+    private function filter(array $data)
     {
-        if (empty(self::$files)) {
+        foreach ($data as $column => $value) {
+            if (empty($value)) {
+                $data[$column] = preg_match('/_id$/', $column) ? null : '';
+            }
+        }
+
+        return $this->setModifiers($data);
+    }
+
+    private function setModifiers(array $data)
+    {
+        $data = $this->setModifyPassword($data);
+        $data = $this->setModifySlug($data);
+
+        return $data;
+    }
+
+    private function setModifyPassword(array $data)
+    {
+        if (empty($this->passwords)) {
+            return $data;
+        }
+
+        foreach ($this->passwords as $column) {
+            if (empty($data[$column])) {
+                unset($data[$column]);
+            } else {
+                $data[$column] = Hash::make($data[$column]);
+            }
+        }
+
+        return $data;
+    }
+
+    private function setModifySlug(array $data)
+    {
+        if (empty($this->slugs)) {
+            return $data;
+        }
+
+        foreach ($this->slugs as $column) {
+            if (isset($data[$column])) {
+                $data[$column] = str_slug($data[$column]);
+            }
+        }
+
+        return $data;
+    }
+
+    private function startImages()
+    {
+        if (empty($this->images)) {
+            return null;
+        }
+
+        if (empty($this->files)) {
+            $this->files = [];
+        }
+
+        $this->files = array_unique(array_merge($this->files, array_keys($this->images)));
+    }
+
+    private function startFiles($form, array &$data)
+    {
+        $this->startImages();
+
+        if (empty($this->files)) {
             return null;
         }
 
         self::saveFormFiles($form, $data, self::getClass());
     }
 
-    private static function endFiles($form, $data, $previous)
+    private function endFiles($form, array $data, $previous)
     {
-        if (empty(self::$files) || empty($data['id'])) {
+        if (empty($this->files) || empty($data['id'])) {
             return null;
         }
 
         self::deleteOldFiles($form, $previous);
+
+        $this->endImages($data);
     }
 
-    private static function deleteFiles($row)
+    private function endImages(array $data)
     {
-        if (empty(self::$files)) {
+        if (empty($this->images) || empty($data['id'])) {
             return null;
         }
 
-        foreach (self::$files as $file) {
+        clearstatcache();
+
+        foreach ($this->images as $name => $size) {
+            if (empty($data[$name])) {
+                continue;
+            }
+
+            if (!is_file($file = self::getStoragePath($data[$name]))) {
+                continue;
+            }
+
+            list($width, $height) = explode('x', $size);
+
+            $image = Image::create($file);
+            $image->resize($width, $height);
+            $image->save();
+        }
+    }
+
+    private function deleteFiles($row)
+    {
+        if (empty($this->files)) {
+            return null;
+        }
+
+        foreach ($this->files as $file) {
             self::deleteFile($row->$file);
         }
     }
