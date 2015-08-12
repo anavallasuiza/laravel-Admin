@@ -42,7 +42,7 @@
                     <a href="#" class="fa fa-info-circle show-references"></a>
 
                     <ul class="list-unstyled references text-muted">
-                        <li>{{ implode('</li><li>', $entry->lines) }}</li>
+                        <li>{!! implode('</li><li>', $entry->lines) !!}</li>
                     </ul>
                     <?php } ?>
 
