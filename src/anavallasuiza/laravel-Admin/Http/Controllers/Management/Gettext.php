@@ -75,6 +75,10 @@ class Gettext extends Controller
         $config['storage'] = base_path($config['storage']);
         $config['directories'] = [$directory];
 
+        if (is_dir($app = base_path('admin'))) {
+            $config['directories'][] = $app;
+        }
+
         Meta::meta('title', __('Admin Gettext translations'));
 
         return $this->show($form, $config, $locale);
