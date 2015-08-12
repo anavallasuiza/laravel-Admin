@@ -96,7 +96,7 @@ $(function() {
 
                 if ((value = $this.attr(attr)) && (value.indexOf('[') !== -1)) {
                     $this.attr(attr, value.replace(/\[a?[0-9]+\]/g, '[' + id + ']'));
-                }           
+                }
             }
 
             if (type === 'checkbox') {
@@ -316,6 +316,17 @@ $(function() {
             return true;
         });
     }
+
+    $('.form-group[data-related] a').on('click', function(e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            $select = $this.closest('.form-group').find('select');
+
+        if ($select.val()) {
+            window.location.href = $this.attr('href') + '/' + $select.val();
+        }
+    });
 
     $('[data-change-submit]').on('change', function (e) {
         e.preventDefault();
