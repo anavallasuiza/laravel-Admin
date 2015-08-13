@@ -17,6 +17,6 @@ trait EditTrait
             $form->preload($row);
         }
 
-        return true;
+        return $processor;
     }
 }
