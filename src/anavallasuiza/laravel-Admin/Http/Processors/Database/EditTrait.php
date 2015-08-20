@@ -26,7 +26,7 @@ trait EditTrait
 
         $previous = clone $row;
 
-        $this->startFiles($form, $data);
+        $this->startFiles($form, $data, $previous);
 
         try {
             $row = self::getModel()->replace($this->filter($data), $row, true);
@@ -147,7 +147,7 @@ trait EditTrait
         $this->files = array_unique(array_merge($this->files, array_keys($this->images)));
     }
 
-    private function startFiles($form, array &$data)
+    private function startFiles($form, array &$data, $previous)
     {
         $this->startImages();
 
@@ -156,6 +156,33 @@ trait EditTrait
         }
 
         self::saveFormFiles($form, $data, self::getClass());
+
+        $this->removeDeletedFiles($data, $previous);
+    }
+
+    private function removeDeletedFiles(array &$data, $previous)
+    {
+        foreach ($this->files as $key => $value) {
+            $name = is_numeric($key) ? $value : $key;
+
+            if (!self::toDelete($name)) {
+                continue;
+            }
+
+            if (self::deleteFile($previous->$name)) {
+                $data[$name] = '';
+            }
+        }
+    }
+
+    private static function toDelete($name)
+    {
+        return array_key_exists(self::deleteName($name), $_POST);
+    }
+
+    private static function deleteName($name)
+    {
+        return '_'.$name.'_delete';
     }
 
     private function endFiles($form, array $data, $previous)
