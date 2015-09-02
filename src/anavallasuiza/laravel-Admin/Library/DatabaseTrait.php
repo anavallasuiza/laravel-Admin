@@ -12,9 +12,9 @@ trait DatabaseTrait
 
     protected static function getModel($model = null)
     {
-        $model = $model ?: class_basename(__CLASS__);
+        $model = self::makeModel($model);
 
-        return App::make('App\Models\\'.$model);
+        return method_exists($model, 'withTrashed') ? $model->withTrashed() : $model;
     }
 
     protected static function getForm($function, $form = null)
@@ -34,8 +34,13 @@ trait DatabaseTrait
             return $row;
         }
 
-        $model = self::getModel();
+        $model = self::makeModel();
 
-        return $row ? $model->where('id', (int)$row)->firstOrFail() : $model;
+        return $row ? $model->where('id', (int)$row)->withTrashed()->firstOrFail() : $model;
+    }
+
+    private static function makeModel($model = null)
+    {
+        return App::make('App\Models\\'.($model ?: class_basename(__CLASS__)));
     }
 }
