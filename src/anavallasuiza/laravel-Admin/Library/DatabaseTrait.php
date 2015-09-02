@@ -36,7 +36,15 @@ trait DatabaseTrait
 
         $model = self::makeModel();
 
-        return $row ? $model->where('id', (int)$row)->withTrashed()->firstOrFail() : $model;
+        if (empty($row)) {
+            return $model;
+        }
+
+        if (method_exists($model, 'withTrashed')) {
+            $model = $model->withTrashed();
+        }
+
+        return $model->where('id', (int)$row)->firstOrFail();
     }
 
     private static function makeModel($model = null)
