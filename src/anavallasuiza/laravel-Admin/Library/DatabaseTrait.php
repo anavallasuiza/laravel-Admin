@@ -14,7 +14,7 @@ trait DatabaseTrait
     {
         $model = $model ?: class_basename(__CLASS__);
 
-        return App::make('App\Models\\'.$model)->withTrashed();
+        return App::make('App\Models\\'.$model);
     }
 
     protected static function getForm($function, $form = null)
