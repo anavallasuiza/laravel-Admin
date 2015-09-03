@@ -2,6 +2,7 @@
 namespace Admin\Http\Processors\Database;
 
 use Exception;
+use DB;
 use Hash;
 use Imagecow\Image;
 
@@ -35,6 +36,8 @@ trait EditTrait
         }
 
         $this->endFiles($form, $data, $previous);
+
+        $this->deletedAt($data, $row);
 
         session()->flash('flash-message', [
             'message' => __('Data was saved successfully'),
@@ -230,5 +233,18 @@ trait EditTrait
         foreach ($this->files as $file) {
             self::deleteFile($row->$file);
         }
+    }
+
+    private function deletedAt($data, $row)
+    {
+        if (!isset($row->deleted_at) || ($row->deleted_at && ($row->deleted_at !== '0000-00-00 00:00:00'))) {
+            return true;
+        }
+
+        DB::table($row->getTable())
+            ->where('id', $row->id)
+            ->whereNotNull('deleted_at')
+            ->limit(1)
+            ->update(['deleted_at' => DB::raw('NULL')]);
     }
 }
