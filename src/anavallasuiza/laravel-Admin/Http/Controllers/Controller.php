@@ -27,6 +27,7 @@ abstract class Controller extends BaseController
         View::share([
             'ROUTE' => $route,
             'TABLE' => ($database ? Request::segment(3) : null),
+            'SECTION' => ($database ? Request::segment(4) : null),
             'LOCALES' => config('gettext.locales'),
             'LOCALE' => ($this->locale = Library\Helpers::locale()),
             'I' => ($this->user = Auth::user()),
