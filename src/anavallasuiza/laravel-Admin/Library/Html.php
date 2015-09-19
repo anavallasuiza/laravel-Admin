@@ -40,10 +40,6 @@ class Html
         $html = preg_replace('~<(?:!DOCTYPE|/?(?:\?xml|html|head|body))[^>]*>\s*~i', '', $html);
         $html = preg_replace('/<([^<\/>]*)>([\s]*?|(?R))<\/\1>/imsU', '', $html);
 
-        $html = preg_replace_callback('/\[IMG=([^\]]+)\]/', function ($matches) {
-            return '[IMG='.preg_replace('/.*href="([^"]+).*/', '$1', $matches[1]).']';
-        }, $html);
-
         return trim(str_replace('&nbsp;', ' ', $html));
     }
 
