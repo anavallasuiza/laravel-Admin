@@ -1,6 +1,8 @@
 <?php
 namespace Admin\Library;
 
+use Packer;
+
 class Html
 {
     public static function fix($html)
@@ -123,5 +125,22 @@ class Html
         } else  {
             return str_replace('datatables.s', '', $string);
         }
+    }
+
+    public static function img($image, $transform = '')
+    {
+        if (is_object($image)) {
+            $image = $image->image;
+        }
+
+        if (strpos($image, '/') !== 0) {
+            $image = '/storage/resources/'.$image;
+        }
+
+        if (empty($transform)) {
+            return asset($image);
+        }
+
+        return Packer::img($image, $transform);
     }
 }
