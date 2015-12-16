@@ -52,7 +52,7 @@ class Update extends Processor
 
     public function git()
     {
-        return $this->exec(__FUNCTION__, 'git pull -u origin '.env('GIT_BRANCH'));
+        return $this->exec(__FUNCTION__, 'git pull origin '.env('GIT_BRANCH'));
     }
 
     public function composer()
