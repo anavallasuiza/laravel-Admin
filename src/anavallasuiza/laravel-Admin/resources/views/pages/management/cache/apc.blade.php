@@ -17,13 +17,12 @@
 </div>
 
 <form method="post">
-    {!! Form::token() !!}
-
-    <input type="hidden" name="action" value="cacheApc" />
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+    <input type="hidden" name="_processor" value="apc" />
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {{ empty($I->admin) ? 'disabled' : '' }} name="_action" value="cacheApc" class="btn btn-success">
+            <button type="submit" class="btn btn-success">
                 {{ __('Clear APC Cache') }}
             </button>
         </div>

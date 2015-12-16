@@ -1,4 +1,5 @@
-<?php namespace Admin\Http\Processors\Management;
+<?php
+namespace Admin\Http\Processors\Management;
 
 use Exception;
 use Admin\Http\Processors\Processor;
@@ -9,7 +10,7 @@ use Redirect;
 
 class Users extends Processor
 {
-    public function edit($form)
+    public function edit($form, $row)
     {
         if (!($data = $this->check(__FUNCTION__, $form))) {
             return $data;
@@ -38,7 +39,7 @@ class Users extends Processor
         unset($data['password_repeat']);
 
         try {
-            $row = Models\User::replace($data);
+            $row = Models\User::replace($data, $row);
         } catch (Exception $e) {
             throw new Exception(__('Error storing data: %s', $e->getMessage()));
         }
@@ -49,5 +50,30 @@ class Users extends Processor
         ]);
 
         return Redirect::route('admin.management.users.edit', $row->id);
+    }
+
+    public function delete($form, $row)
+    {
+        if (!($data = $this->check(__FUNCTION__))) {
+            return $data;
+        }
+
+        if ($row->id === $this->user->id) {
+            Session::flash('flash-message', [
+                'message' => __('You can not delete your own user'),
+                'status' => 'danger',
+            ]);
+
+            return false;
+        }
+
+        $row->delete();
+
+        Session::flash('flash-message', [
+            'message' => __('Data was saved successfully'),
+            'status' => 'success',
+        ]);
+
+        return Redirect::route('admin.management.users.index');
     }
 }

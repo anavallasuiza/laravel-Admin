@@ -1,34 +1,35 @@
-<?php namespace Admin\Http\Controllers\Management;
+<?php
+namespace Admin\Http\Controllers\Management;
 
-use Input;
 use Redirect;
-use Admin\Http\Controllers\Controller;
-use Admin\Library;
+use Eusonlito\LaravelGettext\Gettext as LGettext;
+use Eusonlito\LaravelFormManager\Form;
 use Meta;
+use Admin\Http\Controllers\Controller;
 
 class Gettext extends Controller
 {
-    public function index($locale)
+    protected function show($form, $config, $locale)
     {
-        if (is_object($action = $this->action(['save', 'download']))) {
-            return $action;
+        if (empty($locale)) {
+            $locale = $config['locales'][0];
+        } elseif (!in_array($locale, $config['locales'], true)) {
+            return Redirect::route('admin.management.gettext.app', $config['locales'][0]);
         }
 
-        $locales = array_keys(config('app.locales'));
+        LGettext::setConfig($config);
 
-        if (!in_array($locale, $locales, true)) {
-            return Redirect::route('admin.management.gettext.index', $locales[0]);
+        if (is_object($processor = $this->processor(['save', 'download'], $form, $config))) {
+            return $processor;
         }
 
-        Library\Gettext::setDirs([app_path(), base_path('vendor/anavallasuiza/laravel-admin')]);
-
-        $entries = Library\Gettext::get($locale, Input::get('refresh'));
+        $entries = LGettext::getEntries($locale);
         $base = base_path();
 
         foreach ($entries as $entry) {
             $entry->lines = [];
 
-            if (empty($references = $entry->getReferences())) {
+            if (!($references = $entry->getReferences())) {
                 continue;
             }
 
@@ -37,12 +38,49 @@ class Gettext extends Controller
             }
         }
 
-        Meta::meta('title', __('Gettext translations'));
-
         return self::view('management.gettext.index', [
+            'form' => $form,
             'current' => $locale,
-            'locales' => $locales,
+            'locales' => $config['locales'],
             'entries' => $entries,
         ]);
+    }
+
+    public function app($locale = '')
+    {
+        $form = new Forms\Gettext\App();
+
+        $config = config('gettext');
+
+        $config['storage'] = base_path($config['storage']);
+        $config['domain'] = preg_replace('/\-admin$/', '', $config['domain']);
+
+        foreach ($config['directories'] as $key => $directory) {
+            $config['directories'][$key] = base_path($directory);
+        }
+
+        Meta::meta('title', __('App Gettext translations'));
+
+        return $this->show($form, $config, $locale);
+    }
+
+    public function admin($locale = '')
+    {
+        $form = new Forms\Gettext\Admin();
+
+        $directory = realpath(__DIR__.'/../../..');
+
+        $config = config('gettext');
+
+        $config['storage'] = base_path($config['storage']);
+        $config['directories'] = [$directory];
+
+        if (is_dir($app = base_path('admin'))) {
+            $config['directories'][] = $app;
+        }
+
+        Meta::meta('title', __('Admin Gettext translations'));
+
+        return $this->show($form, $config, $locale);
     }
 }

@@ -3,14 +3,14 @@
 @section('content')
 
 <form id="form-gettext" method="post">
-    {!! token() !!}
+    {!! $form->token() !!}
 
     <input type="hidden" name="locale" value="{{ $current }}" />
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             @foreach ($locales as $locale)
-            <li {!! ($locale === $current) ? 'class="active"' : '' !!}><a href="{{ route('admin.management.gettext.index', $locale) }}">{{ $locale }}</a></li>
+            <li {!! ($locale === $current) ? 'class="active"' : '' !!}><a href="{{ route(Route::currentRouteName(), $locale) }}">{{ $locale }}</a></li>
             @endforeach
         </ul>
 
@@ -27,14 +27,6 @@
                                 <label class="btn">
                                     <input type="checkbox" data-gettext="empty" autocomplete="off" /> {{ __('Only empty') }}
                                 </label>
-
-                                <label class="btn">
-                                    <input type="checkbox" data-gettext="admin" autocomplete="off" /> {{ __('Only admin') }}
-                                </label>
-
-                                <label class="btn">
-                                    <input type="checkbox" data-gettext="web" autocomplete="off" /> {{ __('Only web') }}
-                                </label>
                             </div>
                         </div>
                     </div>
@@ -46,15 +38,13 @@
                 <div class="form-group gettext-group">
                     <label for="entry-{{ ++$i }}">{{{ $entry->getOriginal() }}}</label>
 
-                    <?php if ($entry->lines) {
-    ?>
+                    <?php if ($entry->lines) { ?>
                     <a href="#" class="fa fa-info-circle show-references"></a>
 
                     <ul class="list-unstyled references text-muted">
-                        <li>{{ implode('</li><li>', $entry->lines) }}</li>
+                        <li>{!! implode('</li><li>', $entry->lines) !!}</li>
                     </ul>
-                    <?php 
-} ?>
+                    <?php } ?>
 
                     <input id="entry-{{ $i }}" type="text" name="translations[{{{ $entry->getOriginal() }}}]" value="{{{ $entry->getTranslation() }}}" class="form-control" />
                 </div>
@@ -65,15 +55,11 @@
 
     <div class="box-footer clearfix">
         <div class="pull-right">
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="save" class="btn btn-success">
+            <button type="submit" name="_processor" value="save" class="btn btn-success">
                 {{ __('Save') }}
             </button>
 
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="refresh" value="true" class="btn btn-primary">
-                {{ __('Search for new translations') }}
-            </button>
-
-            <button type="submit" {!! empty($I->admin) ? 'disabled' : '' !!} name="_action" value="download" class="btn btn-primary">
+            <button type="submit" name="_processor" value="download" class="btn btn-primary">
                 {{ __('Download translations') }}
             </button>
         </div>

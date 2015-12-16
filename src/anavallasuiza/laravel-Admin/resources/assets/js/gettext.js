@@ -5,8 +5,6 @@ $(function() {
         $gettextGroups = $gettextForm.find('.tab-pane > .gettext-group'),
         $gettextSearch = $gettextForm.find('input[type="search"]'),
         $gettextEmpty = $gettextForm.find('[data-gettext="empty"]'),
-        $gettextAdmin = $gettextForm.find('[data-gettext="admin"]'),
-        $gettextWeb = $gettextForm.find('[data-gettext="web"]'),
         common = /\/(libs|models)\//;
 
     if ($gettextForm.length === 0) {
@@ -26,14 +24,6 @@ $(function() {
         return (text.indexOf(search) !== -1);
     };
 
-    var gettextAdminShow = function ($group, text) {
-        return (!$gettextAdmin.is(':checked') || (text.indexOf('/laravel-admin/') !== -1) || text.match(common));
-    };
-
-    var gettextWebShow = function ($group, text) {
-        return (!$gettextWeb.is(':checked') || (text.indexOf('/laravel-admin/') === -1));
-    };
-
     var gettextEmptyShow = function ($group, text) {
         return (!$gettextEmpty.is(':checked') || ($group.find('input').val() === ''));
     };
@@ -45,10 +35,7 @@ $(function() {
             var $group = $(this),
                 text = $group.text().toLowerCase();
 
-            if (gettextSearch($group, text)
-            && gettextEmptyShow($group, text)
-            && gettextAdminShow($group, text)
-            && gettextWebShow($group, text)) {
+            if (gettextSearch($group, text) && gettextEmptyShow($group, text)) {
                 $group.show();
             }
         });

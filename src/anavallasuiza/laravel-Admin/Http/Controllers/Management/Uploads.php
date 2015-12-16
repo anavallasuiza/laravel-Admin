@@ -1,15 +1,16 @@
-<?php namespace Admin\Http\Controllers\Management;
+<?php
+namespace Admin\Http\Controllers\Management;
 
 use Input;
-use Admin\Http\Controllers\Controller;
 use Meta;
+use Admin\Http\Controllers\Controller;
 
 class Uploads extends Controller
 {
+    private static $processors = ['fileNew', 'directoryNew', 'fileDelete', 'directoryDelete'];
+
     public function index()
     {
-        Meta::meta('title', __('Uploads'));
-
         $public = 'storage/uploads/';
         $base = public_path($public);
 
@@ -29,10 +30,23 @@ class Uploads extends Controller
             throw new Exception(__('Folder %s has not write permissions', $public));
         }
 
-        if (is_object($action = $this->action('AUTO', null, $uploads))) {
-            return $action;
+        if (is_object($processor = $this->processor(self::$processors, null, $uploads))) {
+            return $processor;
         }
 
+        list($files, $directories) = self::getFilesDirectories($uploads, $dir, $public);
+
+        Meta::meta('title', __('Uploads'));
+
+        return self::view('management.uploads.index', [
+            'location' => self::getLocation($dir),
+            'directories' => $directories,
+            'files' => $files,
+        ]);
+    }
+
+    private static function getFilesDirectories($uploads, $dir, $public)
+    {
         $directories = $files = [];
 
         foreach (glob($uploads.'*', GLOB_MARK) as $each) {
@@ -53,6 +67,11 @@ class Uploads extends Controller
             }
         }
 
+        return [$files, $directories];
+    }
+
+    private static function getLocation($dir)
+    {
         $location = [];
         $acum = '';
 
@@ -63,10 +82,6 @@ class Uploads extends Controller
             ];
         }
 
-        return self::view('management.uploads.index', [
-            'location' => $location,
-            'directories' => $directories,
-            'files' => $files,
-        ]);
+        return $location;
     }
 }

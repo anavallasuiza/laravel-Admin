@@ -1,6 +1,11 @@
-<?php namespace Admin;
+<?php
+namespace Admin;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
+use Admin\Console\Commands;
+use Config;
+use Request;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -10,16 +15,30 @@ class AdminServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+    protected static $admin;
+
+    private function isAdmin()
+    {
+        if (self::$admin !== null) {
+            return self::$admin;
+        }
+
+        return self::$admin = (config('admin.admin.prefix') === Request::segment(1));
+    }
 
     /**
      * Bootstrap the application events.
      */
     public function boot()
     {
-        include __DIR__.'/Library/helpers.php';
+        if (!self::isAdmin()) {
+            return null;
+        }
+
         include __DIR__.'/Http/routes.php';
 
         $this->loadViewsFrom(__DIR__.'/resources/views', 'admin');
+        $this->loadViewsFrom(base_path('admin/resources/views'), 'admin-app');
 
         $this->publishes([
             __DIR__.'/config' => config_path('admin'),
@@ -35,6 +54,52 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if (self::isAdmin()) {
+            $this->registerConfig();
+            $this->registerProviders();
+            $this->registerAliases();
+        }
+
+        $this->registerCommands();
+    }
+
+    protected function registerConfig()
+    {
+        Config::set('session.cookie', config('session.cookie').'_admin');
+        Config::set('gettext.cookie', config('gettext.cookie').'_admin');
+        Config::set('gettext.domain', config('gettext.domain').'-admin');
+        Config::set('auth', config('admin.auth'));
+    }
+
+    protected function registerProviders()
+    {
+        $this->app->register('Eusonlito\LaravelMeta\MetaServiceProvider');
+        $this->app->register('Eusonlito\LaravelPacker\PackerServiceProvider');
+        $this->app->register('Eusonlito\LaravelGettext\GettextServiceProvider');
+    }
+
+    protected function registerAliases()
+    {
+        $loader = AliasLoader::getInstance();
+
+        $loader->alias('Collection', 'Illuminate\Database\Eloquent\Collection');
+        $loader->alias('Meta', 'Eusonlito\LaravelMeta\Facade');
+        $loader->alias('Packer', 'Eusonlito\LaravelPacker\Facade');
+        $loader->alias('Gettext', 'Eusonlito\LaravelGettext\Facade');
+    }
+
+    protected function registerCommands()
+    {
+        $this->app->singleton('command.admin.publish.assets', function ($app) {
+            return new Commands\PublishAssets();
+        });
+
+        $this->app->singleton('command.admin.user.new', function ($app) {
+            return new Commands\UserNew();
+        });
+
+        $this->commands('command.admin.publish.assets');
+        $this->commands('command.admin.user.new');
     }
 
     /**
@@ -44,5 +109,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function provides()
     {
+        return [
+            'command.admin.publish.assets',
+            'command.admin.user.new',
+        ];
     }
 }

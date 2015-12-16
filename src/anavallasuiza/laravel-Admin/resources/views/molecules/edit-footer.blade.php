@@ -1,26 +1,26 @@
-<?php if (empty($I->admin)) {
-    return;
-} ?>
-
 <div class="box-footer clearfix">
     @if ($row->id)
 
     <div class="pull-right">
-        <button type="submit" class="btn btn-success">
-            {{ __('Save changes') }}
-        </button>
-
-        <button type="submit" name="_action" value="duplicate" class="btn btn-primary">
-            {{ __('Duplicate') }}
-        </button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">
+                {{ __('Save changes') }}
+            </button>
+        </div>
     </div>
 
     <div class="pull-left">
-        <button type="button" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger">
-            {{ __('Delete') }}
-        </button>
+        <div class="form-group">
+            <button type="button" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger">
+                {{ __('Delete') }}
+            </button>
 
-        <div class="modal fade" id="modal-delete">
+            <button type="submit" name="_processor" value="duplicate" class="btn btn-primary">
+                {{ __('Duplicate') }}
+            </button>
+        </div>
+
+        <div class="modal fade" id="modal-delete" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -43,7 +43,7 @@
                             {{ __('No, cancel') }}
                         </button>
 
-                        <button type="submit" name="_action" value="delete" class="btn btn-danger">
+                        <button type="submit" name="_processor" value="delete" class="btn btn-danger">
                             {{ __('Yes, delete') }}
                         </button>
                     </div>
@@ -56,7 +56,7 @@
 
     <div class="pull-right">
         <button type="submit" class="btn btn-success">
-            {{ __('Create new') }}
+            {{ __('Save') }}
         </button>
     </div>
 

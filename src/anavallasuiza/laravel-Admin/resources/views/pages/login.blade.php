@@ -1,7 +1,3 @@
-<?php use Admin\Http\Controllers\Forms\Form;
-
-?>
-
 @extends('admin::layouts.master')
 
 @section('body')
@@ -13,7 +9,7 @@
             @include('admin::molecules.alert-flash')
 
             <form method="post" class="clearfix">
-                {!! $form->token() !!}
+                {!! $form->tokenAndFake() !!}
                 {!! $form->html() !!}
 
                 <div class="pull-right">

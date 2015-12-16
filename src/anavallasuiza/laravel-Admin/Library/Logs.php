@@ -1,4 +1,5 @@
-<?php namespace Admin\Library;
+<?php
+namespace Admin\Library;
 
 class Logs
 {
@@ -47,7 +48,15 @@ class Logs
 
     public function getFiles()
     {
-        return $this->files ?: ($this->files = glob($this->getStorage().'*.log'));
+        if ($this->files) {
+            return $this->files;
+        }
+
+        $this->files = glob($this->getStorage().'*.log');
+
+        rsort($this->files);
+
+        return $this->files;
     }
 
     public function getFilesNames()

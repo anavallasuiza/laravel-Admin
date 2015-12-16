@@ -1,4 +1,5 @@
-<?php namespace Admin\Http\Processors\Management;
+<?php
+namespace Admin\Http\Processors\Management;
 
 use File;
 use Redirect;

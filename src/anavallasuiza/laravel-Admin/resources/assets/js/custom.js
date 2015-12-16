@@ -1,16 +1,46 @@
+function updateQuery (key, value) {
+    var queryString = location.search.slice(1),
+        params = {};
+
+    queryString.replace(/([^=]*)=([^&]*)&*/g, function (_, key, value) {
+        params[key] = value;
+    });
+
+    params[key] = value;
+
+    var query = [];
+
+    for (current in params) {
+        if (!params.hasOwnProperty(current)) {
+            continue;
+        }
+
+        query.push(current + '=' + params[current]);
+    }
+
+    location.search = query.join('&');
+}
+
 $(function() {
     'use strict';
 
-    var $menuGroups = $('.sidebar-menu > li:gt(0)');
+    var $sidebar = $('.sidebar'),
+        $sidebarMenu = $sidebar.find('.sidebar-menu'),
+        $sidebarMenuGroups = $sidebarMenu.find('> li:gt(0)'),
+        $sidebarSearch = $sidebarMenu.find('input[type="search"]'),
+        $contentWrapper = $('.content-wrapper'),
+        $rightSide = $('.right-side'),
+        $mainHeader = $('.main-header'),
+        $mainFooter = $('.main-footer');
 
-    $('.sidebar-menu input[type="search"]').on('keydown', function (e) {
+    $sidebarSearch.on('keydown', function (e) {
         var $this = $(this);
 
         if (e.keyCode === 27) {
             $this.val('');
 
-            $menuGroups.show();
-            $menuGroups.filter('.treeview.active').find('> a').trigger('click');
+            $sidebarMenuGroups.show();
+            $sidebarMenuGroups.filter('.treeview.active').find('> a').trigger('click');
 
             return false;
         }
@@ -20,19 +50,19 @@ $(function() {
         }
     });
 
-    $('.sidebar-menu input[type="search"]').on('keyup', function (e) {
+    $sidebarSearch.on('keyup', function (e) {
         var $this = $(this);
 
         setTimeout(function () {
             var search = $this.val().toLowerCase();
 
             if (search.length === 0) {
-                $menuGroups.filter('.treeview.active').find('> a').trigger('click');
-                $menuGroups.show();
+                $sidebarMenuGroups.filter('.treeview.active').find('> a').trigger('click');
+                $sidebarMenuGroups.show();
                 return false;
             }
 
-            $menuGroups.each(function () {
+            $sidebarMenuGroups.each(function () {
                 var $group = $(this),
                     text = $group.text().toLowerCase();
 
@@ -66,7 +96,7 @@ $(function() {
 
                 if ((value = $this.attr(attr)) && (value.indexOf('[') !== -1)) {
                     $this.attr(attr, value.replace(/\[a?[0-9]+\]/g, '[' + id + ']'));
-                }           
+                }
             }
 
             if (type === 'checkbox') {
@@ -121,28 +151,33 @@ $(function() {
                     btn.parent('li').addClass('active');
                 }
             });
-
-            menu.find('li > a').each(function() {
-                $(this).css({
-                    'margin-left': (parseInt($(this).css('margin-left')) + 10) + 'px'
-                });
-            });
         });
     };
 
-    $('.content-wrapper').css('min-height', $('.main-sidebar').height());
+    var wHeight = $(window).height(),
+        sHeight = $sidebar.height();
 
-    $('[data-toggle="offcanvas"]').on('click', function(e) {
-        e.preventDefault();
-        $('body').toggleClass('sidebar-collapse').toggleClass('sidebar-open');
-    });
+    if (wHeight >= sHeight) {
+        var negative = ($mainHeader.outerHeight() + ($mainFooter.length ? $mainFooter.outerHeight() : 0));
 
-    $('.content-wrapper').on('click', function() {
+        $contentWrapper.css('min-height', wHeight - negative);
+        $rightSide.css('min-height', wHeight - negative);
+    } else {
+        $contentWrapper.css('min-height', sHeight);
+        $rightSide.css('min-height', sHeight);
+    }
+
+    $contentWrapper.on('click', function() {
         var $body = $('body');
 
         if (($(window).width() <= 767) && $body.hasClass('sidebar-open')) {
             $body.removeClass('sidebar-open');
         }
+    });
+
+    $('[data-toggle="offcanvas"]').on('click', function(e) {
+        e.preventDefault();
+        $('body').toggleClass('sidebar-collapse').toggleClass('sidebar-open');
     });
 
     $('[data-widget="collapse"]').on('click', function() {
@@ -161,17 +196,16 @@ $(function() {
         }
     });
 
-    $('.sidebar .treeview').tree();
+    $sidebar.find('.treeview').tree();
 
-    $('.wysihtml5').wysihtml5({
-        'toolbar': {
-            'link': false,
-            'blockquote': false,
-            'color': false
-        },
-        'style': {
-            'remove': 1
-        }
+    $('.htmleditor').summernote({
+        styleWithSpan: false,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture']],
+            ['misc', ['undo', 'redo', 'codeview']],
+        ]
     });
 
     $('.select2').select2();
@@ -193,21 +227,24 @@ $(function() {
         return false;
     });
 
-    var $datatable = $('.datatable').dataTable({
-        'bPaginate': true,
-        'bSort': true,
-        'bInfo': true,
-        'bAutoWidth': false,
-        'bProcessing': true,
-        'aaSorting': [],
-        'oLanguage': gettext['datatables'],
-        'aLengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
-        'fnInitComplete': function () {
-            this.fnAdjustColumnSizing();
-        }
-    });
+    var $datatable = $('.datatable');
 
     if ($datatable.length) {
+        $datatable.dataTable({
+            'bDestroy': true,
+            'bPaginate': true,
+            'bSort': true,
+            'bInfo': true,
+            'bAutoWidth': false,
+            'bProcessing': true,
+            'aaSorting': [],
+            'oLanguage': gettext['datatables'],
+            'aLengthMenu': [[10, 25, 50, -1], [10, 25, 50, 'All']],
+            'fnInitComplete': function () {
+                this.fnAdjustColumnSizing();
+            }
+        });
+
         $('form button[type=submit]').on('click', function () {
             var $form = $(this).closest('form'),
                 $checks = $form.find('input[type="checkbox"], input[type="radio"]');
@@ -218,13 +255,15 @@ $(function() {
 
             var inputs = '';
 
-            $('input, select', $datatable.fnGetNodes()).each(function () {
-                var $this = $(this),
-                    checkbox = $this.is(':checkbox') || $this.is(':radio');
+            $datatable.each(function () {
+                $('input, select', $(this).dataTable().fnGetNodes()).each(function () {
+                    var $this = $(this),
+                        checkbox = $this.is(':checkbox') || $this.is(':radio');
 
-                if (!checkbox || (checkbox && $this.is(':checked'))) {
-                    inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.attr('value') + '" />';
-                }
+                    if (!checkbox || (checkbox && $this.is(':checked'))) {
+                        inputs += '<input type="hidden" name="' + $this.attr('name') + '" value="' + $this.val() + '" />';
+                    }
+                });
             });
 
             if (($('input:checked', $form).length === 0) && (inputs === '')) {
@@ -278,6 +317,17 @@ $(function() {
         });
     }
 
+    $('.form-group[data-related] a').on('click', function(e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            $select = $this.closest('.form-group').find('select');
+
+        if ($select.val()) {
+            window.location.href = $this.attr('href') + '/' + $select.val();
+        }
+    });
+
     $('[data-change-submit]').on('change', function (e) {
         e.preventDefault();
 
@@ -285,10 +335,10 @@ $(function() {
             $form = $this.closest('form');
 
         if ($form.length) {
-            $form.submit();
-        } else {
-            window.location = '?' + $this.attr('name') + '=' + encodeURIComponent($this.val());
+            return $form.submit();
         }
+
+        updateQuery($this.attr('name'), $this.val());
     });
 
     $('[data-print]').on('click', function (e) {

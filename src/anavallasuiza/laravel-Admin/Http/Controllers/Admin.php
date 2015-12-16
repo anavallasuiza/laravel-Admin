@@ -1,6 +1,6 @@
-<?php namespace Admin\Http\Controllers;
+<?php
+namespace Admin\Http\Controllers;
 
-use Auth;
 use Redirect;
 use Response;
 use Meta;
@@ -21,10 +21,14 @@ class Admin extends Controller
 
     public function login()
     {
-        $form = (new Forms\Admin())->login();
+        if ($this->user) {
+            return Redirect::route('admin.index');
+        }
 
-        if (is_object($action = $this->action(__FUNCTION__, $form))) {
-            return $action;
+        $form = new Forms\Users\Login();
+
+        if (is_object($processor = $this->processor(__FUNCTION__, $form))) {
+            return $processor;
         }
 
         Meta::meta('title', __('Login into admin area'));
@@ -36,9 +40,7 @@ class Admin extends Controller
 
     public function logout()
     {
-        Auth::logout();
-
-        return Redirect::route('admin.login');
+        return $this->makeProcessor(__FUNCTION__);
     }
 
     public function index()

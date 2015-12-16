@@ -1,11 +1,11 @@
-<?php namespace Admin\Http\Processors;
+<?php
+namespace Admin\Http\Processors;
 
 use ErrorException;
 use Auth;
 use Input;
 use Redirect;
 use Request;
-use Session;
 use Admin\Models;
 
 class Admin extends Processor
@@ -19,7 +19,7 @@ class Admin extends Processor
         $success = Auth::attempt([
             'user' => $data['user'],
             'password' => $data['password'],
-        ], true);
+        ], $data['remember']);
 
         if ($success !== true) {
             Models\Session::create([
@@ -40,7 +40,7 @@ class Admin extends Processor
                 'ip' => Request::getClientIp(),
                 'created_at' => date('Y-m-d H:i:s'),
                 'success' => 0,
-                'users_id' => $user->id,
+                'admin_users_id' => $user->id,
             ]);
 
             Auth::logout();
@@ -53,7 +53,7 @@ class Admin extends Processor
             'ip' => Request::getClientIp(),
             'created_at' => date('Y-m-d H:i:s'),
             'success' => 1,
-            'users_id' => $user->id,
+            'admin_users_id' => $user->id,
         ]);
 
         $referer = Input::get('referer');
@@ -63,5 +63,12 @@ class Admin extends Processor
         } else {
             return Redirect::away($referer);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->back();
     }
 }

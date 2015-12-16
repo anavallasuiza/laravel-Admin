@@ -14,17 +14,9 @@
         <tr>
             <td>{{ $row->created_at }}</td>
 
-            <?php
-            try {
-                $exists = route('admin.'.$row->related_table.'.index');
-            } catch (Exception $e) {
-                $exists = false;
-            }
-            ?>
-
             @if ($row->related_table)
-            <td><a href="{{ $exists ?: 'javascript: void;' }}">{{ $row->related_table }}</a></td>
-            <td><a href="{{ $exists ? route('admin.'.$row->related_table.'.edit', $row->related_id) : 'javascript: void;' }}">{{ $row->related_id }}</td>
+            <td><a href="{{ route('admin.database', [$row->related_table, 'index']) }}">{{ $row->related_table }}</a></td>
+            <td><a href="{{ route('admin.database', [$row->related_table, 'edit', $row->related_id]) }}">{{ $row->related_id }}</td>
             @else
             <td>&nbsp;</td>
             <td>&nbsp;</td>

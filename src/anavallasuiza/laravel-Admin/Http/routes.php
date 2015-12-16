@@ -1,4 +1,6 @@
 <?php
+use Admin\Library\Helpers;
+
 require __DIR__.'/filters.php';
 
 $prefix = config('admin.admin.prefix');
@@ -19,21 +21,22 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
         'uses' => 'Admin\Http\Controllers\Admin@index',
     ]);
 
+    Route::any('/database/{table}/{action}/{id?}', ['as' => 'admin.database', function ($table, $action, $id = null) {
+        $class = 'Admin\\Http\\Controllers\\Database\\'.Helpers::camelcase($table);
+
+        return App::make($class)->$action($id);
+    }]);
+
+    if (is_file($custom = base_path('admin/Http/routes.php'))) {
+        require $custom;
+    }
+
     Route::get('/logout', [
         'as' => 'admin.logout',
         'uses' => 'Admin\Http\Controllers\Admin@logout',
     ]);
 
-    Route::group(['prefix' => 'database'], function () {
-
-    });
-
     Route::group(['before' => 'admin.admin'], function () {
-        Route::get('/management/database', [
-            'as' => 'admin.management.database.index',
-            'uses' => 'Admin\Http\Controllers\Management\Database@index',
-        ]);
-
         Route::get('/management/users', [
             'as' => 'admin.management.users.index',
             'uses' => 'Admin\Http\Controllers\Management\Users@index',
@@ -44,9 +47,14 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
             'uses' => 'Admin\Http\Controllers\Management\Users@edit',
         ]);
 
-        Route::any('/management/gettext/{locale}', [
-            'as' => 'admin.management.gettext.index',
-            'uses' => 'Admin\Http\Controllers\Management\Gettext@index',
+        Route::any('/management/gettext/app/{locale?}', [
+            'as' => 'admin.management.gettext.app',
+            'uses' => 'Admin\Http\Controllers\Management\Gettext@app',
+        ]);
+
+        Route::any('/management/gettext/admin/{locale?}', [
+            'as' => 'admin.management.gettext.admin',
+            'uses' => 'Admin\Http\Controllers\Management\Gettext@admin',
         ]);
 
         Route::any('/management/uploads', [

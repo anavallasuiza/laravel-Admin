@@ -1,19 +1,19 @@
 <?php
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateAdminTables extends Migration
 {
-    protected function drop()
-    {
-        Schema::dropIfExists('admin_logs');
-        Schema::dropIfExists('admin_sessions');
-        Schema::dropIfExists('admin_users');
-    }
-
     public function up()
     {
-        Schema::create('admin_logs', function ($table) {
+        $this->upTables();
+        $this->upIndex();
+    }
+
+    protected function upTables()
+    {
+        Schema::create('admin_logs', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -25,24 +25,47 @@ class CreateAdminTables extends Migration
 
             $table->timestamp('created_at');
 
-            $table->integer('users_id')->unsigned();
+            $table->integer('admin_users_id')->unsigned();
         });
 
-        Schema::create('admin_sessions', function ($table) {
+        Schema::create('admin_menus', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
+            $table->increments('id');
+
+            $table->string('title');
+            $table->string('route');
+
+            $table->boolean('enabled');
+        });
+
+        Schema::create('admin_menus_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
+            $table->boolean('list')->nullable();
+            $table->boolean('create')->nullable();
+            $table->boolean('update')->nullable();
+            $table->boolean('delete')->nullable();
+
+            $table->integer('admin_menus_id')->unsigned();
+            $table->integer('admin_users_id')->unsigned();
+        });
+
+        Schema::create('admin_sessions', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
 
             $table->string('user');
             $table->string('ip');
-            $table->string('success');
+            $table->boolean('success')->nullable();
 
             $table->timestamp('created_at');
 
-            $table->integer('users_id')->unsigned();
+            $table->unsignedInteger('admin_users_id')->nullable();
         });
 
-        Schema::create('admin_users', function ($table) {
+        Schema::create('admin_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 
             $table->increments('id');
@@ -51,28 +74,46 @@ class CreateAdminTables extends Migration
             $table->string('user')->unique();
             $table->string('password');
             $table->string('password_token');
-            $table->boolean('admin');
-            $table->boolean('enabled');
+            $table->boolean('admin')->nullable();
+            $table->boolean('enabled')->nullable();
 
             $table->rememberToken();
 
             $table->timestamps();
         });
+    }
 
-        Schema::table('admin_logs', function ($table) {
-            $table->index('users_id')
-                ->foreign('users_id')
+    protected function upIndex()
+    {
+        Schema::table('admin_logs', function (Blueprint $table) {
+            $table->foreign('admin_users_id')
                 ->references('id')
                 ->on('admin_users');
         });
 
-        Schema::table('admin_sessions', function ($table) {
-            $table->index('users_id');
+        Schema::table('admin_menus_users', function (Blueprint $table) {
+            $table->foreign('admin_menus_id')
+                ->references('id')
+                ->on('admin_menus');
+
+            $table->foreign('admin_users_id')
+                ->references('id')
+                ->on('admin_users');
+        });
+
+        Schema::table('admin_sessions', function (Blueprint $table) {
+            $table->foreign('admin_users_id')
+                ->references('id')
+                ->on('admin_users');
         });
     }
 
     public function down()
     {
-        $this->drop();
+        Schema::dropIfExists('admin_logs');
+        Schema::dropIfExists('admin_menus_users');
+        Schema::dropIfExists('admin_menus');
+        Schema::dropIfExists('admin_sessions');
+        Schema::dropIfExists('admin_users');
     }
 }

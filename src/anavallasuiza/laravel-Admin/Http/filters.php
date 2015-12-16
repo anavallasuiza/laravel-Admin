@@ -1,8 +1,6 @@
 <?php
 
 Route::filter('admin.logged', function () {
-    Config::set('auth', config('admin.auth'));
-
     if (!Auth::guest()) {
         return;
     }

@@ -1,4 +1,7 @@
-<?php namespace Admin\Library;
+<?php
+namespace Admin\Library;
+
+use Packer;
 
 class Html
 {
@@ -8,9 +11,12 @@ class Html
             return $html;
         }
 
-        $html = self::xss($html);
+        $html = '<p>'.self::xss($html).'</p>';
 
         $valid = 'class|src|target|alt|title|href|rel';
+
+        $html = preg_replace('#<(font|span) style="font-weight[^"]+">([^<]+)</(font|span)>#i', '<strong>$2</strong>', $html);
+        $html = preg_replace('#<(font|span) style="font-style:\s*italic[^"]+">([^<]+)</(font|span)>#i', '<i>$2</i>', $html);
 
         $html = preg_replace('# ('.$valid.')=#i', ' |$1|', $html);
         $html = preg_replace('# [a-z]+=["\'][^"\']*["\']#i', '', $html);
@@ -35,10 +41,6 @@ class Html
 
         $html = preg_replace('~<(?:!DOCTYPE|/?(?:\?xml|html|head|body))[^>]*>\s*~i', '', $html);
         $html = preg_replace('/<([^<\/>]*)>([\s]*?|(?R))<\/\1>/imsU', '', $html);
-
-        $html = preg_replace_callback('/\[IMG=([^\]]+)\]/', function ($matches) {
-            return '[IMG='.preg_replace('/.*href="([^"]+).*/', '$1', $matches[1]).']';
-        }, $html);
 
         return trim(str_replace('&nbsp;', ' ', $html));
     }
@@ -91,5 +93,54 @@ class Html
         }
 
         return asset($base.'/'.$manifest[$file]);
+    }
+
+    public static function query($key, $value = null)
+    {
+        parse_str(parse_url(getenv('REQUEST_URI'), PHP_URL_QUERY), $query);
+
+        if (is_array($key)) {
+            $query = array_merge($query, $key);
+        } else {
+            $query[$key] = $value;
+        }
+
+        foreach ($query as $key => $value) {
+            if (is_string($value) && (strlen($value) === 0)) {
+                unset($query[$key]);
+            } elseif (is_array($value) && !($value = array_filter($value))) {
+                unset($query[$key]);
+            }
+        }
+
+        return '?'.http_build_query($query);
+    }
+
+    public static function DT($string)
+    {
+        if (strpos($string, 'datatables.s') !== 0) {
+            return $string;
+        } elseif (strstr($string, 'sLengthMenu')) {
+            return '_MENU_';
+        } else  {
+            return str_replace('datatables.s', '', $string);
+        }
+    }
+
+    public static function img($image, $transform = '')
+    {
+        if (is_object($image)) {
+            $image = $image->image;
+        }
+
+        if (strpos($image, '/') !== 0) {
+            $image = '/storage/resources/'.$image;
+        }
+
+        if (empty($transform)) {
+            return asset($image);
+        }
+
+        return Packer::img($image, $transform);
     }
 }

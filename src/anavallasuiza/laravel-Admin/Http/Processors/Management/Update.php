@@ -1,4 +1,5 @@
-<?php namespace Admin\Http\Processors\Management;
+<?php
+namespace Admin\Http\Processors\Management;
 
 use Admin\Http\Processors\Processor;
 use Admin\Library;
@@ -51,17 +52,17 @@ class Update extends Processor
 
     public function git()
     {
-        return $this->exec(__FUNCTION__, 'git pull -u origin master');
+        return $this->exec(__FUNCTION__, 'git pull origin '.env('GIT_BRANCH'));
     }
 
     public function composer()
     {
-        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer update');
+        return $this->exec(__FUNCTION__, 'export COMPOSER_HOME="'.base_path().'"; composer install '.env('COMPOSER_OPTIONS'));
     }
 
     public function npm()
     {
-        return $this->exec(__FUNCTION__, 'npm install; npm update');
+        return $this->exec(__FUNCTION__, 'npm install');
     }
 
     public function bower()

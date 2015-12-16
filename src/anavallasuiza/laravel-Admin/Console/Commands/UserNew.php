@@ -1,8 +1,9 @@
-<?php namespace Admin\Console\Commands;
+<?php
+namespace Admin\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Hash;
 use Admin\Models;
 
@@ -35,9 +36,9 @@ class UserNew extends Command
      *
      * @return mixed
      */
-    public function fire()
+    public function handle()
     {
-        $data = $this->argument();
+        $data = $this->option();
 
         $exists = Models\User::where('user', '=', $data['user'])->first();
 
@@ -52,7 +53,7 @@ class UserNew extends Command
                 'name' => $data['name'],
                 'user' => $data['user'],
                 'password' => Hash::make($data['password']),
-                'admin' => 1,
+                'admin' => ($data['admin'] && ($data['admin'] !== 'false')),
                 'enabled' => 1,
             ]);
         } catch (Exception $e) {
@@ -71,11 +72,7 @@ class UserNew extends Command
      */
     protected function getArguments()
     {
-        return array(
-            array('name', InputArgument::REQUIRED, 'User name.'),
-            array('user', InputArgument::REQUIRED, 'Login user.'),
-            array('password', InputArgument::REQUIRED, 'Login password.'),
-        );
+        return [];
     }
 
     /**
@@ -85,6 +82,11 @@ class UserNew extends Command
      */
     protected function getOptions()
     {
-        return [];
+        return [
+            ['name', '', InputOption::VALUE_REQUIRED, 'User name.'],
+            ['user', '', InputOption::VALUE_REQUIRED, 'Login user.'],
+            ['password', '', InputOption::VALUE_REQUIRED, 'Login password.'],
+            ['admin', '', InputOption::VALUE_OPTIONAL, 'Set User as Admin.'],
+        ];
     }
 }

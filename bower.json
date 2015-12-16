@@ -9,10 +9,10 @@
     "jquery": "2.*",
     "font-awesome": "4.3.*",
     "bootstrap": "3.3.*",
-    "DataTables": "latest",
-    "select2": "latest",
-    "select2-bootstrap-css": "latest",
-    "bootstrap-fileinput": "latest",
-    "bootstrap3-wysihtml5-bower": "latest"
+    "DataTables": "1.10.*",
+    "select2": "3.*",
+    "select2-bootstrap-css": "1.4.*",
+    "bootstrap-fileinput": "4.1.*",
+    "summernote": "0.6.*"
   }
 }

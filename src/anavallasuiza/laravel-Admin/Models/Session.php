@@ -1,4 +1,5 @@
-<?php namespace Admin\Models;
+<?php
+namespace Admin\Models;
 
 class Session extends Model
 {

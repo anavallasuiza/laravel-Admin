@@ -15,14 +15,15 @@
     "require": {
         "php": ">=5.4",
         "almasaeed2010/adminlte": "2.*",
-        "form-manager/form-manager": "4.2.*",
-        "gettext/gettext": "3.*",
-        "laravel/packer": "master-dev",
-        "laravel/meta": "master-dev"
+        "eusonlito/laravel-packer": "2.*",
+        "eusonlito/laravel-meta": "2.*",
+        "eusonlito/laravel-processor": "1.*",
+        "eusonlito/laravel-gettext": "1.*",
+        "eusonlito/laravel-form-manager": "1.*"
     },
     "autoload": {
         "psr-4": {
-            "Admin\\": "src/anavallasuiza/laravel-Admin/"
+            "Admin\\": ["src/anavallasuiza/laravel-Admin/", "../../../admin/"]
         }
     },
     "minimum-stability": "dev"

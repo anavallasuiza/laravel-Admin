@@ -12,31 +12,18 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "anavallasuiza/laravel-admin": "master-dev"
+        "anavallasuiza/laravel-admin": "dev-develop"
     }
 }
 ```
 
-Configure Laravel Service Providers and Aliases in `config/app.php`:
+Configure Laravel Service Providers in `config/app.php`:
 
 ```php
 'providers' => [
     ...
 
-    'App\Providers\GettextServiceProvider',
-    'Laravel\Meta\MetaServiceProvider',
-    'Laravel\Packer\PackerServiceProvider'
     'Admin\AdminServiceProvider',
-
-    ...
-]
-
-'aliases' => [
-    ...
-
-    'Gettext'   => 'App\Facades\Gettext',
-    'Meta'     => 'Laravel\Meta\Facade',
-    'Packer'   => 'Laravel\Packer\Facade',
 
     ...
 ]
@@ -48,30 +35,22 @@ Publish the base admin configuration:
 php artisan vendor:publish
 ```
 
-Update `app/Console/Kernel.php` with this new commands:
-
-```php
-protected $commands = [
-    ...
-
-    'Admin\Console\Commands\PublishAssets',
-    'Admin\Console\Commands\UserNew',
-
-    ...
-];
-```
-
 Publish admin assets with:
 
 ```bash
 php artisan admin:publish:assets
 ```
 
+Mirate admin tables
+
+```bash
+php artisan migrate
+```
+
 And finally, create your first admin user:
 
 ```bash
-# php artisan admin:user:new Name user password
-php artisan admin:user:new Admin admin admin
+php artisan admin:user:new --name Admin --user admin --password admin --admin true
 ```
 
 Check now to login into http://mydomain.com/admin
