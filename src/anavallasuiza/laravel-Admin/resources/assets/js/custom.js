@@ -246,10 +246,9 @@ $(function() {
         });
 
         $('form button[type=submit]').on('click', function () {
-            var $form = $(this).closest('form'),
-                $checks = $form.find('input[type="checkbox"], input[type="radio"]');
+            var $form = $(this).closest('form');
 
-            if ($checks.length === 0) {
+            if ($form.find('input, select').length === 0) {
                 return true;
             }
 
