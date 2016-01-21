@@ -55,7 +55,7 @@ var css_files = [
 
 // Directories
 gulp.task('directories:clean', function(cb) {
-    del(Object.keys(directories).map(function(key) {
+    return del(Object.keys(directories).map(function(key) {
         return directories[key];
     }), cb);
 });
@@ -68,7 +68,7 @@ gulp.task('directories', ['directories:clean'], function() {
 
 // CSS
 gulp.task('css:clean', ['directories'], function(cb) {
-    del([paths.to.css], cb);
+    return del([paths.to.css], cb);
 });
 
 gulp.task('css', ['css:clean'], function() {
@@ -84,7 +84,7 @@ gulp.task('css', ['css:clean'], function() {
 
 // JS
 gulp.task('js:clean', ['directories'], function(cb) {
-    del([paths.to.js], cb);
+    return del([paths.to.js], cb);
 });
 
 gulp.task('js', ['js:clean'], function() {
@@ -96,7 +96,7 @@ gulp.task('js', ['js:clean'], function() {
 
 // Version
 gulp.task('version', ['directories', 'css', 'js'], function() {
-    gulp.src(
+    return gulp.src(
         [
             paths.to.css + 'app.min.css',
             paths.to.js + 'app.min.js'
