@@ -12,7 +12,7 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "anavallasuiza/laravel-admin": "5.1.*-dev"
+        "anavallasuiza/laravel-admin": "5.1.*"
     }
 }
 ```
