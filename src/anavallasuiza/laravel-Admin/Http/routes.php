@@ -1,8 +1,6 @@
 <?php
 use Admin\Library\Helpers;
 
-require __DIR__.'/filters.php';
-
 $prefix = config('admin.admin.prefix');
 
 Route::get('/'.$prefix.'/gettext.js', [
@@ -15,7 +13,7 @@ Route::any('/'.$prefix.'/login', [
     'uses' => 'Admin\Http\Controllers\Admin@login',
 ]);
 
-Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
+Route::group(['prefix' => $prefix, 'middleware' => 'admin.auth'], function () {
     Route::get('/', [
         'as' => 'admin.index',
         'uses' => 'Admin\Http\Controllers\Admin@index',
@@ -24,7 +22,7 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
     Route::any('/database/{table}/{action}/{id?}', ['as' => 'admin.database', function ($table, $action, $id = null) {
         $class = 'Admin\\Http\\Controllers\\Database\\'.Helpers::camelcase($table);
 
-        return App::make($class)->$action($id);
+        return app()->make($class)->$action($id);
     }]);
 
     if (is_file($custom = base_path('admin/Http/routes.php'))) {
@@ -36,7 +34,7 @@ Route::group(['prefix' => $prefix, 'before' => 'admin.logged'], function () {
         'uses' => 'Admin\Http\Controllers\Admin@logout',
     ]);
 
-    Route::group(['before' => 'admin.admin'], function () {
+    Route::group(['middleware' => 'admin.admin'], function () {
         Route::get('/management/users', [
             'as' => 'admin.management.users.index',
             'uses' => 'Admin\Http\Controllers\Management\Users@index',
