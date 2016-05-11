@@ -33,7 +33,8 @@ class Update extends Processor
         $base .= 'export HOME="'.base_path().'"; ';
         $base .= 'export LC_ALL=en_US.UTF-8; ';
 
-        $log = end((new Library\Shell())->exec($base.$cmd)->getLog());
+        $log = (new Library\Shell())->exec($base.$cmd)->getLog();
+        $log = end($log);
 
         if ($log['success']) {
             Session::flash('flash-message', [
