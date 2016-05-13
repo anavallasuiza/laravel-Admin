@@ -13,13 +13,13 @@
         "vendor-dir": "vendor"
     },
     "require": {
-        "php": ">=5.4",
-        "almasaeed2010/adminlte": "2.*",
-        "eusonlito/laravel-packer": "2.*",
-        "eusonlito/laravel-meta": "2.*",
-        "eusonlito/laravel-processor": "1.*",
-        "eusonlito/laravel-gettext": "1.*",
-        "eusonlito/laravel-form-manager": "1.*"
+        "php": ">=5.5",
+        "almasaeed2010/adminlte": "2.3.*",
+        "eusonlito/laravel-packer": "2.1.*",
+        "eusonlito/laravel-meta": "2.0.*",
+        "eusonlito/laravel-processor": "1.0.*",
+        "eusonlito/laravel-gettext": "1.1.*",
+        "eusonlito/laravel-form-manager": "1.0.*"
     },
     "autoload": {
         "psr-4": {
