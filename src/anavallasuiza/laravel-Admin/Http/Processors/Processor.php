@@ -8,7 +8,7 @@ use Session;
 
 abstract class Processor
 {
-    use ProcessorTrait;
+    use ProcessorTrait, ExportCsvTrait;
 
     protected $user;
     protected $locale;
