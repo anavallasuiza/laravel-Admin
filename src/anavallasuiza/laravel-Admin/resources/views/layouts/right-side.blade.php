@@ -3,7 +3,7 @@
 @section('right-side')
 
 <section class="content-header">
-    <h1>{{ Meta::meta('title') }}</h1>
+    <h1>{{ Meta::get('title') }}</h1>
 </section>
 
 <section class="content">

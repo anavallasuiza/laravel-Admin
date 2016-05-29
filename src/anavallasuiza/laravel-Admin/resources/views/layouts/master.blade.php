@@ -9,7 +9,7 @@
         @section('head')
         <meta charset="utf-8">
 
-        <title>{{ Meta::meta('title') }}</title>
+        <title>{{ Meta::get('title') }}</title>
 
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 

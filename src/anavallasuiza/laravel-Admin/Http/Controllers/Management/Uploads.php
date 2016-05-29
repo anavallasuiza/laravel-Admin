@@ -36,7 +36,7 @@ class Uploads extends Controller
 
         list($files, $directories) = self::getFilesDirectories($uploads, $dir, $public);
 
-        Meta::meta('title', __('Uploads'));
+        Meta::set('title', __('Uploads'));
 
         return self::view('management.uploads.index', [
             'location' => self::getLocation($dir),

@@ -59,7 +59,7 @@ class Gettext extends Controller
             $config['directories'][$key] = base_path($directory);
         }
 
-        Meta::meta('title', __('App Gettext translations'));
+        Meta::set('title', __('App Gettext translations'));
 
         return $this->show($form, $config, $locale);
     }
@@ -79,7 +79,7 @@ class Gettext extends Controller
             $config['directories'][] = $app;
         }
 
-        Meta::meta('title', __('Admin Gettext translations'));
+        Meta::set('title', __('Admin Gettext translations'));
 
         return $this->show($form, $config, $locale);
     }

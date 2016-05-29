@@ -14,7 +14,7 @@ class Users extends Controller
 
     public function index()
     {
-        Meta::meta('title', __('List Admin Users'));
+        Meta::set('title', __('List Admin Users'));
 
         return $this->indexView([
             'model' => App::make('Admin\\Models\\User'),
@@ -47,9 +47,9 @@ class Users extends Controller
         }
 
         if (empty($row->id)) {
-            Meta::meta('title', __('New'));
+            Meta::set('title', __('New'));
         } else {
-            Meta::meta('title', __('Edit "%s"', $row->name));
+            Meta::set('title', __('Edit "%s"', $row->name));
 
             if ($processor === null) {
                 $form->preload($row);
