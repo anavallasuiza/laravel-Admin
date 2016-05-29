@@ -11,7 +11,14 @@ class Html
             return $html;
         }
 
-        $html = '<p>'.self::xss($html).'</p>';
+        $html = self::xss($html);
+
+        if (substr($html, 0, 2) !== '<p') {
+            $html = '<p>'.implode('</p><p>', preg_split('/[\n\r]/', $html)).'</p>';
+        }
+
+        $html = trim(str_replace(["\n", "\r"], ' ', self::xss($html)));
+        $html = preg_replace('#\s{2,}#', ' ', $html);
 
         $valid = 'class|src|target|alt|title|href|rel';
 
@@ -40,7 +47,8 @@ class Html
         libxml_use_internal_errors(false);
 
         $html = preg_replace('~<(?:!DOCTYPE|/?(?:\?xml|html|head|body))[^>]*>\s*~i', '', $html);
-        $html = preg_replace('/<([^<\/>]*)>([\s]*?|(?R))<\/\1>/imsU', '', $html);
+        $html = preg_replace('#<([^\s]+)[^>]*>\s*</\1>#', '', $html);
+        $html = preg_replace('#</p>\s+<p#', '</p><p', $html);
 
         return trim(str_replace('&nbsp;', ' ', $html));
     }

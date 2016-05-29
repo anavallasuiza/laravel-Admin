@@ -25,7 +25,7 @@ class Cache extends Controller
             $contents = '';
         }
 
-        Meta::meta('title', __('Cache: Views'));
+        Meta::set('title', __('Cache: Views'));
 
         return self::view('management.cache.views', [
             'files' => $files,
@@ -36,7 +36,7 @@ class Cache extends Controller
 
     public function apc()
     {
-        Meta::meta('title', __('Cache: APC'));
+        Meta::set('title', __('Cache: APC'));
 
         if (!function_exists('apc_cache_info')) {
             return View::make('admin::molecules.alert-extends', [
@@ -90,7 +90,7 @@ class Cache extends Controller
 
     public function memcache()
     {
-        Meta::meta('title', __('Cache: Memcache'));
+        Meta::set('title', __('Cache: Memcache'));
 
         $Memcache = $this->loadCacheMemcache('Memcache');
 
@@ -116,7 +116,7 @@ class Cache extends Controller
 
     public function memcached()
     {
-        Meta::meta('title', __('Cache: Memcached'));
+        Meta::set('title', __('Cache: Memcached'));
 
         $Memcache = $this->loadCacheMemcache('Memcached');
 
@@ -168,7 +168,7 @@ class Cache extends Controller
             ];
         }
 
-        Meta::meta('title', __('Cache: Files'));
+        Meta::set('title', __('Cache: Files'));
 
         if (empty($folders)) {
             return View::make('admin::molecules.alert-extends', [

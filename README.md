@@ -12,21 +12,57 @@ Begin by installing this package through Composer.
 ```js
 {
     "require": {
-        "anavallasuiza/laravel-admin": "dev-develop"
+        "anavallasuiza/laravel-admin": "5.1.*"
     }
 }
 ```
 
-Configure Laravel Service Providers in `config/app.php`:
+Configure Laravel Service Providers/Aliases in `config/app.php`:
 
 ```php
 'providers' => [
     ...
 
-    'Admin\AdminServiceProvider',
+    Admin\AdminServiceProvider::class,
 
     ...
 ]
+
+'aliases' => [
+   ...
+
+   'Input' => Illuminate\Support\Facades\Input::class,
+
+   ...
+]
+```
+
+Configure `app/Http/Kernel.php` with Middlewares:
+
+```php
+/**
+ * The application's route middleware groups.
+ *
+ * @var array
+ */
+protected $middlewareGroups = [
+    ...
+
+    'admin' => [
+        \App\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\Http\Middleware\VerifyCsrfToken::class,
+    ]
+];
+
+protected $routeMiddleware = [
+    ...
+
+    'admin.auth' => \Admin\Http\Middleware\Authenticate::class,
+    'admin.admin' => \Admin\Http\Middleware\Admin::class,
+];
 ```
 
 Publish the base admin configuration:

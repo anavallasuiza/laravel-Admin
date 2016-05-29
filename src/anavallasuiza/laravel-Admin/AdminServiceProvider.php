@@ -73,19 +73,19 @@ class AdminServiceProvider extends ServiceProvider
 
     protected function registerProviders()
     {
-        $this->app->register('Eusonlito\LaravelMeta\MetaServiceProvider');
-        $this->app->register('Eusonlito\LaravelPacker\PackerServiceProvider');
-        $this->app->register('Eusonlito\LaravelGettext\GettextServiceProvider');
+        $this->app->register(\Eusonlito\LaravelMeta\MetaServiceProvider::class);
+        $this->app->register(\Eusonlito\LaravelPacker\PackerServiceProvider::class);
+        $this->app->register(\Eusonlito\LaravelGettext\GettextServiceProvider::class);
     }
 
     protected function registerAliases()
     {
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('Collection', 'Illuminate\Database\Eloquent\Collection');
-        $loader->alias('Meta', 'Eusonlito\LaravelMeta\Facade');
-        $loader->alias('Packer', 'Eusonlito\LaravelPacker\Facade');
-        $loader->alias('Gettext', 'Eusonlito\LaravelGettext\Facade');
+        $loader->alias('Collection', \Illuminate\Database\Eloquent\Collection::class);
+        $loader->alias('Meta', \Eusonlito\LaravelMeta\Facade::class);
+        $loader->alias('Packer', \Eusonlito\LaravelPacker\Facade::class);
+        $loader->alias('Gettext', \Eusonlito\LaravelGettext\Facade::class);
     }
 
     protected function registerCommands()

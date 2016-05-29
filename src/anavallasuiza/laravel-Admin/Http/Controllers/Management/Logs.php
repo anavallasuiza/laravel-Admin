@@ -10,7 +10,7 @@ class Logs extends Controller
 {
     public function index()
     {
-        Meta::meta('title', __('System Logs'));
+        Meta::set('title', __('System Logs'));
 
         $Logs = new Library\Logs($data = Input::all());
 

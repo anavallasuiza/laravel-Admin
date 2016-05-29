@@ -15,7 +15,7 @@ class Update extends Controller
             return $processor;
         }
 
-        Meta::meta('title', __('Update environment'));
+        Meta::set('title', __('Update environment'));
 
         return self::view('management.update.index', [
             'processor' => Input::get('_processor'),
