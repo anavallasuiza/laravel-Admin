@@ -221,7 +221,7 @@ trait EditTrait
 
             list($width, $height) = explode('x', $size);
 
-            Image::create($file)->resize($width, $height)->save();
+            Image::fromFile($file)->resize($width, $height)->save();
         }
     }
 
