@@ -10,6 +10,7 @@ class Forms extends BaseForm
         foreach ($this as $input) {
             if (strstr($input->attr('class'), 'htmleditor')) {
                 $input->sanitize(__NAMESPACE__.'\\Html::fix');
+                $input->sanitize(__NAMESPACE__.'\\Html::storeImagesInline');
             } elseif ($input->attr('type') === 'text') {
                 $input->sanitize('strip_tags');
             }

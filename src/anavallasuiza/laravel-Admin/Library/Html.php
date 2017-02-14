@@ -2,9 +2,12 @@
 namespace Admin\Library;
 
 use Packer;
+use Eusonlito\LaravelProcessor\Library;
 
 class Html
 {
+    use Library\FilesTrait;
+
     public static function fix($html)
     {
         if (empty($html)) {
@@ -84,6 +87,36 @@ class Html
         } while ($old_data !== $html);
 
         return $html;
+    }
+
+    public static function storeImagesInline($string)
+    {
+        preg_match_all('/src="(data:image[^"]+)" data\-filename="([^"]+)"/', $string, $matches);
+
+        if (empty($matches[0])) {
+            return $string;
+        }
+
+        foreach ($matches[2] as $index => $name) {
+            $image = self::storeImageInline($name, $matches[1][$index]);
+
+            if ($image) {
+                $string = str_replace($matches[0][$index], 'src="'.$image.'"', $string);
+            }
+        }
+
+        return $string;
+    }
+
+    private static function storeImageInline($name, $contents)
+    {
+        $file = tempnam(sys_get_temp_dir(), 'inline');
+
+        file_put_contents($file, base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $contents)));
+
+        if ($image = self::saveFile($file, 'uploads/'.date('Y-m-d'), $name)) {
+            return asset(self::getRelativeStoragePath($image));
+        }
     }
 
     public static function elixir($file)
