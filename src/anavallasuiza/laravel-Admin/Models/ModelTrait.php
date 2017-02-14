@@ -30,6 +30,8 @@ trait ModelTrait
 
     public function scopeSearch($query, $q, $columns = [])
     {
+        $q = trim(preg_replace('/[^[[:alnum:]]\s]/', '', $q));
+
         if (strlen($q) === 0) {
             return $query;
         }
@@ -37,7 +39,7 @@ trait ModelTrait
         $columns = array_filter(is_array($columns) ? $columns : [$columns]);
         $columns = $columns ?: Schema::getColumnListing($this->getTable());
 
-        $q = '%'.str_replace(' ', '%', trim($q)).'%';
+        $q = '%'.str_replace(' ', '%', $q).'%';
 
         return $query->where(function ($query) use ($columns, $q) {
             foreach ($columns as $column) {
