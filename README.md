@@ -90,3 +90,14 @@ php artisan admin:user:new --name Admin --user admin --password admin --admin tr
 ```
 
 Check now to login into http://mydomain.com/admin
+
+## Laravel 5.4
+
+Gettext admin Translator use `__` functions added now on Laravel 5.4
+
+To use this admin on Laravel >=5.4 add this line to `bootstrap/autoload.php` project file:
+
+```php
+require __DIR__.'/../vendor/gettext/gettext/src/translator_functions.php'; # Add this line
+require __DIR__.'/../vendor/autoload.php';
+```

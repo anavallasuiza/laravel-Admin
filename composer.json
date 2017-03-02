@@ -18,7 +18,7 @@
         "eusonlito/laravel-packer": "2.1.*",
         "eusonlito/laravel-meta": "3.0.*",
         "eusonlito/laravel-processor": "1.0.*",
-        "eusonlito/laravel-gettext": "1.2.*",
+        "eusonlito/laravel-gettext": "2.0.*",
         "eusonlito/laravel-form-manager": "1.0.*"
     },
     "autoload": {
