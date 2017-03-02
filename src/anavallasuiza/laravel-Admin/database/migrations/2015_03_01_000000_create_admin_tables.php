@@ -21,7 +21,7 @@ class CreateAdminTables extends Migration
             $table->string('related_table');
             $table->string('related_id');
             $table->string('action');
-            $table->text('description');
+            $table->text('description')->nullable();
 
             $table->timestamp('created_at');
 
@@ -73,7 +73,7 @@ class CreateAdminTables extends Migration
             $table->string('name');
             $table->string('user')->unique();
             $table->string('password');
-            $table->string('password_token');
+            $table->string('password_token')->nullable();
             $table->boolean('admin')->nullable();
             $table->boolean('enabled')->nullable();
 
