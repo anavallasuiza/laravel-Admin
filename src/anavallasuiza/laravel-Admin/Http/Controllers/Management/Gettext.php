@@ -2,7 +2,6 @@
 namespace Admin\Http\Controllers\Management;
 
 use Redirect;
-use Eusonlito\LaravelGettext\Gettext as LGettext;
 use Eusonlito\LaravelFormManager\Form;
 use Meta;
 use Admin\Http\Controllers\Controller;
@@ -17,13 +16,13 @@ class Gettext extends Controller
             return Redirect::route('admin.management.gettext.app', $config['locales'][0]);
         }
 
-        LGettext::setConfig($config);
+        app('gettext')->setConfig($config);
 
         if (is_object($processor = $this->processor(['save', 'download'], $form, $config))) {
             return $processor;
         }
 
-        $entries = LGettext::getEntries($locale);
+        $entries = app('gettext')->getEntries($locale);
         $base = base_path();
 
         foreach ($entries as $entry) {

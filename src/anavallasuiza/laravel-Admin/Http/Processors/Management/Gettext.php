@@ -4,7 +4,6 @@ namespace Admin\Http\Processors\Management;
 use Exception;
 use ZipArchive;
 use Admin\Http\Processors\Processor;
-use Eusonlito\LaravelGettext\Gettext as LGettext;
 use Input;
 use Session;
 use Redirect;
@@ -18,7 +17,7 @@ class Gettext extends Processor
             return false;
         }
 
-        LGettext::setEntries(Input::get('locale'), $data['translations']);
+        app('gettext')->setEntries(Input::get('locale'), $data['translations']);
 
         Session::flash('flash-message', [
             'message' => __('Gettext was saved successfully'),
