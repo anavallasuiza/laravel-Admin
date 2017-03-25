@@ -9,13 +9,16 @@
   "devDependencies": {
     "del": "latest",
     "gulp": "latest",
-    "gulp-cache": "latest",
     "gulp-concat": "latest",
     "gulp-filter": "latest",
     "gulp-jshint": "latest",
+    "gulp-concat-css": "latest",
     "gulp-minify-css": "latest",
     "gulp-replace": "latest",
     "gulp-rev": "latest",
-    "gulp-uglify": "latest"
+    "gulp-uglify": "latest",
+    "files-exist": "latest",
+    "jshint": "latest",
+    "jshint-stylish": "latest"
   }
 }

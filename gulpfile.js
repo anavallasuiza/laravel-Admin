@@ -1,11 +1,15 @@
 // Load plugins
 var gulp = require('gulp'),
     replace = require('gulp-replace'),
+    concatcss = require('gulp-concat-css'),
     minifycss = require('gulp-minify-css'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     rev = require('gulp-rev'),
-    del = require('del');
+    del = require('del'),
+    jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish'),
+    filesExist = require('files-exist');
 
 var paths = {
     'from': {
@@ -33,7 +37,7 @@ var js_files = [
     paths.from.vendor   + 'jquery/dist/jquery.min.js',
     paths.from.vendor   + 'bootstrap/dist/js/bootstrap.min.js',
     paths.from.vendor   + 'summernote/dist/summernote.min.js',
-    paths.from.vendor   + 'select2/select2.min.js',
+    paths.from.vendor   + 'select2/dist/js/select2.min.js',
     paths.from.vendor   + 'bootstrap-fileinput/js/fileinput.min.js',
     paths.from.vendor   + 'DataTables/media/js/jquery.dataTables.min.js',
     paths.from.adminlte + 'plugins/datatables/dataTables.bootstrap.js',
@@ -44,8 +48,8 @@ var css_files = [
     paths.from.vendor   + 'bootstrap/dist/css/bootstrap.min.css',
     paths.from.vendor   + 'font-awesome/css/font-awesome.min.css',
     paths.from.vendor   + 'summernote/dist/summernote.css',
-    paths.from.vendor   + 'select2/select2.css',
-    paths.from.vendor   + 'select2-bootstrap-css/select2-bootstrap.min.css',
+    paths.from.vendor   + 'select2/dist/css/select2.min.css',
+    paths.from.vendor   + 'select2-bootstrap-theme/dist/select2-bootstrap.min.css',
     paths.from.vendor   + 'bootstrap-fileinput/css/fileinput.min.css',
     paths.from.adminlte + 'plugins/datatables/dataTables.bootstrap.css',
     paths.from.adminlte + 'dist/css/AdminLTE.min.css',
@@ -72,11 +76,14 @@ gulp.task('css:clean', ['directories'], function(cb) {
 });
 
 gulp.task('css', ['css:clean'], function() {
-    return gulp.src(css_files)
-        .pipe(concat('app.min.css'))
-        .pipe(minifycss({keepSpecialComments: 0, processImport: false}))
+    return gulp.src(filesExist(css_files))
+        .pipe(concatcss('app.min.css'))
+        .pipe(minifycss({
+            keepSpecialComments: 0,
+            restructuring: false,
+            processImport: false
+        }))
         .pipe(replace(/url\(images/g, "url(../datatables/images"))
-        .pipe(replace(/url\(select2/g, "url(../select2/select2"))
         .pipe(replace(/url\(..\/img/g, "url(../bootstrap-fileinput/img"))
         .pipe(replace(/@import[^;]+;/g, ''))
         .pipe(gulp.dest(paths.to.css));
@@ -87,8 +94,19 @@ gulp.task('js:clean', ['directories'], function(cb) {
     return del([paths.to.js], cb);
 });
 
+gulp.task('js:lint', function() {
+    var files = css_files.filter(function(file) {
+        return file.indexOf('vendor') === -1;
+    });
+
+    return gulp
+        .src(files)
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
+});
+
 gulp.task('js', ['js:clean'], function() {
-    return gulp.src(js_files)
+    return gulp.src(filesExist(js_files))
         .pipe(concat('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.to.js));
