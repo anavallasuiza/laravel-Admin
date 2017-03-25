@@ -85,6 +85,7 @@ gulp.task('css', ['css:clean'], function() {
         }))
         .pipe(replace(/url\(images/g, "url(../datatables/images"))
         .pipe(replace(/url\(..\/img/g, "url(../bootstrap-fileinput/img"))
+        .pipe(replace(/(\.\.\/)+[^\/]+\/fonts/g, '../fonts'))
         .pipe(replace(/@import[^;]+;/g, ''))
         .pipe(gulp.dest(paths.to.css));
 });
