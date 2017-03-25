@@ -6,13 +6,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery": "2.*",
-    "font-awesome": "4.5.*",
+    "jquery": "3.*",
+    "font-awesome": "4.7.*",
     "bootstrap": "3.3.*",
     "DataTables": "1.10.*",
-    "select2": "3.*",
-    "select2-bootstrap-css": "1.4.*",
-    "bootstrap-fileinput": "4.1.*",
-    "summernote": "0.6.*"
+    "select2": "4.*",
+    "select2-bootstrap-theme": "0.1.*",
+    "bootstrap-fileinput": "4.3.*",
+    "summernote": "0.8.*"
   }
 }
