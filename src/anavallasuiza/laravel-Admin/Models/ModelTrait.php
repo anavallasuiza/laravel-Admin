@@ -48,18 +48,18 @@ trait ModelTrait
         });
     }
 
-    public function scopeRelated($query, $table, $row)
+    public function scopeRelated($query, $relation, $row)
     {
-        $rows = $query->with([$table => function ($q) use ($table, $row) {
-                $q->where($table.'.id', $row->id);
+        $rows = $query->with([$relation => function ($q) use ($row) {
+                $q->where($row->getTable().'.id', $row->id);
             }])->get();
 
         foreach ($rows as $row) {
-            if (count($row->$table)) {
-                if ($row->$table instanceof Collection) {
-                    $row->related = $row->$table->first();
+            if (count($row->$relation)) {
+                if ($row->$relation instanceof Collection) {
+                    $row->related = $row->$relation->first();
                 } else {
-                    $row->related = $row->$table;
+                    $row->related = $row->$relation;
                 }
             } else {
                 $row->related = false;
