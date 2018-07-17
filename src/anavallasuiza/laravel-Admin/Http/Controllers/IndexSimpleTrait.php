@@ -7,7 +7,7 @@ trait IndexSimpleTrait
 {
     protected function indexView($params)
     {
-        $filters = self::initFilters($params['fields']);
+        $filters = self::initFilters($params['model'], $params['fields']);
         $list = $params['model']->filter($filters);
 
         if (is_object($processor = $this->processor('exportCsv', null, $list))) {
@@ -25,9 +25,31 @@ trait IndexSimpleTrait
         ], array_key_exists('share', $params) ? $params['share'] : []));
     }
 
-    private static function initFilters($fields)
+    private static function getFields($model, $fields)
+    {
+        $table = $model->getModel()->getTable();
+
+        $related = array_filter($fields, function ($value) {
+            return strpos($value, '.');
+        });
+
+        if (empty($related)) {
+            return $fields;
+        }
+
+        return array_map(function ($value) use ($table) {
+            if (strpos($value, '.')) {
+                return $value;
+            }
+
+            return $table.'.'.$value;
+        }, $fields);
+    }
+
+    private static function initFilters($model, $fields)
     {
         $all = Input::all();
+        $fields = static::getFields($model, $fields);
 
         foreach (['f-search-c', 'f-search-q', 'f-sort', 'f-rows'] as $field) {
             if (!isset($all[$field]) || (strlen($all[$field]) === 0)) {
