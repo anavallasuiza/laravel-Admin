@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Console\Commands;
 
-use File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
 
 class PublishAssets extends Command

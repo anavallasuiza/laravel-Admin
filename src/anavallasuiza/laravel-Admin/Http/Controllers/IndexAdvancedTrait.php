@@ -75,7 +75,7 @@ trait IndexAdvancedTrait
             return self::applyFilterWhereRelated($model, $field, $values);
         }
 
-        return $model->where(function($q) use ($field, $values) {
+        return $model->where(function ($q) use ($field, $values) {
             foreach ($values as $value) {
                 $q->orWhere($field, 'LIKE', '%'.$value.'%');
             }
@@ -86,7 +86,7 @@ trait IndexAdvancedTrait
     {
         list($table, $field) = explode('|', $field);
 
-        return $model->whereHas($table, function($q) use ($field, $values) {
+        return $model->whereHas($table, function ($q) use ($field, $values) {
             foreach ($values as $value) {
                 $q->where($field, 'LIKE', '%'.$value.'%');
             }

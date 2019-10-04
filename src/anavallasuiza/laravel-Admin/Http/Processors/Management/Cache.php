@@ -1,9 +1,9 @@
 <?php
 namespace Admin\Http\Processors\Management;
 
-use File;
-use Redirect;
-use Session;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Admin\Http\Processors\Processor;
 
 class Cache extends Processor

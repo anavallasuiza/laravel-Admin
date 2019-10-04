@@ -3,8 +3,7 @@ namespace Admin\Http\Controllers\Management;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Input;
-use View;
+use Illuminate\Support\Facades\View;
 use Admin\Http\Controllers\Controller;
 use Admin\Library;
 use Meta;
@@ -19,7 +18,7 @@ class Cache extends Controller
             return basename($file);
         }, glob($storage.'*'));
 
-        if (($view = Input::get('view')) && in_array($view, $files, true)) {
+        if (($view = request()->input('view')) && in_array($view, $files, true)) {
             $contents = file_get_contents($storage.$view);
         } else {
             $contents = '';

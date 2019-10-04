@@ -3,7 +3,7 @@ namespace Admin\Http\Processors\Management;
 
 use Admin\Http\Processors\Processor;
 use Admin\Library;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class Update extends Processor
 {

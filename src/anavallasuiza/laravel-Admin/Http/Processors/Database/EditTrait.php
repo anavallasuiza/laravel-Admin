@@ -2,7 +2,7 @@
 namespace Admin\Http\Processors\Database;
 
 use Exception;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Imagecow\Image;
 
 trait EditTrait
@@ -74,7 +74,7 @@ trait EditTrait
             return null;
         }
 
-        $exists = self::getModel()->where(function($q) use ($data) {
+        $exists = self::getModel()->where(function ($q) use ($data) {
             foreach ($this->duplicates as $column) {
                 $q->orWhere($column, $data[$column]);
             }

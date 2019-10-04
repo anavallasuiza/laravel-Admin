@@ -3,8 +3,7 @@ namespace Admin\Http\Processors;
 
 use Eusonlito\LaravelProcessor\Processors\ProcessorTrait;
 use Admin\Library;
-use Auth;
-use Session;
+use Illuminate\Support\Facades\Auth;
 
 abstract class Processor
 {

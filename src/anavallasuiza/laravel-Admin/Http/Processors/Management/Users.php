@@ -4,9 +4,9 @@ namespace Admin\Http\Processors\Management;
 use Exception;
 use Admin\Http\Processors\Processor;
 use Admin\Models;
-use Hash;
-use Session;
-use Redirect;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class Users extends Processor
 {

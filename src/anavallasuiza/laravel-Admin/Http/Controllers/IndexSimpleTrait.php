@@ -1,8 +1,6 @@
 <?php
 namespace Admin\Http\Controllers;
 
-use Input;
-
 trait IndexSimpleTrait
 {
     protected function indexView($params)
@@ -48,7 +46,7 @@ trait IndexSimpleTrait
 
     private static function initFilters($model, $fields)
     {
-        $all = Input::all();
+        $all = request()->input();
         $fields = static::getFields($model, $fields);
 
         foreach (['f-search-c', 'f-search-q', 'f-sort', 'f-rows'] as $field) {

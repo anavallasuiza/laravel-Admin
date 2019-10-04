@@ -2,10 +2,9 @@
 namespace Admin\Http\Processors;
 
 use ErrorException;
-use Auth;
-use Input;
-use Redirect;
-use Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Admin\Models;
 
 class Admin extends Processor
@@ -56,7 +55,7 @@ class Admin extends Processor
             'admin_users_id' => $user->id,
         ]);
 
-        $referer = Input::get('referer');
+        $referer = request()->input('referer');
 
         if (empty($referer) || ($referer === getenv('REQUEST_URI'))) {
             return Redirect::route('admin.index');

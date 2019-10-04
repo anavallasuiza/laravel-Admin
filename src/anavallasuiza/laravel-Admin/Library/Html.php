@@ -163,7 +163,7 @@ class Html
             return $string;
         } elseif (strstr($string, 'sLengthMenu')) {
             return '_MENU_';
-        } else  {
+        } else {
             return str_replace('datatables.s', '', $string);
         }
     }

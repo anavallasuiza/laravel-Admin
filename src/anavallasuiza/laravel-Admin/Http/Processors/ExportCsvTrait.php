@@ -2,7 +2,7 @@
 namespace Admin\Http\Processors;
 
 use Exception;
-use Response;
+use Illuminate\Support\Facades\Response;
 
 trait ExportCsvTrait
 {
@@ -70,7 +70,8 @@ trait ExportCsvTrait
         }
     }
 
-    private function exportCsvRow($table, $row) {
+    private function exportCsvRow($table, $row)
+    {
         foreach ($row as $name => $value) {
             if ($this->isExcluded($table, $name)) {
                 continue;

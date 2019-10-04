@@ -51,8 +51,8 @@ trait ModelTrait
     public function scopeRelated($query, $relation, $row)
     {
         $rows = $query->with([$relation => function ($q) use ($row) {
-                $q->where($row->getTable().'.id', $row->id);
-            }])->get();
+            $q->where($row->getTable().'.id', $row->id);
+        }])->get();
 
         foreach ($rows as $row) {
             if (count($row->$relation)) {

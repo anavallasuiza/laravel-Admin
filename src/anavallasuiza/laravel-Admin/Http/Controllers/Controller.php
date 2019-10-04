@@ -4,10 +4,10 @@ namespace Admin\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Eusonlito\LaravelProcessor\Controllers\ProcessorTrait;
 use Admin\Library;
-use Auth;
-use Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Route;
-use View;
+use Illuminate\Support\Facades\View;
 use Meta;
 
 abstract class Controller extends BaseController

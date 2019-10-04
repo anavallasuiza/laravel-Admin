@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Http\Controllers\Management;
 
-use Input;
 use Meta;
 use Admin\Http\Controllers\Controller;
 
@@ -18,7 +17,7 @@ class Uploads extends Controller
             throw new Exception(__('Folder %s not exists and can not be created', $public));
         }
 
-        if ($dir = Input::get('dir')) {
+        if ($dir = request()->input('dir')) {
             $public .= $dir = str_replace('..', '', base64_decode($dir));
         }
 

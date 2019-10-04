@@ -4,7 +4,7 @@ namespace Admin\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Admin\Models;
 
 class UserNew extends Command

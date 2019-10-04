@@ -1,8 +1,7 @@
 <?php
 namespace Admin\Http\Controllers\Management;
 
-use Redirect;
-use Eusonlito\LaravelFormManager\Form;
+use Illuminate\Support\Facades\Redirect;
 use Meta;
 use Admin\Http\Controllers\Controller;
 

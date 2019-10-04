@@ -1,9 +1,8 @@
 <?php
 namespace Admin\Http\Processors\Management;
 
-use File;
-use Input;
-use Session;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Admin\Http\Processors\Processor;
 use Admin\Models;
 
@@ -11,7 +10,7 @@ class Uploads extends Processor
 {
     public function fileNew($form, $uploads)
     {
-        $files = array_filter(Input::file('files'));
+        $files = array_filter(request()->file('files'));
 
         if (empty($files)) {
             return false;
@@ -42,7 +41,7 @@ class Uploads extends Processor
 
     public function fileDelete($form, $uploads)
     {
-        $name = str_replace('..', '', base64_decode(Input::get('name')));
+        $name = str_replace('..', '', base64_decode(request()->input('name')));
 
         if (empty($name) || !is_file($uploads.$name)) {
             return false;
@@ -67,7 +66,7 @@ class Uploads extends Processor
 
     public function directoryNew($form, $uploads)
     {
-        $name = strtolower(str_replace('..', '', Input::get('name')));
+        $name = strtolower(str_replace('..', '', request()->input('name')));
         $name = preg_replace('/[^\w\.]/', '-', $name);
         $name = preg_replace('/\-+/', '-', $name);
 
@@ -94,7 +93,7 @@ class Uploads extends Processor
 
     public function directoryDelete($form, $uploads)
     {
-        $name = str_replace('..', '', base64_decode(Input::get('name')));
+        $name = str_replace('..', '', base64_decode(request()->input('name')));
 
         if (empty($name) || !is_dir($uploads.$name)) {
             return false;

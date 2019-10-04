@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Http\Controllers\Management;
 
-use Input;
 use Admin\Http\Controllers\Controller;
 use Meta;
 
@@ -18,7 +17,7 @@ class Update extends Controller
         Meta::set('title', __('Update environment'));
 
         return self::view('management.update.index', [
-            'processor' => Input::get('_processor'),
+            'processor' => request()->input('_processor'),
             'response' => $processor,
         ]);
     }

@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Library;
 
-use App, Auth;
+use App;
 
 trait DatabaseTrait
 {

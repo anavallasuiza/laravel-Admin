@@ -1,8 +1,8 @@
 <?php
 namespace Admin\Http\Controllers;
 
-use Redirect;
-use Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Meta;
 
 class Admin extends Controller

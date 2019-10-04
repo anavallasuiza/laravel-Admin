@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Models;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class Log extends Model
 {

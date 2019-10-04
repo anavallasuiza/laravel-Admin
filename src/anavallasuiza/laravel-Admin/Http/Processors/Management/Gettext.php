@@ -4,10 +4,9 @@ namespace Admin\Http\Processors\Management;
 use Exception;
 use ZipArchive;
 use Admin\Http\Processors\Processor;
-use Input;
-use Session;
-use Redirect;
-use Response;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 
 class Gettext extends Processor
 {
@@ -17,7 +16,7 @@ class Gettext extends Processor
             return false;
         }
 
-        app('gettext')->setEntries(Input::get('locale'), $data['translations']);
+        app('gettext')->setEntries(request()->input('locale'), $data['translations']);
 
         Session::flash('flash-message', [
             'message' => __('Gettext was saved successfully'),
@@ -37,7 +36,7 @@ class Gettext extends Processor
             throw new Exception(__('Sorry but you haven\'t enabled ZipArchive (zlib) in your system'));
         }
 
-        $locale = Input::get('locale');
+        $locale = request()->input('locale');
 
         $file = tempnam(sys_get_temp_dir(), $locale.'-zip-');
 

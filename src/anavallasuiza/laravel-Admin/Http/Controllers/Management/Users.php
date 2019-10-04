@@ -5,7 +5,7 @@ use Admin\Http\Controllers\Controller;
 use Admin\Http\Controllers\IndexSimpleTrait;
 use Admin\Models;
 use Meta;
-use View;
+use Illuminate\Support\Facades\View;
 use App;
 
 class Users extends Controller

@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Http\Controllers\Management;
 
-use Input;
 use Admin\Http\Controllers\Controller;
 use Admin\Library;
 use Meta;
@@ -12,7 +11,7 @@ class Logs extends Controller
     {
         Meta::set('title', __('System Logs'));
 
-        $Logs = new Library\Logs($data = Input::all());
+        $Logs = new Library\Logs($data = request()->input());
 
         return self::view('management.logs.index', [
             'files' => $Logs->getFilesNames(),
