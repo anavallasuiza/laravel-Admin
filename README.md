@@ -27,14 +27,6 @@ Configure Laravel Service Providers/Aliases in `config/app.php`:
 
     ...
 ]
-
-'aliases' => [
-   ...
-
-   'Input' => Illuminate\Support\Facades\Input::class,
-
-   ...
-]
 ```
 
 Configure `app/Http/Kernel.php` with Middlewares:
